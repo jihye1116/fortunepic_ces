@@ -1,8 +1,8 @@
 import { useRouter } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
 
-import BackIcon from "@/assets/back.svg?react";
-import HomeIcon from "@/assets/home.svg?react";
+import BackIcon from "@/assets/icons/back.svg?react";
+import HomeIcon from "@/assets/icons/home.svg?react";
 import { resetAllAtoms } from "@/store/atoms";
 
 export const NavigationBar = () => {
