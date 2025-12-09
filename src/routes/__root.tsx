@@ -4,7 +4,9 @@ import { Provider } from "jotai";
 
 const RootLayout = () => (
   <Provider>
-    <Outlet />
+    <div className="bg-[#1B1C1E]">
+      <Outlet />
+    </div>
     <TanStackRouterDevtools />
   </Provider>
 );

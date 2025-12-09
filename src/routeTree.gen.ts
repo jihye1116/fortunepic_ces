@@ -9,266 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SelectRouteImport } from './routes/select'
-import { Route as PrintRouteImport } from './routes/print'
-import { Route as LanguageRouteImport } from './routes/language'
-import { Route as DesignRouteImport } from './routes/design'
-import { Route as CameraRouteImport } from './routes/camera'
-import { Route as AnalysisRouteImport } from './routes/analysis'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as StartRelationRouteImport } from './routes/start/relation'
-import { Route as StartPicturesRouteImport } from './routes/start/pictures'
-import { Route as StartPaymentRouteImport } from './routes/start/payment'
-import { Route as StartNameRouteImport } from './routes/start/name'
-import { Route as StartHeadcountRouteImport } from './routes/start/headcount'
-import { Route as StartFortuneSubjectRouteImport } from './routes/start/fortune-subject'
-import { Route as StartBirthTimeRouteImport } from './routes/start/birth-time'
-import { Route as StartBirthRouteImport } from './routes/start/birth'
 
-const SelectRoute = SelectRouteImport.update({
-  id: '/select',
-  path: '/select',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrintRoute = PrintRouteImport.update({
-  id: '/print',
-  path: '/print',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LanguageRoute = LanguageRouteImport.update({
-  id: '/language',
-  path: '/language',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DesignRoute = DesignRouteImport.update({
-  id: '/design',
-  path: '/design',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CameraRoute = CameraRouteImport.update({
-  id: '/camera',
-  path: '/camera',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AnalysisRoute = AnalysisRouteImport.update({
-  id: '/analysis',
-  path: '/analysis',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StartRelationRoute = StartRelationRouteImport.update({
-  id: '/start/relation',
-  path: '/start/relation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartPicturesRoute = StartPicturesRouteImport.update({
-  id: '/start/pictures',
-  path: '/start/pictures',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartPaymentRoute = StartPaymentRouteImport.update({
-  id: '/start/payment',
-  path: '/start/payment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartNameRoute = StartNameRouteImport.update({
-  id: '/start/name',
-  path: '/start/name',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartHeadcountRoute = StartHeadcountRouteImport.update({
-  id: '/start/headcount',
-  path: '/start/headcount',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartFortuneSubjectRoute = StartFortuneSubjectRouteImport.update({
-  id: '/start/fortune-subject',
-  path: '/start/fortune-subject',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartBirthTimeRoute = StartBirthTimeRouteImport.update({
-  id: '/start/birth-time',
-  path: '/start/birth-time',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartBirthRoute = StartBirthRouteImport.update({
-  id: '/start/birth',
-  path: '/start/birth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/analysis': typeof AnalysisRoute
-  '/camera': typeof CameraRoute
-  '/design': typeof DesignRoute
-  '/language': typeof LanguageRoute
-  '/print': typeof PrintRoute
-  '/select': typeof SelectRoute
-  '/start/birth': typeof StartBirthRoute
-  '/start/birth-time': typeof StartBirthTimeRoute
-  '/start/fortune-subject': typeof StartFortuneSubjectRoute
-  '/start/headcount': typeof StartHeadcountRoute
-  '/start/name': typeof StartNameRoute
-  '/start/payment': typeof StartPaymentRoute
-  '/start/pictures': typeof StartPicturesRoute
-  '/start/relation': typeof StartRelationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/analysis': typeof AnalysisRoute
-  '/camera': typeof CameraRoute
-  '/design': typeof DesignRoute
-  '/language': typeof LanguageRoute
-  '/print': typeof PrintRoute
-  '/select': typeof SelectRoute
-  '/start/birth': typeof StartBirthRoute
-  '/start/birth-time': typeof StartBirthTimeRoute
-  '/start/fortune-subject': typeof StartFortuneSubjectRoute
-  '/start/headcount': typeof StartHeadcountRoute
-  '/start/name': typeof StartNameRoute
-  '/start/payment': typeof StartPaymentRoute
-  '/start/pictures': typeof StartPicturesRoute
-  '/start/relation': typeof StartRelationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/analysis': typeof AnalysisRoute
-  '/camera': typeof CameraRoute
-  '/design': typeof DesignRoute
-  '/language': typeof LanguageRoute
-  '/print': typeof PrintRoute
-  '/select': typeof SelectRoute
-  '/start/birth': typeof StartBirthRoute
-  '/start/birth-time': typeof StartBirthTimeRoute
-  '/start/fortune-subject': typeof StartFortuneSubjectRoute
-  '/start/headcount': typeof StartHeadcountRoute
-  '/start/name': typeof StartNameRoute
-  '/start/payment': typeof StartPaymentRoute
-  '/start/pictures': typeof StartPicturesRoute
-  '/start/relation': typeof StartRelationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/analysis'
-    | '/camera'
-    | '/design'
-    | '/language'
-    | '/print'
-    | '/select'
-    | '/start/birth'
-    | '/start/birth-time'
-    | '/start/fortune-subject'
-    | '/start/headcount'
-    | '/start/name'
-    | '/start/payment'
-    | '/start/pictures'
-    | '/start/relation'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/analysis'
-    | '/camera'
-    | '/design'
-    | '/language'
-    | '/print'
-    | '/select'
-    | '/start/birth'
-    | '/start/birth-time'
-    | '/start/fortune-subject'
-    | '/start/headcount'
-    | '/start/name'
-    | '/start/payment'
-    | '/start/pictures'
-    | '/start/relation'
-  id:
-    | '__root__'
-    | '/'
-    | '/analysis'
-    | '/camera'
-    | '/design'
-    | '/language'
-    | '/print'
-    | '/select'
-    | '/start/birth'
-    | '/start/birth-time'
-    | '/start/fortune-subject'
-    | '/start/headcount'
-    | '/start/name'
-    | '/start/payment'
-    | '/start/pictures'
-    | '/start/relation'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AnalysisRoute: typeof AnalysisRoute
-  CameraRoute: typeof CameraRoute
-  DesignRoute: typeof DesignRoute
-  LanguageRoute: typeof LanguageRoute
-  PrintRoute: typeof PrintRoute
-  SelectRoute: typeof SelectRoute
-  StartBirthRoute: typeof StartBirthRoute
-  StartBirthTimeRoute: typeof StartBirthTimeRoute
-  StartFortuneSubjectRoute: typeof StartFortuneSubjectRoute
-  StartHeadcountRoute: typeof StartHeadcountRoute
-  StartNameRoute: typeof StartNameRoute
-  StartPaymentRoute: typeof StartPaymentRoute
-  StartPicturesRoute: typeof StartPicturesRoute
-  StartRelationRoute: typeof StartRelationRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/select': {
-      id: '/select'
-      path: '/select'
-      fullPath: '/select'
-      preLoaderRoute: typeof SelectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/print': {
-      id: '/print'
-      path: '/print'
-      fullPath: '/print'
-      preLoaderRoute: typeof PrintRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/language': {
-      id: '/language'
-      path: '/language'
-      fullPath: '/language'
-      preLoaderRoute: typeof LanguageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/design': {
-      id: '/design'
-      path: '/design'
-      fullPath: '/design'
-      preLoaderRoute: typeof DesignRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/camera': {
-      id: '/camera'
-      path: '/camera'
-      fullPath: '/camera'
-      preLoaderRoute: typeof CameraRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/analysis': {
-      id: '/analysis'
-      path: '/analysis'
-      fullPath: '/analysis'
-      preLoaderRoute: typeof AnalysisRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -276,81 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/start/relation': {
-      id: '/start/relation'
-      path: '/start/relation'
-      fullPath: '/start/relation'
-      preLoaderRoute: typeof StartRelationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/pictures': {
-      id: '/start/pictures'
-      path: '/start/pictures'
-      fullPath: '/start/pictures'
-      preLoaderRoute: typeof StartPicturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/payment': {
-      id: '/start/payment'
-      path: '/start/payment'
-      fullPath: '/start/payment'
-      preLoaderRoute: typeof StartPaymentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/name': {
-      id: '/start/name'
-      path: '/start/name'
-      fullPath: '/start/name'
-      preLoaderRoute: typeof StartNameRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/headcount': {
-      id: '/start/headcount'
-      path: '/start/headcount'
-      fullPath: '/start/headcount'
-      preLoaderRoute: typeof StartHeadcountRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/fortune-subject': {
-      id: '/start/fortune-subject'
-      path: '/start/fortune-subject'
-      fullPath: '/start/fortune-subject'
-      preLoaderRoute: typeof StartFortuneSubjectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/birth-time': {
-      id: '/start/birth-time'
-      path: '/start/birth-time'
-      fullPath: '/start/birth-time'
-      preLoaderRoute: typeof StartBirthTimeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start/birth': {
-      id: '/start/birth'
-      path: '/start/birth'
-      fullPath: '/start/birth'
-      preLoaderRoute: typeof StartBirthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AnalysisRoute: AnalysisRoute,
-  CameraRoute: CameraRoute,
-  DesignRoute: DesignRoute,
-  LanguageRoute: LanguageRoute,
-  PrintRoute: PrintRoute,
-  SelectRoute: SelectRoute,
-  StartBirthRoute: StartBirthRoute,
-  StartBirthTimeRoute: StartBirthTimeRoute,
-  StartFortuneSubjectRoute: StartFortuneSubjectRoute,
-  StartHeadcountRoute: StartHeadcountRoute,
-  StartNameRoute: StartNameRoute,
-  StartPaymentRoute: StartPaymentRoute,
-  StartPicturesRoute: StartPicturesRoute,
-  StartRelationRoute: StartRelationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
