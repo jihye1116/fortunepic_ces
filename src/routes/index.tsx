@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 import homeLottie from "@/assets/lottie/home.json";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: HomePage,
 });
 
-function Index() {
+function HomePage() {
   const { t } = useTranslation();
   const router = useRouter();
 

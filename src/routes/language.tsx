@@ -5,7 +5,7 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { SelectionButtons } from "@/components/SelectionButtons";
 
 export const Route = createFileRoute("/language")({
-  component: Language,
+  component: LanguagePage,
 });
 
 const languages = [
@@ -15,7 +15,7 @@ const languages = [
   { id: "cn", label: "中文" },
 ];
 
-function Language() {
+function LanguagePage() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 

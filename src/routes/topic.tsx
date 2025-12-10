@@ -9,7 +9,7 @@ import { SecondaryButton } from "@/components/SecondaryButton";
 import { fortuneSubjectAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/topic")({
-  component: Topic,
+  component: TopicPage,
 });
 
 interface TopicItem {
@@ -19,7 +19,7 @@ interface TopicItem {
   color: "blue" | "red" | "yellow";
 }
 
-function Topic() {
+function TopicPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
