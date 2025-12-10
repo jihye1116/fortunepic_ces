@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Drawer } from "vaul";
 
 import { CancelButton } from "@/components/CancelButton";
-import { ConfirmButton } from "@/components/ConfirmButton";
+import { SecondaryButton } from "@/components/SecondaryButton";
 
 interface ConfirmBottomSheetProps {
   open: boolean;
@@ -45,9 +45,9 @@ export const ConfirmBottomSheet = ({
 
             {/* Buttons */}
             <div className="flex flex-col gap-5 py-10">
-              <ConfirmButton onConfirm={handleConfirm}>
+              <SecondaryButton onConfirm={handleConfirm}>
                 {t("confirm.restart.confirm")}
-              </ConfirmButton>
+              </SecondaryButton>
               <CancelButton onCancel={() => onOpenChange(false)}>
                 {t("confirm.restart.cancel")}
               </CancelButton>

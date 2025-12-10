@@ -4,8 +4,8 @@ import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ConfirmButton } from "@/components/ConfirmButton";
 import { NavigationBar } from "@/components/NavigationBar";
+import { SecondaryButton } from "@/components/SecondaryButton";
 import { fortuneSubjectAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/topic")({
@@ -189,9 +189,9 @@ function Topic() {
 
       {selectedTopic && (
         <div className="px-20 py-10">
-          <ConfirmButton onConfirm={handleNext}>
+          <SecondaryButton onConfirm={handleNext}>
             {t("topic.next")}
-          </ConfirmButton>
+          </SecondaryButton>
         </div>
       )}
     </main>

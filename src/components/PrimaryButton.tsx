@@ -1,3 +1,5 @@
+import { cn } from "@sglara/cn";
+
 interface PrimaryButtonProps {
   onClick: () => void;
   children: React.ReactNode;
@@ -11,12 +13,20 @@ export const PrimaryButton = ({
 }: PrimaryButtonProps) => {
   return (
     <button
-      className={`my-8 h-40 w-full rounded-lg max-sm:my-4 max-sm:h-20 ${disabled ? "bg-[#E53888]/32" : "bg-[#E53888]"}`}
+      className={cn(
+        "flex w-full items-center justify-center rounded-3xl py-10",
+        disabled
+          ? "bg-[#212225]"
+          : "bg-[radial-gradient(50%_140%_at_50%_50%,#324EA5_0%,#8495C9_50%,#212225_100%)] active:bg-[radial-gradient(76%_214%_at_50%_50%,#324EA5_0%,#8495C9_50%,#212225_100%)]",
+      )}
       onClick={onClick}
       disabled={disabled}
     >
       <span
-        className={`font-pretendard text-5xl leading-[120%] font-bold tracking-[-1px] max-sm:text-2xl ${disabled ? "text-[#777777]" : "text-[#111111]"}`}
+        className={cn(
+          "font-pretendard text-[2.5rem] leading-[1.3] font-medium tracking-[-0.0375rem]",
+          disabled ? "text-[#70737C]" : "text-white",
+        )}
       >
         {children}
       </span>
