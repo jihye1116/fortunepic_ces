@@ -1,5 +1,10 @@
 import { cn } from "@sglara/cn";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+
+import GreenIcon from "@/assets/icons/green.svg?react";
+import RedIcon from "@/assets/icons/red.svg?react";
+import WhiteIcon from "@/assets/icons/white.svg?react";
+import YellowIcon from "@/assets/icons/yellow.svg?react";
 
 const gradientClasses = [
   "bg-[radial-gradient(90%_260%_at_0%_50%,#f16c6e_0%,#8495c9_40%,rgba(0,0,0,0.3)_100%)]", // 첫번째 - 빨강
@@ -19,12 +24,16 @@ interface SelectionOption {
 interface SelectionButtonsProps {
   options: SelectionOption[];
   onSelect: (id: string) => void;
+  showIcon?: boolean;
 }
 
 export const SelectionButtons = ({
   options,
   onSelect,
+  showIcon = false,
 }: SelectionButtonsProps) => {
+  const Icons = [<RedIcon />, <YellowIcon />, <GreenIcon />, <WhiteIcon />];
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleSelect = (id: string) => {
@@ -36,12 +45,12 @@ export const SelectionButtons = ({
     <div className="flex flex-col gap-6">
       {options.map((option, index) => {
         const isSelected = selectedId === option.id;
-        return (
+
+        const Button = (
           <button
-            key={option.id}
             onClick={() => handleSelect(option.id)}
             className={cn(
-              "flex items-center rounded-xl px-12 py-10 transition-all duration-300",
+              "flex w-full items-center rounded-xl px-12 py-10 transition-all duration-300",
               isSelected && "shadow-[0_0_0_4px_#292A2D]",
               isSelected ? gradientClasses[index] : defaultGradientClass,
             )}
@@ -56,6 +65,17 @@ export const SelectionButtons = ({
             </p>
           </button>
         );
+
+        if (showIcon) {
+          return (
+            <div key={option.id} className="flex items-center gap-6">
+              {Icons[index]}
+              {Button}
+            </div>
+          );
+        }
+
+        return <Fragment key={option.id}>{Button}</Fragment>;
       })}
     </div>
   );

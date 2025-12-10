@@ -101,6 +101,10 @@ function TopicPage() {
     if (selectedTopic === "dateSpecificReading") {
       router.navigate({ to: "/date" });
     }
+
+    if (selectedTopic === "koreanTalisman") {
+      router.navigate({ to: "/talisman-theme" });
+    }
   };
 
   return (

@@ -30,5 +30,63 @@
       "confirm": "Start over",
       "cancel": "Cancel"
     }
+  },
+  "talisman": {
+    "happiness": {
+      "title": "Happiness Talisman",
+      "subtitle": "Choose your specific happiness focus",
+      "overallSuccess": "Overall Success and Smooth Flow",
+      "goalAchievement": "Specific Goal Achievement",
+      "mentalPeace": "Mental Peace",
+      "divineProtection": "Divine Protection"
+    },
+    "wealth": {
+      "title": "Wealth Talisman",
+      "subtitle": "Choose your wealth manifestation focus",
+      "fortuneBoost": "Good Fortune Boost",
+      "moneyAttraction": "Money Attraction",
+      "windfallWish": "Windfall Wish",
+      "greatLuckFlow": "Great Luck Flow"
+    },
+    "career": {
+      "title": "Career Talisman",
+      "subtitle": "Choose your career success focus",
+      "legalTroubleSolve": "Legal Trouble Solve",
+      "gossipPrevention": "Gossip Prevention",
+      "promotionWish": "Promotion Wish",
+      "jobSuccess": "Job Success"
+    },
+    "love": {
+      "title": "Love Talisman",
+      "subtitle": "Choose your love and relationship focus",
+      "coupleHarmony": "Couple Harmony",
+      "relationshipRepair": "Relationship Repair",
+      "relationshipCall": "Relationship Call",
+      "maritalPeace": "Marital Peace"
+    },
+    "family": {
+      "title": "Family Talisman",
+      "subtitle": "Choose your family harmony focus",
+      "familyHarmony": "Family Harmony",
+      "movingSafety": "Moving Safety",
+      "homePeace": "Home Peace",
+      "fetalProtection": "Fetal Protection"
+    },
+    "health": {
+      "title": "Health Talisman",
+      "subtitle": "Choose your health protection focus",
+      "diseaseHealing": "Disease Healing",
+      "illnessRepel": "Illness Repel",
+      "accidentPrevention": "Accident Prevention",
+      "longLifeHealth": "Long Life Health"
+    },
+    "business": {
+      "title": "Business Talisman",
+      "subtitle": "Choose your business success focus",
+      "businessProsperity": "Business Prosperity",
+      "salesSuccess": "Sales Success",
+      "salesActivation": "Sales Activation",
+      "investmentSuccess": "Investment Success"
+    }
   }
 }

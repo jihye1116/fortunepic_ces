@@ -13,6 +13,8 @@ import { Route as TopicRouteImport } from './routes/topic'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as DateRouteImport } from './routes/date'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TalismanThemeIndexRouteImport } from './routes/talisman-theme/index'
+import { Route as TalismanThemeThemeRouteImport } from './routes/talisman-theme/$theme'
 
 const TopicRoute = TopicRouteImport.update({
   id: '/topic',
@@ -34,18 +36,32 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TalismanThemeIndexRoute = TalismanThemeIndexRouteImport.update({
+  id: '/talisman-theme/',
+  path: '/talisman-theme/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TalismanThemeThemeRoute = TalismanThemeThemeRouteImport.update({
+  id: '/talisman-theme/$theme',
+  path: '/talisman-theme/$theme',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
+  '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
+  '/talisman-theme': typeof TalismanThemeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
+  '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
+  '/talisman-theme': typeof TalismanThemeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,34 @@ export interface FileRoutesById {
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
+  '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
+  '/talisman-theme/': typeof TalismanThemeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/date' | '/language' | '/topic'
+  fullPaths:
+    | '/'
+    | '/date'
+    | '/language'
+    | '/topic'
+    | '/talisman-theme/$theme'
+    | '/talisman-theme'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/date' | '/language' | '/topic'
-  id: '__root__' | '/' | '/date' | '/language' | '/topic'
+  to:
+    | '/'
+    | '/date'
+    | '/language'
+    | '/topic'
+    | '/talisman-theme/$theme'
+    | '/talisman-theme'
+  id:
+    | '__root__'
+    | '/'
+    | '/date'
+    | '/language'
+    | '/topic'
+    | '/talisman-theme/$theme'
+    | '/talisman-theme/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +104,8 @@ export interface RootRouteChildren {
   DateRoute: typeof DateRoute
   LanguageRoute: typeof LanguageRoute
   TopicRoute: typeof TopicRoute
+  TalismanThemeThemeRoute: typeof TalismanThemeThemeRoute
+  TalismanThemeIndexRoute: typeof TalismanThemeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +138,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/talisman-theme/': {
+      id: '/talisman-theme/'
+      path: '/talisman-theme'
+      fullPath: '/talisman-theme'
+      preLoaderRoute: typeof TalismanThemeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/talisman-theme/$theme': {
+      id: '/talisman-theme/$theme'
+      path: '/talisman-theme/$theme'
+      fullPath: '/talisman-theme/$theme'
+      preLoaderRoute: typeof TalismanThemeThemeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +160,8 @@ const rootRouteChildren: RootRouteChildren = {
   DateRoute: DateRoute,
   LanguageRoute: LanguageRoute,
   TopicRoute: TopicRoute,
+  TalismanThemeThemeRoute: TalismanThemeThemeRoute,
+  TalismanThemeIndexRoute: TalismanThemeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,5 +1,7 @@
 import { atom } from "jotai";
 
+import type { Theme } from "@/core/types";
+
 export const capturedPhotosAtom = atom<string[]>([]);
 export const selectedPhotosAtom = atom<number[]>([]);
 
@@ -47,6 +49,7 @@ export const relationAtom = atom<string>("");
 
 export const subjectIndexAtom = atom<number | null>(null);
 export const fortuneSubjectAtom = atom<string>("");
+export const themeAtom = atom<Theme | null>(null);
 
 export const namesAtom = atom<string[]>([]);
 

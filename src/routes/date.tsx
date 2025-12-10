@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import BackIcon from "@/assets/icons/back.svg?react";
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
-import { MONTHS, WEEKDAYS } from "@/constants";
+import { MONTHS, WEEKDAYS } from "@/core/constants";
+
 export const Route = createFileRoute("/date")({
   component: DatePage,
 });
