@@ -8,6 +8,19 @@
   --font-crimson: "Crimson Text", serif;
 }
 
+@utility gradient-text {
+  background: linear-gradient(to right, white, #1e2f63);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
 button {
   cursor: pointer;
   outline: none;
