@@ -2,5 +2,16 @@
   "home": {
     "title": "Check your\nFortune",
     "start": "Touch the screen\nto start"
+  },
+  "language": {
+    "title": "Select a language"
+  },
+  "confirm": {
+    "restart": {
+      "title": "Start over?",
+      "description": "Your current progress will be lost.",
+      "confirm": "Start over",
+      "cancel": "Cancel"
+    }
   }
 }
