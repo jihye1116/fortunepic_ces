@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import Lottie from "lottie-react";
 import { useTranslation } from "react-i18next";
 
@@ -10,23 +10,27 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { t } = useTranslation();
+  const router = useRouter();
+
+  const handleStartClick = () => {
+    router.navigate({ to: "/language" });
+  };
 
   return (
     <main className="flex h-dvh flex-col">
       <div className="relative z-10 w-full px-20 py-35">
-        <h1 className="font-crimson bg-linear-to-r from-white to-[#1E2F63] bg-clip-text text-8xl leading-[115%] tracking-[-1%] whitespace-pre-wrap text-transparent">
+        <h1 className="font-crimson gradient-text text-[6.25rem] leading-[115%] tracking-[-0.1rem] whitespace-pre-wrap">
           {t("home.title")}
         </h1>
       </div>
       <div className="flex flex-col gap-12 py-30">
         <Lottie
-          className="mx-auto"
+          className="mx-auto blur-md"
           animationData={homeLottie}
           width={514}
           height={514}
-          style={{ filter: "blur(15px)" }}
         />
-        <button className="px-10 py-8">
+        <button className="px-10 py-8" onClick={handleStartClick}>
           <p className="text-5xl leading-[130%] tracking-[-1.5%] whitespace-pre-wrap text-white/60">
             {t("home.start")}
           </p>
