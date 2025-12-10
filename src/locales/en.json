@@ -19,6 +19,10 @@
       "newYearFortune": "New Year\nFortune"
     }
   },
+  "date": {
+    "title": "Select your date",
+    "subtitle": "Choose a specific date for your fortune reading"
+  },
   "confirm": {
     "restart": {
       "title": "Start over?",

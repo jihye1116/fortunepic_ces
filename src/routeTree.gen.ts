@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TopicRouteImport } from './routes/topic'
 import { Route as LanguageRouteImport } from './routes/language'
+import { Route as DateRouteImport } from './routes/date'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TopicRoute = TopicRouteImport.update({
@@ -23,6 +24,11 @@ const LanguageRoute = LanguageRouteImport.update({
   path: '/language',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DateRoute = DateRouteImport.update({
+  id: '/date',
+  path: '/date',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/language' | '/topic'
+  fullPaths: '/' | '/date' | '/language' | '/topic'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/language' | '/topic'
-  id: '__root__' | '/' | '/language' | '/topic'
+  to: '/' | '/date' | '/language' | '/topic'
+  id: '__root__' | '/' | '/date' | '/language' | '/topic'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DateRoute: typeof DateRoute
   LanguageRoute: typeof LanguageRoute
   TopicRoute: typeof TopicRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/date': {
+      id: '/date'
+      path: '/date'
+      fullPath: '/date'
+      preLoaderRoute: typeof DateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DateRoute: DateRoute,
   LanguageRoute: LanguageRoute,
   TopicRoute: TopicRoute,
 }

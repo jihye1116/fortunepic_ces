@@ -28,7 +28,7 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between px-10 py-15">
+      <div className="flex w-full items-center justify-between px-10 py-15">
         <button onClick={handleGoBack} className="h-fit">
           <BackIcon className="h-25 w-25 p-4.5" />
         </button>

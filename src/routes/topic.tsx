@@ -1,5 +1,5 @@
 import { cn } from "@sglara/cn";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,7 @@ interface TopicItem {
 
 function Topic() {
   const { t } = useTranslation();
+  const router = useRouter();
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const setTopicAtom = useSetAtom(fortuneSubjectAtom);
 
@@ -96,6 +97,10 @@ function Topic() {
 
   const handleNext = () => {
     setTopicAtom(selectedTopic!);
+
+    if (selectedTopic === "dateSpecificReading") {
+      router.navigate({ to: "/date" });
+    }
   };
 
   return (
