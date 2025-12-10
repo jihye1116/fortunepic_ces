@@ -6,6 +6,19 @@
   "language": {
     "title": "Select a language"
   },
+  "topic": {
+    "title": "Select a topic",
+    "next": "Next",
+    "topics": {
+      "todayFortune": "Today\nFortune",
+      "lifetimeFortune": "Lifetime\nFortune",
+      "myZodiacAnimal": "My Zodiac\nAnimal",
+      "koreanTalisman": "Korean\nTalisman",
+      "fiveElementsAnalysis": "Five Elements\nAnalysis",
+      "dateSpecificReading": "Date Specific\nReading",
+      "newYearFortune": "New Year\nFortune"
+    }
+  },
   "confirm": {
     "restart": {
       "title": "Start over?",

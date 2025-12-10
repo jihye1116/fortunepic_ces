@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TopicRouteImport } from './routes/topic'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TopicRoute = TopicRouteImport.update({
+  id: '/topic',
+  path: '/topic',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LanguageRoute = LanguageRouteImport.update({
   id: '/language',
   path: '/language',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/language': typeof LanguageRoute
+  '/topic': typeof TopicRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/language': typeof LanguageRoute
+  '/topic': typeof TopicRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/language': typeof LanguageRoute
+  '/topic': typeof TopicRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/language'
+  fullPaths: '/' | '/language' | '/topic'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/language'
-  id: '__root__' | '/' | '/language'
+  to: '/' | '/language' | '/topic'
+  id: '__root__' | '/' | '/language' | '/topic'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LanguageRoute: typeof LanguageRoute
+  TopicRoute: typeof TopicRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/topic': {
+      id: '/topic'
+      path: '/topic'
+      fullPath: '/topic'
+      preLoaderRoute: typeof TopicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/language': {
       id: '/language'
       path: '/language'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LanguageRoute: LanguageRoute,
+  TopicRoute: TopicRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

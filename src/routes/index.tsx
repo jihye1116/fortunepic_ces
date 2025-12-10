@@ -31,13 +31,13 @@ function Index() {
           height={514}
         />
         <button className="px-10 py-8" onClick={handleStartClick}>
-          <p className="text-5xl leading-[130%] tracking-[-1.5%] whitespace-pre-wrap text-white/60">
+          <p className="text-5xl leading-[1.3] tracking-[-1.5%] whitespace-pre-wrap text-white/60">
             {t("home.start")}
           </p>
         </button>
       </div>
       <footer className="flex flex-1 items-center justify-center">
-        <p className="text-[2.5rem] leading-[130%] tracking-[-1%] text-white/60">
+        <p className="text-[2.5rem] leading-[1.3] tracking-[-1%] text-white/60">
           FortunePic ©
         </p>
       </footer>

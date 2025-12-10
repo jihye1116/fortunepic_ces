@@ -48,7 +48,7 @@ export const SelectionButtons = ({
           >
             <p
               className={cn(
-                "text-[2.5rem] leading-[130%] tracking-[-0.025rem]",
+                "text-[2.5rem] leading-[1.3] tracking-[-0.025rem]",
                 isSelected ? "font-semibold text-white" : "text-[#E1E2E4]",
               )}
             >
