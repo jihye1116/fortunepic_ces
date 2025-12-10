@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 
 import cn from "./locales/cn.json";
 import en from "./locales/en.json";
-import ja from "./locales/ja.json";
+import es from "./locales/es.json";
 import ko from "./locales/ko.json";
 
 const resources = {
@@ -13,8 +13,8 @@ const resources = {
   ko: {
     translation: ko,
   },
-  ja: {
-    translation: ja,
+  es: {
+    translation: es,
   },
   cn: {
     translation: cn,
