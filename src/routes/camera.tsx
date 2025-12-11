@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import GuideIcon from "@/assets/icons/guide.svg?react";
+import { CancelButton } from "@/components/CancelButton";
 import { NavigationBar } from "@/components/NavigationBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { Title } from "@/components/Title";
@@ -15,6 +16,8 @@ export const Route = createFileRoute("/camera")({
 
 function CameraPage() {
   const { t } = useTranslation();
+  const router = useRouter();
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -24,6 +27,7 @@ function CameraPage() {
   const [countdown, setCountdown] = useState<number>(5);
   const [remainingShots, setRemainingShots] = useState<number>(2);
   const [isCountingDown, setIsCountingDown] = useState(false);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
 
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
@@ -257,4 +261,87 @@ function CameraPage() {
       </main>
     );
   }
+
+  return (
+    <main className="flex h-dvh flex-col bg-black">
+      <NavigationBar />
+
+      <Title
+        text={t("camera.select.title")}
+        subtext={t("camera.select.subtitle")}
+      />
+
+      {/* 사진 선택 */}
+      <div className="flex gap-5 px-20 py-12">
+        {capturedPhotos.map((photo, idx) => (
+          <button
+            key={idx}
+            className="relative h-84.5 flex-1 overflow-hidden rounded-xl"
+            onClick={() => setSelectedPhotoIndex(idx)}
+          >
+            {/* 사진 이미지 */}
+            <img
+              src={photo}
+              alt={`Captured ${idx + 1}`}
+              className="h-full w-full object-cover"
+            />
+
+            {/* 선택된 사진: 그라데이션 테두리 */}
+            {idx === selectedPhotoIndex && (
+              <>
+                {/* 그라데이션 배경 레이어 */}
+                <div className="absolute inset-0 rounded-xl bg-linear-to-br from-[#5b72b7] via-[#8495c9] to-[#ed474a] p-[5px]">
+                  <div className="h-full w-full rounded-[7px] bg-black" />
+                </div>
+                {/* 이미지를 다시 위에 표시 */}
+                <img
+                  src={photo}
+                  alt={`Captured ${idx + 1}`}
+                  className="absolute inset-[5px] h-[calc(100%-10px)] w-[calc(100%-10px)] rounded-[7px] object-cover"
+                />
+              </>
+            )}
+
+            {/* 선택되지 않은 사진: 흰색 반투명 테두리 */}
+            {idx !== selectedPhotoIndex && (
+              <div className="absolute inset-0 rounded-xl border border-white/20 opacity-80" />
+            )}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-5 px-20 py-10">
+        <PrimaryButton
+          onClick={() => {
+            setBackgroundOpacity(false);
+
+            setTimeout(() => {
+              // 선택된 사진을 capturedPhotosAtom에 저장
+              const selectedPhoto = capturedPhotos[selectedPhotoIndex];
+              setCapturedPhotos([selectedPhoto]);
+              router.navigate({ to: "/" });
+              setBackgroundOpacity(true);
+            }, 800);
+          }}
+        >
+          {t("camera.select.next")}
+        </PrimaryButton>
+
+        <CancelButton
+          onCancel={() => {
+            setBackgroundOpacity(false);
+            setTimeout(() => {
+              setStep("capture");
+              setCapturedPhotos([]);
+              setRemainingShots(2);
+              setIsCameraReady(false);
+              setBackgroundOpacity(true);
+            }, 800);
+          }}
+        >
+          {t("camera.select.retake")}
+        </CancelButton>
+      </div>
+    </main>
+  );
 }

@@ -149,6 +149,12 @@
       "loading": "Camera loading...",
       "remainingShots": "Remaining shots",
       "earVisibility": "Please make sure your ears are clearly visible"
+    },
+    "select": {
+      "title": "Choose Your Best",
+      "subtitle": "Select one for your fortune reading",
+      "next": "Next",
+      "retake": "Retake"
     }
   }
 }
