@@ -156,5 +156,49 @@
       "next": "Next",
       "retake": "Retake"
     }
+  },
+  "result": {
+    "qrCode": "Scan for Full Details",
+    "reportSuffix": "'s report",
+    "finish": "Finish",
+    "removeData": "Remove my data",
+    "lifetimeFortune": {
+      "title": "Lifetime Fortune",
+      "description": "Today is a day of great financial opportunity. A bold move will lead to significant gains. Trust your instincts in matters of investment."
+    },
+    "todaysFortune": {
+      "title": "Today's Fortune",
+      "subtitle": "October 26, 2023",
+      "mainTitle": "A Day of Unexpected Opportunity",
+      "chip1": "Luck",
+      "chip2": "Creativity",
+      "chip3": "Connection"
+    },
+    "dateSpecific": {
+      "title": "Your Fortune for October 26, 2024",
+      "mainTitle": "A Day of Unexpected Opportunity",
+      "chip1": "Luck",
+      "chip2": "Creativity",
+      "chip3": "Connection"
+    },
+    "fiveElements": {
+      "title": "Five Elements Analysis",
+      "mainImage": "Main",
+      "supportingImage": "Supporting",
+      "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness."
+    },
+    "zodiacAnimal": {
+      "title": "My Zodiac Animal",
+      "mainTitle": "The Blue Dragon",
+      "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness.",
+      "chip1": "Leadership",
+      "chip2": "Creativity",
+      "chip3": "Wisdom"
+    },
+    "koreanTalisman": {
+      "title": "Korean Talisman",
+      "mainTitle": "Lucky Talisman",
+      "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness."
+    }
   }
 }

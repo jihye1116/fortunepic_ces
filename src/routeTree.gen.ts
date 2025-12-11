@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TopicRouteImport } from './routes/topic'
+import { Route as ResultRouteImport } from './routes/result'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as DateRouteImport } from './routes/date'
 import { Route as CameraRouteImport } from './routes/camera'
@@ -33,6 +34,11 @@ import { Route as InformationBirthRouteImport } from './routes/information/birth
 const TopicRoute = TopicRouteImport.update({
   id: '/topic',
   path: '/topic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultRoute = ResultRouteImport.update({
+  id: '/result',
+  path: '/result',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LanguageRoute = LanguageRouteImport.update({
@@ -61,9 +67,9 @@ const TalismanThemeIndexRoute = TalismanThemeIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportIndexRoute = ReportIndexRouteImport.update({
-  id: '/report/',
-  path: '/report/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => ReportRoute,
 } as any)
 const InformationIndexRoute = InformationIndexRouteImport.update({
   id: '/information/',
@@ -76,39 +82,39 @@ const TalismanThemeThemeRoute = TalismanThemeThemeRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportTodayRoute = ReportTodayRouteImport.update({
-  id: '/report/today',
-  path: '/report/today',
-  getParentRoute: () => rootRouteImport,
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => ReportRoute,
 } as any)
 const ReportTalismanRoute = ReportTalismanRouteImport.update({
-  id: '/report/talisman',
-  path: '/report/talisman',
-  getParentRoute: () => rootRouteImport,
+  id: '/talisman',
+  path: '/talisman',
+  getParentRoute: () => ReportRoute,
 } as any)
 const ReportNewYearRoute = ReportNewYearRouteImport.update({
-  id: '/report/new-year',
-  path: '/report/new-year',
-  getParentRoute: () => rootRouteImport,
+  id: '/new-year',
+  path: '/new-year',
+  getParentRoute: () => ReportRoute,
 } as any)
 const ReportLifetimeRoute = ReportLifetimeRouteImport.update({
-  id: '/report/lifetime',
-  path: '/report/lifetime',
-  getParentRoute: () => rootRouteImport,
+  id: '/lifetime',
+  path: '/lifetime',
+  getParentRoute: () => ReportRoute,
 } as any)
 const ReportFiveElementsRoute = ReportFiveElementsRouteImport.update({
-  id: '/report/five-elements',
-  path: '/report/five-elements',
-  getParentRoute: () => rootRouteImport,
+  id: '/five-elements',
+  path: '/five-elements',
+  getParentRoute: () => ReportRoute,
 } as any)
 const ReportDateRoute = ReportDateRouteImport.update({
-  id: '/report/date',
-  path: '/report/date',
-  getParentRoute: () => rootRouteImport,
+  id: '/date',
+  path: '/date',
+  getParentRoute: () => ReportRoute,
 } as any)
 const ReportDailyPilarRoute = ReportDailyPilarRouteImport.update({
-  id: '/report/daily-pilar',
-  path: '/report/daily-pilar',
-  getParentRoute: () => rootRouteImport,
+  id: '/daily-pilar',
+  path: '/daily-pilar',
+  getParentRoute: () => ReportRoute,
 } as any)
 const InformationTimeRoute = InformationTimeRouteImport.update({
   id: '/information/time',
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
+  '/result': typeof ResultRoute
   '/topic': typeof TopicRoute
   '/information/birth': typeof InformationBirthRoute
   '/information/gender': typeof InformationGenderRoute
@@ -150,7 +157,7 @@ export interface FileRoutesByFullPath {
   '/report/today': typeof ReportTodayRoute
   '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
   '/information': typeof InformationIndexRoute
-  '/report': typeof ReportIndexRoute
+  '/report/': typeof ReportIndexRoute
   '/talisman-theme': typeof TalismanThemeIndexRoute
 }
 export interface FileRoutesByTo {
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
+  '/result': typeof ResultRoute
   '/topic': typeof TopicRoute
   '/information/birth': typeof InformationBirthRoute
   '/information/gender': typeof InformationGenderRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
+  '/result': typeof ResultRoute
   '/topic': typeof TopicRoute
   '/information/birth': typeof InformationBirthRoute
   '/information/gender': typeof InformationGenderRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/date'
     | '/language'
+    | '/result'
     | '/topic'
     | '/information/birth'
     | '/information/gender'
@@ -219,7 +229,7 @@ export interface FileRouteTypes {
     | '/report/today'
     | '/talisman-theme/$theme'
     | '/information'
-    | '/report'
+    | '/report/'
     | '/talisman-theme'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/date'
     | '/language'
+    | '/result'
     | '/topic'
     | '/information/birth'
     | '/information/gender'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/date'
     | '/language'
+    | '/result'
     | '/topic'
     | '/information/birth'
     | '/information/gender'
@@ -272,21 +284,14 @@ export interface RootRouteChildren {
   CameraRoute: typeof CameraRoute
   DateRoute: typeof DateRoute
   LanguageRoute: typeof LanguageRoute
+  ResultRoute: typeof ResultRoute
   TopicRoute: typeof TopicRoute
   InformationBirthRoute: typeof InformationBirthRoute
   InformationGenderRoute: typeof InformationGenderRoute
   InformationNicknameRoute: typeof InformationNicknameRoute
   InformationTimeRoute: typeof InformationTimeRoute
-  ReportDailyPilarRoute: typeof ReportDailyPilarRoute
-  ReportDateRoute: typeof ReportDateRoute
-  ReportFiveElementsRoute: typeof ReportFiveElementsRoute
-  ReportLifetimeRoute: typeof ReportLifetimeRoute
-  ReportNewYearRoute: typeof ReportNewYearRoute
-  ReportTalismanRoute: typeof ReportTalismanRoute
-  ReportTodayRoute: typeof ReportTodayRoute
   TalismanThemeThemeRoute: typeof TalismanThemeThemeRoute
   InformationIndexRoute: typeof InformationIndexRoute
-  ReportIndexRoute: typeof ReportIndexRoute
   TalismanThemeIndexRoute: typeof TalismanThemeIndexRoute
 }
 
@@ -297,6 +302,13 @@ declare module '@tanstack/react-router' {
       path: '/topic'
       fullPath: '/topic'
       preLoaderRoute: typeof TopicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/result': {
+      id: '/result'
+      path: '/result'
+      fullPath: '/result'
+      preLoaderRoute: typeof ResultRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/language': {
@@ -336,10 +348,10 @@ declare module '@tanstack/react-router' {
     }
     '/report/': {
       id: '/report/'
-      path: '/report'
-      fullPath: '/report'
+      path: '/'
+      fullPath: '/report/'
       preLoaderRoute: typeof ReportIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/information/': {
       id: '/information/'
@@ -357,52 +369,52 @@ declare module '@tanstack/react-router' {
     }
     '/report/today': {
       id: '/report/today'
-      path: '/report/today'
+      path: '/today'
       fullPath: '/report/today'
       preLoaderRoute: typeof ReportTodayRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/report/talisman': {
       id: '/report/talisman'
-      path: '/report/talisman'
+      path: '/talisman'
       fullPath: '/report/talisman'
       preLoaderRoute: typeof ReportTalismanRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/report/new-year': {
       id: '/report/new-year'
-      path: '/report/new-year'
+      path: '/new-year'
       fullPath: '/report/new-year'
       preLoaderRoute: typeof ReportNewYearRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/report/lifetime': {
       id: '/report/lifetime'
-      path: '/report/lifetime'
+      path: '/lifetime'
       fullPath: '/report/lifetime'
       preLoaderRoute: typeof ReportLifetimeRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/report/five-elements': {
       id: '/report/five-elements'
-      path: '/report/five-elements'
+      path: '/five-elements'
       fullPath: '/report/five-elements'
       preLoaderRoute: typeof ReportFiveElementsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/report/date': {
       id: '/report/date'
-      path: '/report/date'
+      path: '/date'
       fullPath: '/report/date'
       preLoaderRoute: typeof ReportDateRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/report/daily-pilar': {
       id: '/report/daily-pilar'
-      path: '/report/daily-pilar'
+      path: '/daily-pilar'
       fullPath: '/report/daily-pilar'
       preLoaderRoute: typeof ReportDailyPilarRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ReportRoute
     }
     '/information/time': {
       id: '/information/time'
@@ -440,21 +452,14 @@ const rootRouteChildren: RootRouteChildren = {
   CameraRoute: CameraRoute,
   DateRoute: DateRoute,
   LanguageRoute: LanguageRoute,
+  ResultRoute: ResultRoute,
   TopicRoute: TopicRoute,
   InformationBirthRoute: InformationBirthRoute,
   InformationGenderRoute: InformationGenderRoute,
   InformationNicknameRoute: InformationNicknameRoute,
   InformationTimeRoute: InformationTimeRoute,
-  ReportDailyPilarRoute: ReportDailyPilarRoute,
-  ReportDateRoute: ReportDateRoute,
-  ReportFiveElementsRoute: ReportFiveElementsRoute,
-  ReportLifetimeRoute: ReportLifetimeRoute,
-  ReportNewYearRoute: ReportNewYearRoute,
-  ReportTalismanRoute: ReportTalismanRoute,
-  ReportTodayRoute: ReportTodayRoute,
   TalismanThemeThemeRoute: TalismanThemeThemeRoute,
   InformationIndexRoute: InformationIndexRoute,
-  ReportIndexRoute: ReportIndexRoute,
   TalismanThemeIndexRoute: TalismanThemeIndexRoute,
 }
 export const routeTree = rootRouteImport
