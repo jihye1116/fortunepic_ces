@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TopicRouteImport } from './routes/topic'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as DateRouteImport } from './routes/date'
+import { Route as CameraRouteImport } from './routes/camera'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TalismanThemeIndexRouteImport } from './routes/talisman-theme/index'
 import { Route as InformationIndexRouteImport } from './routes/information/index'
@@ -31,6 +32,11 @@ const LanguageRoute = LanguageRouteImport.update({
 const DateRoute = DateRouteImport.update({
   id: '/date',
   path: '/date',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CameraRoute = CameraRouteImport.update({
+  id: '/camera',
+  path: '/camera',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,6 +67,7 @@ const InformationNicknameRoute = InformationNicknameRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/camera'
     | '/date'
     | '/language'
     | '/topic'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/camera'
     | '/date'
     | '/language'
     | '/topic'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/camera'
     | '/date'
     | '/language'
     | '/topic'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CameraRoute: typeof CameraRoute
   DateRoute: typeof DateRoute
   LanguageRoute: typeof LanguageRoute
   TopicRoute: typeof TopicRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/date'
       fullPath: '/date'
       preLoaderRoute: typeof DateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/camera': {
+      id: '/camera'
+      path: '/camera'
+      fullPath: '/camera'
+      preLoaderRoute: typeof CameraRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -197,6 +217,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CameraRoute: CameraRoute,
   DateRoute: DateRoute,
   LanguageRoute: LanguageRoute,
   TopicRoute: TopicRoute,
