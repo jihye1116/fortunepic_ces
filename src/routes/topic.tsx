@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
 import { Title } from "@/components/Title";
-import { fortuneSubjectAtom } from "@/store/atoms";
+import { topicAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/topic")({
   component: TopicPage,
@@ -24,7 +24,7 @@ function TopicPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
-  const setTopicAtom = useSetAtom(fortuneSubjectAtom);
+  const setTopicAtom = useSetAtom(topicAtom);
 
   const topics: TopicItem[] = [
     {

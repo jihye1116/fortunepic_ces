@@ -45,6 +45,9 @@ export interface FortuneResult {
 
 export const fortuneResultAtom = atom<Record<number, FortuneResult>>({});
 
+export const topicAtom = atom<string>("");
+export const themeAtom = atom<string>("");
+
 export const nicknameAtom = atom<string>("");
 export const birthdateAtom = atom<string>("");
 export const birthtimeAtom = atom<string>("");
