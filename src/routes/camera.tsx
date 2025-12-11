@@ -17,8 +17,8 @@ function CameraPage() {
   const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [step, setStep] = useState<"info" | "capture">("info");
-  const [stream, setStream] = useState<MediaStream | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const [step, setStep] = useState<"info" | "capture" | "select">("info");
   const [capturedPhotos, setCapturedPhotos] = useAtom(capturedPhotosAtom);
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [countdown, setCountdown] = useState<number>(5);
@@ -42,11 +42,12 @@ function CameraPage() {
     if (step !== "capture") return;
 
     let isMounted = true;
+    let localStream: MediaStream | null = null;
 
     const startCamera = async () => {
       try {
         const mediaStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: { facingMode: "user" },
           audio: false,
         });
 
@@ -59,7 +60,8 @@ function CameraPage() {
           videoRef.current.srcObject = mediaStream;
         }
 
-        setStream(mediaStream);
+        localStream = mediaStream;
+        streamRef.current = mediaStream;
         setIsCameraReady(true);
       } catch (err) {
         console.error("카메라 접근 오류:", err);
@@ -70,11 +72,11 @@ function CameraPage() {
 
     return () => {
       isMounted = false;
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
+      if (localStream) {
+        localStream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [stream, step]);
+  }, [step]);
 
   // 카메라 준비되면 자동으로 카운트다운 시작
   useEffect(() => {
@@ -91,10 +93,10 @@ function CameraPage() {
 
   // 카운트다운 타이머
   useEffect(() => {
-    if (!isCountingDown || countdown <= 0) return;
+    if (!isCountingDown || countdown < 0) return;
 
     const timer = setTimeout(() => {
-      if (countdown === 1) {
+      if (countdown === 0) {
         // 사진 촬영
         if (videoRef.current && canvasRef.current) {
           const context = canvasRef.current.getContext("2d");
@@ -114,13 +116,20 @@ function CameraPage() {
         }
 
         setIsCountingDown(false);
-        setRemainingShots((prev) => prev - 1);
+        const newRemainingShots = remainingShots - 1;
+        setRemainingShots(newRemainingShots);
 
         // 남은 촬영이 있으면 다시 카운트다운 시작
-        if (remainingShots > 1) {
+        if (newRemainingShots > 0) {
           setTimeout(() => {
             setIsCountingDown(true);
             setCountdown(5);
+          }, 1000);
+        } else {
+          // 모든 촬영 완료 - select 화면으로 전환
+          setTimeout(() => {
+            setStep("select");
+            setBackgroundOpacity(false);
           }, 1000);
         }
       } else {
@@ -135,6 +144,7 @@ function CameraPage() {
     remainingShots,
     capturedPhotos,
     setCapturedPhotos,
+    setBackgroundOpacity,
   ]);
 
   // 사진 촬영 (사용 안함 - 카운트다운에서 직접 처리)
@@ -208,46 +218,43 @@ function CameraPage() {
   // }
 
   // Capture 화면
-  return (
-    <main className="relative flex h-dvh flex-col bg-black">
-      <NavigationBar cameraMode remainingShots={remainingShots} />
+  if (step === "capture") {
+    return (
+      <main className="flex h-dvh flex-col bg-black">
+        <NavigationBar cameraMode remainingShots={remainingShots} />
 
-      {/* 비디오 배경 */}
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* 카메라 준비 중 */}
-      {/* {!isCameraReady && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black">
-          <p className="text-[2.5rem] text-gray-400">{t("camera.loading")}</p>
+        {/* Camera Guide - 중앙 */}
+        <div className="relative flex flex-1 justify-center">
+          {/* 비디오 배경 */}
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            className="h-full w-full"
+          />
+          {/* 가이드 아이콘 - 비디오 위에 오버레이 */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <GuideIcon />
+          </div>
         </div>
-      )} */}
 
-      {/* Camera Guide - 중앙 */}
-      <div className="flex flex-1 justify-center">
-        <GuideIcon />
-      </div>
-
-      {/* Countdown - 하단 */}
-      <div className="flex flex-1 flex-col items-center bg-[#141415] px-20">
-        <div className="h-fit py-20">
-          <p className="text-[6.25rem] leading-[1.3] font-semibold tracking-[-0.169rem] text-white">
-            {countdown}
-          </p>
+        {/* Countdown - 하단 */}
+        <div className="flex flex-1 flex-col items-center bg-[#141415] px-20">
+          <div className="h-fit py-20">
+            <p className="text-[6.25rem] leading-[1.3] font-semibold tracking-[-0.169rem] text-white">
+              {countdown}
+            </p>
+          </div>
+          <div className="rounded-3xl bg-linear-to-r from-[rgba(132,149,201,0.2)] to-[rgba(0,0,0,0.06)] px-9 py-6">
+            <p className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[2.5rem] leading-[1.3] tracking-[-0.025rem] text-transparent">
+              {t("camera.capture.earVisibility")}
+            </p>
+          </div>
         </div>
-        <div className="rounded-3xl bg-linear-to-r from-[rgba(132,149,201,0.2)] to-[rgba(0,0,0,0.06)] px-9 py-6">
-          <p className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[2.5rem] leading-[1.3] tracking-[-0.025rem] text-transparent">
-            {t("camera.capture.earVisibility")}
-          </p>
-        </div>
-      </div>
 
-      {/* 숨겨진 캔버스 */}
-      <canvas ref={canvasRef} className="hidden" />
-    </main>
-  );
+        {/* 숨겨진 캔버스 */}
+        <canvas ref={canvasRef} className="hidden" />
+      </main>
+    );
+  }
 }
