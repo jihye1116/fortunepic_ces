@@ -101,10 +101,10 @@ function TopicPage() {
 
     if (selectedTopic === "dateSpecificReading") {
       router.navigate({ to: "/date" });
-    }
-
-    if (selectedTopic === "koreanTalisman") {
+    } else if (selectedTopic === "koreanTalisman") {
       router.navigate({ to: "/talisman-theme" });
+    } else {
+      router.navigate({ to: "/information" });
     }
   };
 
@@ -194,7 +194,7 @@ function TopicPage() {
 
       {selectedTopic && (
         <div className="px-20 py-10">
-          <SecondaryButton onConfirm={handleNext}>
+          <SecondaryButton onClick={handleNext}>
             {t("topic.next")}
           </SecondaryButton>
         </div>

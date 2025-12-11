@@ -110,6 +110,7 @@
       "month": "MM",
       "day": "DD",
       "year": "YYYY",
+      "incorrectDate": "Unrecognized Date of Birth",
       "next": "Next"
     },
     "time": {
@@ -118,6 +119,7 @@
       "minute": "Minute",
       "am": "AM",
       "pm": "PM",
+      "error": "Please check again",
       "dontKnow": "I don't know",
       "next": "Next"
     },
@@ -127,7 +129,13 @@
       "male": "Male",
       "female": "Female",
       "preferNot": "Prefer not to say",
-      "next": "Next"
+      "next": "Next",
+      "bottomSheet": {
+        "title": "Before you continue",
+        "description": "Results may be less complete without gender.",
+        "continue": "Continue anyway",
+        "selectGender": "Select gender"
+      }
     }
   }
 }

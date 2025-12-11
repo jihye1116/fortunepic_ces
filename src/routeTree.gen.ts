@@ -17,7 +17,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TalismanThemeIndexRouteImport } from './routes/talisman-theme/index'
 import { Route as InformationIndexRouteImport } from './routes/information/index'
 import { Route as TalismanThemeThemeRouteImport } from './routes/talisman-theme/$theme'
+import { Route as InformationTimeRouteImport } from './routes/information/time'
 import { Route as InformationNicknameRouteImport } from './routes/information/nickname'
+import { Route as InformationGenderRouteImport } from './routes/information/gender'
+import { Route as InformationBirthRouteImport } from './routes/information/birth'
 
 const TopicRoute = TopicRouteImport.update({
   id: '/topic',
@@ -59,9 +62,24 @@ const TalismanThemeThemeRoute = TalismanThemeThemeRouteImport.update({
   path: '/talisman-theme/$theme',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InformationTimeRoute = InformationTimeRouteImport.update({
+  id: '/information/time',
+  path: '/information/time',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InformationNicknameRoute = InformationNicknameRouteImport.update({
   id: '/information/nickname',
   path: '/information/nickname',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InformationGenderRoute = InformationGenderRouteImport.update({
+  id: '/information/gender',
+  path: '/information/gender',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InformationBirthRoute = InformationBirthRouteImport.update({
+  id: '/information/birth',
+  path: '/information/birth',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -71,7 +89,10 @@ export interface FileRoutesByFullPath {
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
+  '/information/birth': typeof InformationBirthRoute
+  '/information/gender': typeof InformationGenderRoute
   '/information/nickname': typeof InformationNicknameRoute
+  '/information/time': typeof InformationTimeRoute
   '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
   '/information': typeof InformationIndexRoute
   '/talisman-theme': typeof TalismanThemeIndexRoute
@@ -82,7 +103,10 @@ export interface FileRoutesByTo {
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
+  '/information/birth': typeof InformationBirthRoute
+  '/information/gender': typeof InformationGenderRoute
   '/information/nickname': typeof InformationNicknameRoute
+  '/information/time': typeof InformationTimeRoute
   '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
   '/information': typeof InformationIndexRoute
   '/talisman-theme': typeof TalismanThemeIndexRoute
@@ -94,7 +118,10 @@ export interface FileRoutesById {
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
   '/topic': typeof TopicRoute
+  '/information/birth': typeof InformationBirthRoute
+  '/information/gender': typeof InformationGenderRoute
   '/information/nickname': typeof InformationNicknameRoute
+  '/information/time': typeof InformationTimeRoute
   '/talisman-theme/$theme': typeof TalismanThemeThemeRoute
   '/information/': typeof InformationIndexRoute
   '/talisman-theme/': typeof TalismanThemeIndexRoute
@@ -107,7 +134,10 @@ export interface FileRouteTypes {
     | '/date'
     | '/language'
     | '/topic'
+    | '/information/birth'
+    | '/information/gender'
     | '/information/nickname'
+    | '/information/time'
     | '/talisman-theme/$theme'
     | '/information'
     | '/talisman-theme'
@@ -118,7 +148,10 @@ export interface FileRouteTypes {
     | '/date'
     | '/language'
     | '/topic'
+    | '/information/birth'
+    | '/information/gender'
     | '/information/nickname'
+    | '/information/time'
     | '/talisman-theme/$theme'
     | '/information'
     | '/talisman-theme'
@@ -129,7 +162,10 @@ export interface FileRouteTypes {
     | '/date'
     | '/language'
     | '/topic'
+    | '/information/birth'
+    | '/information/gender'
     | '/information/nickname'
+    | '/information/time'
     | '/talisman-theme/$theme'
     | '/information/'
     | '/talisman-theme/'
@@ -141,7 +177,10 @@ export interface RootRouteChildren {
   DateRoute: typeof DateRoute
   LanguageRoute: typeof LanguageRoute
   TopicRoute: typeof TopicRoute
+  InformationBirthRoute: typeof InformationBirthRoute
+  InformationGenderRoute: typeof InformationGenderRoute
   InformationNicknameRoute: typeof InformationNicknameRoute
+  InformationTimeRoute: typeof InformationTimeRoute
   TalismanThemeThemeRoute: typeof TalismanThemeThemeRoute
   InformationIndexRoute: typeof InformationIndexRoute
   TalismanThemeIndexRoute: typeof TalismanThemeIndexRoute
@@ -205,11 +244,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TalismanThemeThemeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/information/time': {
+      id: '/information/time'
+      path: '/information/time'
+      fullPath: '/information/time'
+      preLoaderRoute: typeof InformationTimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/information/nickname': {
       id: '/information/nickname'
       path: '/information/nickname'
       fullPath: '/information/nickname'
       preLoaderRoute: typeof InformationNicknameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/information/gender': {
+      id: '/information/gender'
+      path: '/information/gender'
+      fullPath: '/information/gender'
+      preLoaderRoute: typeof InformationGenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/information/birth': {
+      id: '/information/birth'
+      path: '/information/birth'
+      fullPath: '/information/birth'
+      preLoaderRoute: typeof InformationBirthRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -221,7 +281,10 @@ const rootRouteChildren: RootRouteChildren = {
   DateRoute: DateRoute,
   LanguageRoute: LanguageRoute,
   TopicRoute: TopicRoute,
+  InformationBirthRoute: InformationBirthRoute,
+  InformationGenderRoute: InformationGenderRoute,
   InformationNicknameRoute: InformationNicknameRoute,
+  InformationTimeRoute: InformationTimeRoute,
   TalismanThemeThemeRoute: TalismanThemeThemeRoute,
   InformationIndexRoute: InformationIndexRoute,
   TalismanThemeIndexRoute: TalismanThemeIndexRoute,
