@@ -133,7 +133,7 @@ function BirthPage() {
     month.length === 2 && day.length === 2 && year.length === 4;
 
   return (
-    <main className="flex h-dvh flex-col">
+    <main className="h-dvh">
       <NavigationBar />
 
       <ProgressIndicator current={2} />

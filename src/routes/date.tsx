@@ -158,7 +158,7 @@ function DatePage() {
 
         {/* Next Button */}
         {selectedDate && (
-          <SecondaryButton onConfirm={() => console.log(selectedDate)}>
+          <SecondaryButton onClick={() => console.log(selectedDate)}>
             Next
           </SecondaryButton>
         )}

@@ -1,19 +1,19 @@
 import { cn } from "@sglara/cn";
 
 interface SecondaryButtonProps {
-  onConfirm: () => void;
+  onClick: () => void;
   children: React.ReactNode;
   disabled?: boolean;
 }
 
 export const SecondaryButton = ({
-  onConfirm,
+  onClick,
   children,
   disabled = false,
 }: SecondaryButtonProps) => {
   return (
     <button
-      onClick={onConfirm}
+      onClick={onClick}
       disabled={disabled}
       className={cn(
         "flex w-full items-center justify-center rounded-3xl py-10",

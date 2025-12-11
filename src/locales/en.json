@@ -129,7 +129,13 @@
       "male": "Male",
       "female": "Female",
       "preferNot": "Prefer not to say",
-      "next": "Next"
+      "next": "Next",
+      "bottomSheet": {
+        "title": "Before you continue",
+        "description": "Results may be less complete without gender.",
+        "continue": "Continue anyway",
+        "selectGender": "Select gender"
+      }
     }
   }
 }

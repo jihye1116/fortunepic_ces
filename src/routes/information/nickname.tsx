@@ -41,7 +41,7 @@ function NicknamePage() {
   };
 
   return (
-    <main className="flex h-dvh flex-col">
+    <main className="h-dvh">
       <NavigationBar />
 
       <ProgressIndicator current={1} />

@@ -93,11 +93,11 @@ function TimePage() {
   };
 
   const handleNext = () => {
-    router.navigate({ to: "/" });
+    router.navigate({ to: "/information/gender" });
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="h-dvh">
       <NavigationBar />
 
       <ProgressIndicator current={3} />
