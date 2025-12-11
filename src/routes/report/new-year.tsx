@@ -2,16 +2,47 @@ import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
 
+import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
+import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
+import { FaceReading } from "@/components/report/FaceReading";
+import { LifePhaseFlow } from "@/components/report/LifePhaseFlow";
+import { PersonalizedAdvice } from "@/components/report/PersonalizedAdvice";
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
 
 export const Route = createFileRoute("/report/new-year")({
-  component: NewYearFortunePage,
+  component: NewYearReportPage,
 });
 
-function NewYearFortunePage() {
-  // TODO: Use New Year specific data
+function NewYearReportPage() {
+  const newYearLifePhases = [
+    {
+      ageRange: "2025",
+      phase: "First Half",
+      description:
+        "This period unfolds as a structured journey of growth: initially focusing on stable environmental adaptation and skill groundwork, followed by a dramatic phase of skill manifestation and maximizing output expansion.\n\nIt is characterized by a balanced, step-by-step ascent, where you organize your internal resources before leaping into the external world.\n\nStrong energy for rapidly absorbing new environments, learning, and firmly establishing inner structure and stable life patterns. This stage is about defining your direction and establishing self",
+    },
+    {
+      ageRange: "2025",
+      phase: "Second Half",
+      description:
+        "Middle age is a dynamic process of change, re-establishing foundations, and then restructuring your structure through competition and adjustment. The flow is: Change Establishment Reorganization.\n\nDriven by the Energy that Triggers Change combined with the Energy Demanding Readjustment. Existing methods become unsustainable, requiring a shift in direction across life's structure. Focus on seeking new methods, reducing unnecessary expansion, and restructuring your activities.",
+    },
+    {
+      ageRange: "2026",
+      phase: "Full Year",
+      description:
+        "Later life emphasizes inner stability, refining life's balance, organizing responsibilities, and moving toward a dignified conclusion. The flow is: Reorganization → Moderation → Recovery → Stability.\n\nFocused on the Energy of Internal Consolidation and Accumulation (비견, Core Self). The emphasis is on re-evaluating accumulated experience and relationships rather than new external expansion. Interests naturally shift from external activities to the inner world, simplifying life's structure.",
+    },
+    {
+      ageRange: "2027",
+      phase: "Full Year",
+      description:
+        "Later life emphasizes inner stability, refining life's balance, organizing responsibilities, and moving toward a dignified conclusion. The flow is: Reorganization → Moderation → Recovery → Stability.\n\nFocused on the Energy of Internal Consolidation and Accumulation (비견, Core Self). The emphasis is on re-evaluating accumulated experience and relationships rather than new external expansion. Interests naturally shift from external activities to the inner world, simplifying life's structure.",
+    },
+  ];
+
   const data = dummyReportData;
 
   return (
@@ -20,10 +51,21 @@ function NewYearFortunePage() {
         <ReportHeader sourceOfInsight={data.sourceOfInsight} />
 
         <div className="px-4 space-y-8">
-          <div className="py-10 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">New Year Fortune</h2>
-            <p className="text-[#AEB0B6]">Coming Soon...</p>
-          </div>
+          <BasicEnergyInterpretation
+            nickname={data.nickname}
+            pillars={data.pillars}
+          />
+
+          <FaceReading faceReadingAreas={data.faceReadingAreas} />
+
+          <LifePhaseFlow lifePhases={newYearLifePhases} />
+
+          <AreaSpecificStrategies areaStrategies={data.areaStrategies} />
+
+          <PersonalizedAdvice
+            beneficialEnergies={data.beneficialEnergies}
+            regulatingEnergies={data.regulatingEnergies}
+          />
 
           <ReportFooter />
         </div>
