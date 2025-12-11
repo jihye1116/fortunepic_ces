@@ -29,6 +29,11 @@ export interface AreaStrategy {
   bgColor: string;
 }
 
+export interface TimeFlow {
+  time: "Morning" | "Afternoon" | "Evening";
+  description: string;
+}
+
 export interface BeneficialEnergy {
   title: string;
   description: string;
@@ -39,6 +44,16 @@ export interface RegulatingEnergy {
   description: string;
 }
 
+export interface TimingPrediction {
+  bestTime: string;
+  cautionTime: string;
+}
+
+export interface ActionGuide {
+  recommend: string;
+  avoid: string;
+}
+
 export interface LifetimeReportData {
   nickname: string;
   sourceOfInsight: string;
@@ -47,8 +62,11 @@ export interface LifetimeReportData {
   faceReadingAreas: FaceReadingArea[];
   lifePhases: LifePhase[];
   areaStrategies: AreaStrategy[];
+  timeFlows: TimeFlow[];
   beneficialEnergies: BeneficialEnergy[];
   regulatingEnergies: RegulatingEnergy[];
+  timingPrediction: TimingPrediction;
+  actionGuide: ActionGuide;
   backgroundImage?: string;
   faceReadingImage?: string;
 }

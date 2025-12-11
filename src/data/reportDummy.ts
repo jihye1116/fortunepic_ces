@@ -142,6 +142,23 @@ export const dummyReportData: LifetimeReportData = {
       bgColor: "#A57E8D",
     },
   ],
+  timeFlows: [
+    {
+      time: "Morning",
+      description:
+        "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다.",
+    },
+    {
+      time: "Afternoon",
+      description:
+        "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다.",
+    },
+    {
+      time: "Evening",
+      description:
+        "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다.",
+    },
+  ],
   beneficialEnergies: [
     {
       title: "Water (水)",
@@ -161,4 +178,16 @@ export const dummyReportData: LifetimeReportData = {
         "The energy that requires regulation is Earth (土). This is not because you have too much Earth, but because your structure is easily overloaded due to repeated stimulation of the Earth energy. Excessive Earth (土) energy can manifest as phenomena like responsibility, attachment, overwork, or isolation. To mitigate this, you need to avoid the bearing everything alone approach and instead engage in actions that lightly divide and flow work, emotions, and relationships.",
     },
   ],
+  timingPrediction: {
+    bestTime:
+      "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다.",
+    cautionTime:
+      "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다.",
+  },
+  actionGuide: {
+    recommend:
+      "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+    avoid:
+      "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+  },
 };
