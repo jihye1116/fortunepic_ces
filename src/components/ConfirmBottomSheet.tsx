@@ -45,7 +45,7 @@ export const ConfirmBottomSheet = ({
 
             {/* Buttons */}
             <div className="flex flex-col gap-5 py-10">
-              <SecondaryButton onConfirm={handleConfirm}>
+              <SecondaryButton onClick={handleConfirm}>
                 {t("confirm.restart.confirm")}
               </SecondaryButton>
               <CancelButton onCancel={() => onOpenChange(false)}>
