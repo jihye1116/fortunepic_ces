@@ -1,5 +1,6 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -8,23 +9,23 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { OutlineButton } from "@/components/OutlineButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
+import type { Gender } from "@/core/types";
+import { genderAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/gender")({
   component: GenderPage,
 });
 
-type Gender = "male" | "female" | "prefer-not";
-
 function GenderPage() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [selectedGender, setSelectedGender] = useState<Gender | null>(null);
+  const [selectedGender, setSelectedGender] = useAtom(genderAtom);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   const handleGenderSelect = (gender: Gender) => {
     setSelectedGender(gender);
     setTimeout(() => {
-      router.navigate({ to: "/" }); // TODO: Update with correct route
+      router.navigate({ to: "/camera" });
     }, 300);
   };
 
@@ -34,7 +35,7 @@ function GenderPage() {
 
   const handleContinueWithoutGender = () => {
     setSelectedGender("prefer-not");
-    router.navigate({ to: "/" }); // TODO: Update with correct route
+    router.navigate({ to: "/camera" });
   };
 
   return (

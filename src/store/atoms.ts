@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-import type { Theme } from "@/core/types";
+import type { Gender } from "@/core/types";
 
 export const capturedPhotosAtom = atom<string[]>([]);
 export const selectedPhotosAtom = atom<number[]>([]);
@@ -45,22 +45,13 @@ export interface FortuneResult {
 
 export const fortuneResultAtom = atom<Record<number, FortuneResult>>({});
 
-export const relationAtom = atom<string>("");
+export const topicAtom = atom<string>("");
+export const themeAtom = atom<string>("");
 
-export const subjectIndexAtom = atom<number | null>(null);
-export const fortuneSubjectAtom = atom<string>("");
-export const themeAtom = atom<Theme | null>(null);
-
-export const namesAtom = atom<string[]>([]);
 export const nicknameAtom = atom<string>("");
-
-export const headcountAtom = atom<number>(0);
-
-export const birthListAtom = atom<string[]>([]);
-export const birthCalendarTypeAtom = atom<"lunar" | "solar">("solar");
-export const birthTimeListAtom = atom<string[]>([]);
-export const birthOrderAtom = atom<number>(1);
-export const birthTimeOrderAtom = atom<number>(0);
+export const birthdateAtom = atom<string>("");
+export const birthtimeAtom = atom<string>("");
+export const genderAtom = atom<Gender | null>(null);
 
 // 모든 atom을 초기화하는 write-only atom
 export const resetAllAtoms = atom(null, (_get, set) => {
@@ -72,17 +63,7 @@ export const resetAllAtoms = atom(null, (_get, set) => {
   set(designedImagesAtom, []);
   set(apiImageAtom, null);
   set(fortuneResultAtom, {});
-  set(relationAtom, "");
-  set(subjectIndexAtom, null);
-  set(fortuneSubjectAtom, "");
-  set(namesAtom, []);
   set(nicknameAtom, "");
-  set(headcountAtom, 0);
-  set(birthListAtom, []);
-  set(birthCalendarTypeAtom, "solar");
-  set(birthTimeListAtom, []);
-  set(birthOrderAtom, 1);
-  set(birthTimeOrderAtom, 0);
 });
 
 export const resetAtomsForRetake = atom(null, (_get, set) => {
@@ -93,8 +74,6 @@ export const resetAtomsForRetake = atom(null, (_get, set) => {
 });
 
 export const resetFortuneAtoms = atom(null, (_get, set) => {
-  set(subjectIndexAtom, null);
-  set(fortuneSubjectAtom, "");
   set(apiImageAtom, null);
 });
 
