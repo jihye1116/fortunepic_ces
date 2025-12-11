@@ -137,5 +137,18 @@
         "selectGender": "Select gender"
       }
     }
+  },
+  "camera": {
+    "info": {
+      "title": "The camera will start soon",
+      "instruction1": "Please make sure your ears are clearly visible",
+      "instruction2": "Two photos will be taken",
+      "button": "Okay"
+    },
+    "capture": {
+      "loading": "Camera loading...",
+      "remainingShots": "Remaining shots",
+      "earVisibility": "Please make sure your ears are clearly visible"
+    }
   }
 }

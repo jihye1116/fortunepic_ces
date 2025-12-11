@@ -1,35 +1,52 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { createFileRoute } from "@tanstack/react-router";
+import { useAtom, useSetAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { capturedPhotosAtom } from "@/store/atoms";
+import GuideIcon from "@/assets/icons/guide.svg?react";
+import { NavigationBar } from "@/components/NavigationBar";
+import { PrimaryButton } from "@/components/PrimaryButton";
+import { Title } from "@/components/Title";
+import { backgroundOpacityAtom, capturedPhotosAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/camera")({
   component: CameraPage,
 });
 
 function CameraPage() {
-  const router = useRouter();
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [step, setStep] = useState<"info" | "capture">("info");
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [capturedPhotos, setCapturedPhotos] = useAtom(capturedPhotosAtom);
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
-  const [cameraFacingMode, setCameraFacingMode] = useState<
-    "user" | "environment"
-  >("user");
+  const [countdown, setCountdown] = useState<number>(5);
+  const [remainingShots, setRemainingShots] = useState<number>(2);
+  const [isCountingDown, setIsCountingDown] = useState(false);
+
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
+
+  // Info 화면에서 카메라 화면으로 전환
+  const handleStartCamera = () => {
+    setBackgroundOpacity(false);
+    setTimeout(() => {
+      setStep("capture");
+      setBackgroundOpacity(true);
+    }, 800);
+    //
+  };
 
   // 카메라 권한 확인 및 스트림 시작
   useEffect(() => {
+    if (step !== "capture") return;
+
     let isMounted = true;
 
     const startCamera = async () => {
       try {
         const mediaStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: cameraFacingMode,
-          },
+          video: true,
           audio: false,
         });
 
@@ -43,13 +60,9 @@ function CameraPage() {
         }
 
         setStream(mediaStream);
-        setHasPermission(true);
         setIsCameraReady(true);
       } catch (err) {
         console.error("카메라 접근 오류:", err);
-        if (isMounted) {
-          setHasPermission(false);
-        }
       }
     };
 
@@ -61,191 +74,179 @@ function CameraPage() {
         stream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [cameraFacingMode, stream]);
+  }, [stream, step]);
 
-  // 사진 촬영
-  const handleCapture = () => {
-    if (!videoRef.current || !canvasRef.current) return;
-
-    const context = canvasRef.current.getContext("2d");
-    if (!context) return;
-
-    canvasRef.current.width = videoRef.current.videoWidth;
-    canvasRef.current.height = videoRef.current.videoHeight;
-
-    context.drawImage(
-      videoRef.current,
-      0,
-      0,
-      canvasRef.current.width,
-      canvasRef.current.height,
-    );
-
-    const photoDataUrl = canvasRef.current.toDataURL("image/jpeg", 0.9);
-    setCapturedPhotos([...capturedPhotos, photoDataUrl]);
-  };
-
-  // 카메라 전환 (전면/후면)
-  const handleToggleCameraFacing = () => {
-    setCameraFacingMode(cameraFacingMode === "user" ? "environment" : "user");
-    setIsCameraReady(false);
-
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
+  // 카메라 준비되면 자동으로 카운트다운 시작
+  useEffect(() => {
+    if (
+      step === "capture" &&
+      isCameraReady &&
+      !isCountingDown &&
+      remainingShots > 0
+    ) {
+      setIsCountingDown(true);
+      setCountdown(5);
     }
-  };
+  }, [isCameraReady, isCountingDown, remainingShots, step]);
 
-  // 마지막 사진 삭제
-  const handleDeleteLastPhoto = () => {
-    if (capturedPhotos.length > 0) {
-      setCapturedPhotos(capturedPhotos.slice(0, -1));
-    }
-  };
+  // 카운트다운 타이머
+  useEffect(() => {
+    if (!isCountingDown || countdown <= 0) return;
 
-  // 촬영 완료 후 다음 페이지로
-  const handleNext = () => {
-    if (capturedPhotos.length > 0) {
-      router.navigate({ to: "/topic" });
-    }
-  };
+    const timer = setTimeout(() => {
+      if (countdown === 1) {
+        // 사진 촬영
+        if (videoRef.current && canvasRef.current) {
+          const context = canvasRef.current.getContext("2d");
+          if (context) {
+            canvasRef.current.width = videoRef.current.videoWidth;
+            canvasRef.current.height = videoRef.current.videoHeight;
+            context.drawImage(
+              videoRef.current,
+              0,
+              0,
+              canvasRef.current.width,
+              canvasRef.current.height,
+            );
+            const photoDataUrl = canvasRef.current.toDataURL("image/jpeg", 0.9);
+            setCapturedPhotos([...capturedPhotos, photoDataUrl]);
+          }
+        }
 
-  if (hasPermission === false) {
+        setIsCountingDown(false);
+        setRemainingShots((prev) => prev - 1);
+
+        // 남은 촬영이 있으면 다시 카운트다운 시작
+        if (remainingShots > 1) {
+          setTimeout(() => {
+            setIsCountingDown(true);
+            setCountdown(5);
+          }, 1000);
+        }
+      } else {
+        setCountdown(countdown - 1);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [
+    countdown,
+    isCountingDown,
+    remainingShots,
+    capturedPhotos,
+    setCapturedPhotos,
+  ]);
+
+  // 사진 촬영 (사용 안함 - 카운트다운에서 직접 처리)
+  // const handleCapture = () => {
+  //   if (!videoRef.current || !canvasRef.current) return;
+
+  //   const context = canvasRef.current.getContext("2d");
+  //   if (!context) return;
+
+  //   canvasRef.current.width = videoRef.current.videoWidth;
+  //   canvasRef.current.height = videoRef.current.videoHeight;
+
+  //   context.drawImage(
+  //     videoRef.current,
+  //     0,
+  //     0,
+  //     canvasRef.current.width,
+  //     canvasRef.current.height,
+  //   );
+
+  //   const photoDataUrl = canvasRef.current.toDataURL("image/jpeg", 0.9);
+  //   setCapturedPhotos([...capturedPhotos, photoDataUrl]);
+  // };
+
+  // Info 화면
+  if (step === "info") {
     return (
-      <main className="h-dvh bg-black">
-        <div className="flex flex-col items-center justify-center gap-4 px-20 py-10">
-          <p className="text-center text-xl text-gray-300">
-            카메라 접근 권한이 필요합니다.
-          </p>
-          <p className="text-center text-sm text-gray-500">
-            브라우저 설정에서 카메라 권한을 허용해주세요.
-          </p>
+      <main className="h-dvh">
+        <NavigationBar />
+
+        <Title text={t("camera.info.title")} />
+
+        {/* Contents */}
+        <div className="flex flex-col gap-6 px-20 py-10">
+          <div className="rounded-3xl bg-linear-to-r from-[rgba(132,149,201,0.2)] to-[rgba(0,0,0,0.06)] px-9 py-6">
+            <p className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[2.5rem] leading-[1.3] tracking-[-0.025rem] text-transparent">
+              {t("camera.info.instruction1")}
+            </p>
+          </div>
+
+          <div className="w-fit rounded-3xl bg-linear-to-r from-[rgba(132,149,201,0.2)] to-[rgba(0,0,0,0.06)] px-9 py-6">
+            <p className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[2.5rem] leading-[1.3] tracking-[-0.025rem] text-transparent">
+              {t("camera.info.instruction2")}
+            </p>
+          </div>
+        </div>
+
+        {/* Button */}
+        <div className="px-20 py-10">
+          <PrimaryButton onClick={handleStartCamera}>
+            {t("camera.info.button")}
+          </PrimaryButton>
         </div>
       </main>
     );
   }
 
+  // if (hasPermission === false) {
+  //   return (
+  //     <main className="h-dvh bg-black">
+  //       <div className="flex flex-col items-center justify-center gap-4 px-20 py-10">
+  //         <p className="text-center text-xl text-gray-300">
+  //           카메라 접근 권한이 필요합니다.
+  //         </p>
+  //         <p className="text-center text-sm text-gray-500">
+  //           브라우저 설정에서 카메라 권한을 허용해주세요.
+  //         </p>
+  //       </div>
+  //     </main>
+  //   );
+  // }
+
+  // Capture 화면
   return (
-    <main className="flex h-dvh flex-col bg-black">
-      <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden">
-        {/* 비디오 스트림 */}
-        <div className="relative h-full w-full">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="h-full w-full object-cover"
-          />
+    <main className="relative flex h-dvh flex-col bg-black">
+      <NavigationBar cameraMode remainingShots={remainingShots} />
 
-          {/* 카메라 준비 중 인디케이터 */}
-          {!isCameraReady && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black">
-              <div className="text-center text-gray-400">
-                <p>카메라 준비 중...</p>
-              </div>
-            </div>
-          )}
+      {/* 비디오 배경 */}
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+      />
 
-          {/* 캡처 가이드 라인 */}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <div className="h-96 w-80 rounded-3xl border-2 border-white/30"></div>
-          </div>
-
-          {/* 촬영 횟수 표시 */}
-          <div className="absolute top-6 right-6 rounded-full bg-black/50 px-4 py-2 text-sm text-white">
-            {capturedPhotos.length}/3
-          </div>
+      {/* 카메라 준비 중 */}
+      {/* {!isCameraReady && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black">
+          <p className="text-[2.5rem] text-gray-400">{t("camera.loading")}</p>
         </div>
+      )} */}
 
-        {/* 하단 컨트롤 */}
-        <div className="w-full bg-linear-to-t from-black to-transparent px-6 py-10">
-          <div className="flex flex-col gap-4">
-            {/* 촬영 버튼 그룹 */}
-            <div className="flex items-center justify-center gap-6">
-              {/* 카메라 전환 버튼 */}
-              <button
-                onClick={handleToggleCameraFacing}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 transition hover:bg-white/30"
-              >
-                <svg
-                  className="h-6 w-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 16l-4-4m0 0l4-4m-4 4h16"
-                  />
-                </svg>
-              </button>
+      {/* Camera Guide - 중앙 */}
+      <div className="flex flex-1 justify-center">
+        <GuideIcon />
+      </div>
 
-              {/* 메인 촬영 버튼 */}
-              <button
-                onClick={handleCapture}
-                disabled={!isCameraReady}
-                className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 shadow-lg transition hover:bg-blue-600 disabled:bg-gray-600"
-              >
-                <div className="h-16 w-16 rounded-full border-4 border-white"></div>
-              </button>
-
-              {/* 사진 삭제 버튼 */}
-              <button
-                onClick={handleDeleteLastPhoto}
-                disabled={capturedPhotos.length === 0}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/20 transition hover:bg-red-500/30 disabled:bg-gray-600/20"
-              >
-                <svg
-                  className="h-6 w-6 text-red-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {/* 미리보기 및 다음 버튼 */}
-            {capturedPhotos.length > 0 && (
-              <div className="flex flex-col gap-4">
-                {/* 촬영된 사진 미리보기 */}
-                <div className="flex justify-center gap-2 overflow-x-auto pb-2">
-                  {capturedPhotos.map((photo: string, idx: number) => (
-                    <div
-                      key={idx}
-                      className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-white/20"
-                    >
-                      <img
-                        src={photo}
-                        alt={`Captured ${idx + 1}`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                {/* 다음 버튼 */}
-                <button
-                  onClick={handleNext}
-                  className="flex w-full items-center justify-center rounded-3xl bg-blue-500 py-10 font-semibold text-white transition hover:bg-blue-600"
-                >
-                  Next
-                </button>
-              </div>
-            )}
-          </div>
+      {/* Countdown - 하단 */}
+      <div className="flex flex-1 flex-col items-center bg-[#141415] px-20">
+        <div className="h-fit py-20">
+          <p className="text-[6.25rem] leading-[1.3] font-semibold tracking-[-0.169rem] text-white">
+            {countdown}
+          </p>
+        </div>
+        <div className="rounded-3xl bg-linear-to-r from-[rgba(132,149,201,0.2)] to-[rgba(0,0,0,0.06)] px-9 py-6">
+          <p className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[2.5rem] leading-[1.3] tracking-[-0.025rem] text-transparent">
+            {t("camera.capture.earVisibility")}
+          </p>
         </div>
       </div>
 
-      {/* 숨겨진 캔버스 (사진 캡처용) */}
+      {/* 숨겨진 캔버스 */}
       <canvas ref={canvasRef} className="hidden" />
     </main>
   );
