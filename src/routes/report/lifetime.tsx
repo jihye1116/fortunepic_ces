@@ -1,16 +1,21 @@
-import "../global.css";
+import "../../global.css";
 
+import { createFileRoute } from "@tanstack/react-router";
+
+import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
+import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
+import { FaceReading } from "@/components/report/FaceReading";
+import { LifePhaseFlow } from "@/components/report/LifePhaseFlow";
+import { PersonalizedAdvice } from "@/components/report/PersonalizedAdvice";
+import { ReportFooter } from "@/components/report/ReportFooter";
+import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
 
-import { AreaSpecificStrategies } from "./report/AreaSpecificStrategies";
-import { BasicEnergyInterpretation } from "./report/BasicEnergyInterpretation";
-import { FaceReading } from "./report/FaceReading";
-import { LifePhaseFlow } from "./report/LifePhaseFlow";
-import { PersonalizedAdvice } from "./report/PersonalizedAdvice";
-import { ReportFooter } from "./report/ReportFooter";
-import { ReportHeader } from "./report/ReportHeader";
+export const Route = createFileRoute("/report/lifetime")({
+  component: LifetimeReportPage,
+});
 
-export function LifetimeReportPage() {
+function LifetimeReportPage() {
   const data = dummyReportData;
 
   return (
