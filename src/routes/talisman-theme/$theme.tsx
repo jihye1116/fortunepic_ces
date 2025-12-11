@@ -1,9 +1,11 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
 import { NavigationBar } from "@/components/NavigationBar";
 import { SelectionButtons } from "@/components/SelectionButtons";
 import { Title } from "@/components/Title";
+import { backgroundOpacityAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/talisman-theme/$theme")({
   component: RouteComponent,
@@ -24,6 +26,7 @@ function RouteComponent() {
   const { theme } = Route.useParams();
   const { t } = useTranslation();
   const router = useRouter();
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   const THEME_DATA: Record<string, ThemeConfig> = {
     happiness: {
@@ -182,6 +185,15 @@ function RouteComponent() {
     },
   };
 
+  const handleButtonClick = () => {
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      router.navigate({ to: "/information" });
+      setBackgroundOpacity(true);
+    }, 800);
+  };
+
   const themeConfig = THEME_DATA[theme];
 
   if (!themeConfig) {
@@ -201,7 +213,7 @@ function RouteComponent() {
       <div className="flex w-full flex-col px-20 py-12">
         <SelectionButtons
           options={themeConfig.options}
-          onSelect={() => router.navigate({ to: "/information" })}
+          onSelect={handleButtonClick}
           showIcon
         />
       </div>

@@ -1,6 +1,7 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import businessImg from "@/assets/images/themes/business.png";
@@ -13,7 +14,7 @@ import wealthImg from "@/assets/images/themes/wealth.png";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Title } from "@/components/Title";
 import type { Theme } from "@/core/types";
-import { themeAtom } from "@/store/atoms";
+import { backgroundOpacityAtom, themeAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/talisman-theme/")({
   component: TalismanThemePage,
@@ -23,8 +24,12 @@ interface ThemeButton {
   id: Theme;
   label: string;
   image: string;
-  size: number;
-  position: { left: string; top: string };
+  // Collapsed state (small size and position)
+  collapsedSize: number;
+  collapsedPosition: { left: string; top: string };
+  // Expanded state (large size and position)
+  expandedSize: number;
+  expandedPosition: { left: string; top: string };
 }
 
 const themes: ThemeButton[] = [
@@ -32,50 +37,85 @@ const themes: ThemeButton[] = [
     id: "happiness",
     label: "Happiness",
     image: happinessImg,
-    size: 23.375,
-    position: { left: "0", top: "8.125rem" },
+    collapsedSize: 18.6875,
+    collapsedPosition: {
+      left: "calc(50% - 13.6875rem)",
+      top: "calc(50% - 11.8125rem)",
+    },
+    expandedSize: 23.375,
+    expandedPosition: { left: "0", top: "8.125rem" },
   },
   {
     id: "business",
     label: "Business",
     image: businessImg,
-    size: 18.8125,
-    position: { left: "33.1875rem", top: "14.8125rem" },
+    collapsedSize: 14.125,
+    collapsedPosition: {
+      left: "calc(50% + 10.8125rem)",
+      top: "calc(50% - 7.0625rem)",
+    },
+    expandedSize: 18.8125,
+    expandedPosition: { left: "33.1875rem", top: "14.8125rem" },
   },
   {
     id: "wealth",
     label: "Wealth",
     image: wealthImg,
-    size: 18.8125,
-    position: { left: "32.375rem", top: "35rem" },
+    collapsedSize: 14.125,
+    collapsedPosition: {
+      left: "calc(50% + 8.75rem)",
+      top: "calc(50% + 7.75rem)",
+    },
+    expandedSize: 18.8125,
+    expandedPosition: { left: "32.375rem", top: "35rem" },
   },
   {
     id: "career",
     label: "Career",
     image: careerImg,
-    size: 18.8125,
-    position: { left: "8.0625rem", top: "36.8125rem" },
+    collapsedSize: 14.125,
+    collapsedPosition: {
+      left: "calc(50% - 11.375rem)",
+      top: "calc(50% + 6.1875rem)",
+    },
+    expandedSize: 18.8125,
+    expandedPosition: { left: "8.0625rem", top: "36.8125rem" },
   },
   {
     id: "family",
     label: "Family",
     image: familyImg,
-    size: 13.6875,
-    position: { left: "20.25rem", top: "25.125rem" },
+    collapsedSize: 9,
+    collapsedPosition: {
+      left: "calc(50% - 0.75rem)",
+      top: "calc(50% - 1.75rem)",
+    },
+    expandedSize: 13.6875,
+    expandedPosition: { left: "20.25rem", top: "25.125rem" },
   },
   {
     id: "love",
     label: "Love",
     image: loveImg,
-    size: 13.6875,
-    position: { left: "23.375rem", top: "51.5625rem" },
+    collapsedSize: 9,
+    collapsedPosition: {
+      left: "calc(50% - 1.6875rem)",
+      top: "calc(50% + 13.9375rem)",
+    },
+    expandedSize: 13.6875,
+    expandedPosition: { left: "23.375rem", top: "51.5625rem" },
   },
   {
     id: "health",
     label: "Health",
     image: healthImg,
-    size: 16.6875,
-    position: { left: "21.875rem", top: "0.8125rem" },
+    collapsedSize: 12,
+    collapsedPosition: {
+      left: "calc(50% + 1.6875rem)",
+      top: "calc(50% - 17.8125rem)",
+    },
+    expandedSize: 16.6875,
+    expandedPosition: { left: "21.875rem", top: "0.8125rem" },
   },
 ];
 
@@ -83,16 +123,28 @@ function TalismanThemePage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [selectedTheme, setSelectedTheme] = useAtom(themeAtom);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Expand animation after mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsExpanded(true);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleThemeSelect = (themeId: Theme) => {
     setSelectedTheme(themeId);
+    setBackgroundOpacity(false);
 
     setTimeout(() => {
       router.navigate({
         to: "/talisman-theme/$theme",
         params: { theme: themeId },
       });
-    }, 300);
+      setBackgroundOpacity(true);
+    }, 800);
   };
 
   return (
@@ -114,14 +166,22 @@ function TalismanThemePage() {
                 key={theme.id}
                 onClick={() => handleThemeSelect(theme.id)}
                 className={cn(
-                  "absolute flex items-center justify-center overflow-hidden rounded-full transition-all duration-300",
+                  "absolute flex items-center justify-center overflow-hidden rounded-full transition-all duration-700",
                   isSelected && "scale-110",
                 )}
                 style={{
-                  left: theme.position.left,
-                  top: theme.position.top,
-                  width: `${theme.size}rem`,
-                  height: `${theme.size}rem`,
+                  left: isExpanded
+                    ? theme.expandedPosition.left
+                    : theme.collapsedPosition.left,
+                  top: isExpanded
+                    ? theme.expandedPosition.top
+                    : theme.collapsedPosition.top,
+                  width: isExpanded
+                    ? `${theme.expandedSize}rem`
+                    : `${theme.collapsedSize}rem`,
+                  height: isExpanded
+                    ? `${theme.expandedSize}rem`
+                    : `${theme.collapsedSize}rem`,
                 }}
               >
                 <img
@@ -138,7 +198,12 @@ function TalismanThemePage() {
                     isSelected ? "bg-black/20" : "bg-black/50",
                   )}
                 />
-                <span className="relative text-[2.5rem] leading-[1.3] font-normal tracking-[-0.025rem] text-[#e1e2e4]">
+                <span
+                  className={cn(
+                    "relative text-[2.5rem] leading-[1.3] font-normal tracking-[-0.025rem] text-[#e1e2e4] transition-opacity duration-500",
+                    isExpanded ? "opacity-100 delay-200" : "opacity-0",
+                  )}
+                >
                   {theme.label}
                 </span>
               </button>

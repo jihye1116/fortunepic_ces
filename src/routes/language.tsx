@@ -1,9 +1,11 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 
 import { NavigationBar } from "@/components/NavigationBar";
 import { SelectionButtons } from "@/components/SelectionButtons";
 import { Title } from "@/components/Title";
+import { backgroundOpacityAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/language")({
   component: LanguagePage,
@@ -19,10 +21,16 @@ const languages = [
 function LanguagePage() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   const handleLanguageSelect = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
-    router.navigate({ to: "/topic" });
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      router.navigate({ to: "/topic" });
+      setBackgroundOpacity(true);
+    }, 800);
   };
 
   return (

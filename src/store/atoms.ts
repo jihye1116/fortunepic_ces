@@ -78,3 +78,6 @@ export const resetFortuneAtoms = atom(null, (_get, set) => {
 });
 
 export const specialNavigationAtom = atom(false);
+
+// 배경 투명도 상태 (true: 40%, false: 100%)
+export const backgroundOpacityAtom = atom<boolean>(false);

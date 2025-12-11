@@ -50,14 +50,21 @@ export const SelectionButtons = ({
           <button
             onClick={() => handleSelect(option.id)}
             className={cn(
-              "flex w-full items-center rounded-xl px-12 py-10 transition-all duration-300",
+              "relative flex w-full items-center overflow-hidden rounded-xl px-12 py-10",
               isSelected && "shadow-[0_0_0_4px_#292A2D]",
-              isSelected ? gradientClasses[index] : defaultGradientClass,
+              defaultGradientClass,
             )}
           >
+            <div
+              className={cn(
+                "absolute inset-0 transition-opacity duration-300",
+                gradientClasses[index],
+                isSelected ? "opacity-100" : "opacity-0",
+              )}
+            />
             <p
               className={cn(
-                "text-[2.5rem] leading-[1.3] tracking-[-0.025rem]",
+                "relative z-10 text-[2.5rem] leading-[1.3] tracking-[-0.025rem]",
                 isSelected ? "font-semibold text-white" : "text-[#E1E2E4]",
               )}
             >
