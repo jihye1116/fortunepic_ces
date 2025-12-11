@@ -107,14 +107,7 @@ function BirthPage() {
   };
 
   const handleNext = () => {
-    if (
-      !hasError &&
-      month.length === 2 &&
-      day.length === 2 &&
-      year.length === 4
-    ) {
-      router.navigate({ to: "/" }); // TODO: Update with correct route
-    }
+    router.navigate({ to: "/information/time" });
   };
 
   const displayValue = (field: "month" | "day" | "year") => {

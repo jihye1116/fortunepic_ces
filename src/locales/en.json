@@ -119,6 +119,7 @@
       "minute": "Minute",
       "am": "AM",
       "pm": "PM",
+      "error": "Please check again",
       "dontKnow": "I don't know",
       "next": "Next"
     },
