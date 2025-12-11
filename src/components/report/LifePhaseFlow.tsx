@@ -1,10 +1,16 @@
+import { useState } from "react";
+
 import { LifetimeReportData } from "@/types/report";
+
+import { LifePhaseBottomSheet } from "./LifePhaseBottomSheet";
 
 interface LifePhaseFlowProps {
   lifePhases: LifetimeReportData["lifePhases"];
 }
 
 export function LifePhaseFlow({ lifePhases }: LifePhaseFlowProps) {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
   return (
     <section className="rounded-2xl bg-[#171719] p-6 space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
       <h2 className="text-[18px] font-semibold text-[#878A93]">
@@ -23,7 +29,7 @@ export function LifePhaseFlow({ lifePhases }: LifePhaseFlowProps) {
                   </div>
                 </div>
                 {idx < lifePhases.length - 1 && (
-                  <div className="w-0.5 flex-1 bg-[#324EA5]/30 mt-4" />
+                  <div className="w-0.5 flex-1 bg-[#292A2D] mt-4" />
                 )}
               </div>
               <div className="flex-1 space-y-3 pb-8">
@@ -42,9 +48,18 @@ export function LifePhaseFlow({ lifePhases }: LifePhaseFlowProps) {
         <div className="absolute bottom-0 left-0 w-full h-[154px] bg-linear-to-t from-[#171719] to-transparent pointer-events-none" />
       </div>
 
-      <button className="w-full rounded-lg border border-white/30 px-4 py-3 text-[14px] font-medium text-[#DBDCDF] hover:bg-white/5 transition">
+      <button
+        onClick={() => setIsBottomSheetOpen(true)}
+        className="w-full rounded-lg border border-white/30 px-4 py-3 text-[14px] font-medium text-[#DBDCDF] hover:bg-white/5 transition"
+      >
         See All
       </button>
+
+      <LifePhaseBottomSheet
+        open={isBottomSheetOpen}
+        onOpenChange={setIsBottomSheetOpen}
+        lifePhases={lifePhases}
+      />
     </section>
   );
 }
