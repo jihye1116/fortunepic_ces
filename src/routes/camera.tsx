@@ -1,12 +1,12 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
+
+import { capturedPhotosAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/camera")({
   component: CameraPage,
 });
-
-const capturedPhotosAtom = atom<string[]>([]);
 
 function CameraPage() {
   const router = useRouter();
@@ -16,9 +16,9 @@ function CameraPage() {
   const [capturedPhotos, setCapturedPhotos] = useAtom(capturedPhotosAtom);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
-  const [cameraFacingMode, setCameraFacingMode] = useState<"user" | "environment">(
-    "user",
-  );
+  const [cameraFacingMode, setCameraFacingMode] = useState<
+    "user" | "environment"
+  >("user");
 
   // 카메라 권한 확인 및 스트림 시작
   useEffect(() => {
@@ -126,7 +126,7 @@ function CameraPage() {
   }
 
   return (
-    <main className="h-dvh flex flex-col bg-black">
+    <main className="flex h-dvh flex-col bg-black">
       <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden">
         {/* 비디오 스트림 */}
         <div className="relative h-full w-full">
@@ -147,12 +147,12 @@ function CameraPage() {
           )}
 
           {/* 캡처 가이드 라인 */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <div className="h-96 w-80 rounded-3xl border-2 border-white/30"></div>
           </div>
 
           {/* 촬영 횟수 표시 */}
-          <div className="absolute top-6 right-6 px-4 py-2 bg-black/50 rounded-full text-white text-sm">
+          <div className="absolute top-6 right-6 rounded-full bg-black/50 px-4 py-2 text-sm text-white">
             {capturedPhotos.length}/3
           </div>
         </div>
@@ -165,7 +165,7 @@ function CameraPage() {
               {/* 카메라 전환 버튼 */}
               <button
                 onClick={handleToggleCameraFacing}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition"
+                className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 transition hover:bg-white/30"
               >
                 <svg
                   className="h-6 w-6 text-white"
@@ -186,7 +186,7 @@ function CameraPage() {
               <button
                 onClick={handleCapture}
                 disabled={!isCameraReady}
-                className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 transition shadow-lg"
+                className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-500 shadow-lg transition hover:bg-blue-600 disabled:bg-gray-600"
               >
                 <div className="h-16 w-16 rounded-full border-4 border-white"></div>
               </button>
@@ -195,7 +195,7 @@ function CameraPage() {
               <button
                 onClick={handleDeleteLastPhoto}
                 disabled={capturedPhotos.length === 0}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/20 hover:bg-red-500/30 disabled:bg-gray-600/20 transition"
+                className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/20 transition hover:bg-red-500/30 disabled:bg-gray-600/20"
               >
                 <svg
                   className="h-6 w-6 text-red-400"
@@ -217,11 +217,11 @@ function CameraPage() {
             {capturedPhotos.length > 0 && (
               <div className="flex flex-col gap-4">
                 {/* 촬영된 사진 미리보기 */}
-                <div className="flex gap-2 justify-center overflow-x-auto pb-2">
+                <div className="flex justify-center gap-2 overflow-x-auto pb-2">
                   {capturedPhotos.map((photo: string, idx: number) => (
                     <div
                       key={idx}
-                      className="h-16 w-16 shrink-0 rounded-lg overflow-hidden border border-white/20"
+                      className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-white/20"
                     >
                       <img
                         src={photo}
@@ -235,7 +235,7 @@ function CameraPage() {
                 {/* 다음 버튼 */}
                 <button
                   onClick={handleNext}
-                  className="w-full flex items-center justify-center rounded-3xl py-10 bg-blue-500 hover:bg-blue-600 transition text-white font-semibold"
+                  className="flex w-full items-center justify-center rounded-3xl bg-blue-500 py-10 font-semibold text-white transition hover:bg-blue-600"
                 >
                   Next
                 </button>
