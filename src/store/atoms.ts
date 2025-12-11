@@ -52,6 +52,7 @@ export const fortuneSubjectAtom = atom<string>("");
 export const themeAtom = atom<Theme | null>(null);
 
 export const namesAtom = atom<string[]>([]);
+export const nicknameAtom = atom<string>("");
 
 export const headcountAtom = atom<number>(0);
 
@@ -75,6 +76,7 @@ export const resetAllAtoms = atom(null, (_get, set) => {
   set(subjectIndexAtom, null);
   set(fortuneSubjectAtom, "");
   set(namesAtom, []);
+  set(nicknameAtom, "");
   set(headcountAtom, 0);
   set(birthListAtom, []);
   set(birthCalendarTypeAtom, "solar");

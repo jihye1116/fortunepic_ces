@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import BackspaceIcon from "@/assets/backspace.svg?react";
-import ShiftIcon from "@/assets/shift.svg?react";
+import BackspaceIcon from "@/assets/icons/backspace.svg?react";
+import ShiftIcon from "@/assets/icons/shift.svg?react";
 
 const ENGLISH_KEYBOARD = {
   top: ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -53,7 +53,7 @@ export function EnglishKeyboard({
   };
 
   return (
-    <div className="font-pretendard flex flex-col gap-6">
+    <div className="flex flex-col gap-6 py-4">
       {/* 첫 번째 줄 */}
       <div className="flex h-30 justify-center gap-3">
         {ENGLISH_KEYBOARD.top.map((key) => (
@@ -62,7 +62,7 @@ export function EnglishKeyboard({
             onClick={() => handleKeyPress(key)}
             className="w-17 rounded-lg bg-white shadow-[inset_0rem_-0.3125rem_0rem_0rem_rgba(0,0,0,0.25)]"
           >
-            <span className="text-5xl leading-[120%] font-medium tracking-[-1px] text-black">
+            <span className="text-[2.5rem] leading-[1.2] font-medium tracking-[-0.015rem] text-black">
               {isShiftPressed ? key.toUpperCase() : key.toLowerCase()}
             </span>
           </button>
@@ -77,7 +77,7 @@ export function EnglishKeyboard({
             onClick={() => handleKeyPress(key)}
             className="w-17 rounded-lg bg-white shadow-[inset_0rem_-0.3125rem_0rem_0rem_rgba(0,0,0,0.25)]"
           >
-            <span className="text-5xl leading-[120%] font-medium tracking-[-1px] text-black">
+            <span className="text-[2.5rem] leading-[1.2] font-medium tracking-[-0.015rem] text-black">
               {isShiftPressed ? key.toUpperCase() : key.toLowerCase()}
             </span>
           </button>
@@ -103,7 +103,7 @@ export function EnglishKeyboard({
             onClick={() => handleKeyPress(key)}
             className="w-17 rounded-lg bg-white shadow-[inset_0rem_-0.3125rem_0rem_0rem_rgba(0,0,0,0.25)]"
           >
-            <span className="text-5xl leading-[120%] font-medium tracking-[-1px] text-black">
+            <span className="text-[2.5rem] leading-[1.2] font-medium tracking-[-0.015rem] text-black">
               {isShiftPressed ? key.toUpperCase() : key.toLowerCase()}
             </span>
           </button>

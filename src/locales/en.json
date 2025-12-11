@@ -31,6 +31,10 @@
       "cancel": "Cancel"
     }
   },
+  "talisman-theme": {
+    "title": "Choose your Talisman Theme",
+    "subtitle": "Select a theme that resonates with your current needs"
+  },
   "talisman": {
     "happiness": {
       "title": "Happiness Talisman",
@@ -87,6 +91,43 @@
       "salesSuccess": "Sales Success",
       "salesActivation": "Sales Activation",
       "investmentSuccess": "Investment Success"
+    }
+  },
+  "information": {
+    "intro": {
+      "title": "Your K-Energy Coordinates",
+      "description": "Discover your unique K-Energy coordinates that influence your fortune and destiny.",
+      "okay": "Okay"
+    },
+    "nickname": {
+      "title": "Create your nickname",
+      "placeholder": "Type your nickname",
+      "helpText": "Please enter 1–20 characters.",
+      "next": "Next"
+    },
+    "birth": {
+      "title": "Enter date of birth",
+      "month": "MM",
+      "day": "DD",
+      "year": "YYYY",
+      "next": "Next"
+    },
+    "time": {
+      "title": "Enter time of birth",
+      "hour": "Hour",
+      "minute": "Minute",
+      "am": "AM",
+      "pm": "PM",
+      "dontKnow": "I don't know",
+      "next": "Next"
+    },
+    "gender": {
+      "title": "Choose your gender",
+      "subtitle": "Please select your sex assigned at birth",
+      "male": "Male",
+      "female": "Female",
+      "preferNot": "Prefer not to say",
+      "next": "Next"
     }
   }
 }

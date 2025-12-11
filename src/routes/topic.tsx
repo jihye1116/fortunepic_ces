@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
+import { Title } from "@/components/Title";
 import { fortuneSubjectAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/topic")({
@@ -111,12 +112,7 @@ function TopicPage() {
     <main className="min-h-dvh">
       <NavigationBar />
 
-      {/* Title */}
-      <div className="px-20 py-10">
-        <h1 className="gradient-text h-[calc(3.5rem*1.3*2)] text-[3.5rem] leading-[1.3] font-medium tracking-[-0.07rem]">
-          {t("topic.title")}
-        </h1>
-      </div>
+      <Title text={t("topic.title")} />
 
       {/* Topic Buttons - 3 rows */}
       <div className="flex flex-1 flex-col items-center justify-center gap-0 px-0 py-15">

@@ -1,4 +1,4 @@
-import BackspaceIcon from "@/assets/backspace.svg?react";
+import BackspaceIcon from "@/assets/icons/backspace.svg?react";
 
 interface NumberKeyboardProps {
   value: string;

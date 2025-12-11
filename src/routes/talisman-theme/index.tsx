@@ -1,6 +1,7 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useAtom } from "jotai";
+import { useTranslation } from "react-i18next";
 
 import businessImg from "@/assets/images/themes/business.png";
 import careerImg from "@/assets/images/themes/career.png";
@@ -10,6 +11,7 @@ import healthImg from "@/assets/images/themes/health.png";
 import loveImg from "@/assets/images/themes/love.png";
 import wealthImg from "@/assets/images/themes/wealth.png";
 import { NavigationBar } from "@/components/NavigationBar";
+import { Title } from "@/components/Title";
 import type { Theme } from "@/core/types";
 import { themeAtom } from "@/store/atoms";
 
@@ -78,8 +80,9 @@ const themes: ThemeButton[] = [
 ];
 
 function TalismanThemePage() {
-  const [selectedTheme, setSelectedTheme] = useAtom(themeAtom);
+  const { t } = useTranslation();
   const router = useRouter();
+  const [selectedTheme, setSelectedTheme] = useAtom(themeAtom);
 
   const handleThemeSelect = (themeId: Theme) => {
     setSelectedTheme(themeId);
@@ -96,15 +99,10 @@ function TalismanThemePage() {
     <main className="h-dvh">
       <NavigationBar />
 
-      {/* Title */}
-      <div className="flex w-full flex-col gap-3 px-20 py-10">
-        <h1 className="gradient-text text-[3.5rem] leading-[1.3] font-medium tracking-[-0.07rem]">
-          Select Talisman Theme
-        </h1>
-        <p className="text-[2.5rem] leading-[1.3] font-normal tracking-[-0.025rem] text-[#989ba2]">
-          Choose the area you want to
-        </p>
-      </div>
+      <Title
+        text={t("talisman-theme.title")}
+        subtext={t("talisman-theme.subtitle")}
+      />
 
       {/* Theme Buttons Container */}
       <div className="flex w-full items-center justify-center px-0 py-12">

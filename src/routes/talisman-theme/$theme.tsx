@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { NavigationBar } from "@/components/NavigationBar";
 import { SelectionButtons } from "@/components/SelectionButtons";
+import { Title } from "@/components/Title";
 
 export const Route = createFileRoute("/talisman-theme/$theme")({
   component: RouteComponent,
@@ -22,6 +23,7 @@ interface ThemeConfig {
 function RouteComponent() {
   const { theme } = Route.useParams();
   const { t } = useTranslation();
+  const router = useRouter();
 
   const THEME_DATA: Record<string, ThemeConfig> = {
     happiness: {
@@ -194,19 +196,12 @@ function RouteComponent() {
     <div className="h-dvh">
       <NavigationBar />
 
-      <div className="flex w-full flex-col gap-3 px-20 py-10">
-        <h1 className="gradient-text text-[3.5rem] leading-[1.3] font-medium tracking-[-0.07rem]">
-          {themeConfig.title}
-        </h1>
-        <p className="text-[2.5rem] leading-[1.3] tracking-[-0.025rem] text-[#989ba2]">
-          {themeConfig.subtitle}
-        </p>
-      </div>
+      <Title text={themeConfig.title} subtext={themeConfig.subtitle} />
 
       <div className="flex w-full flex-col px-20 py-12">
         <SelectionButtons
           options={themeConfig.options}
-          onSelect={(id) => console.log("Selected:", id)}
+          onSelect={() => router.navigate({ to: "/information" })}
           showIcon
         />
       </div>
