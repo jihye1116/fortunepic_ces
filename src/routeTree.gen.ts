@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TopicRouteImport } from './routes/topic'
+import { Route as ReportRouteImport } from './routes/report'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as DateRouteImport } from './routes/date'
 import { Route as CameraRouteImport } from './routes/camera'
@@ -25,6 +26,11 @@ import { Route as InformationBirthRouteImport } from './routes/information/birth
 const TopicRoute = TopicRouteImport.update({
   id: '/topic',
   path: '/topic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportRoute = ReportRouteImport.update({
+  id: '/report',
+  path: '/report',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LanguageRoute = LanguageRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
+  '/report': typeof ReportRoute
   '/topic': typeof TopicRoute
   '/information/birth': typeof InformationBirthRoute
   '/information/gender': typeof InformationGenderRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
+  '/report': typeof ReportRoute
   '/topic': typeof TopicRoute
   '/information/birth': typeof InformationBirthRoute
   '/information/gender': typeof InformationGenderRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/camera': typeof CameraRoute
   '/date': typeof DateRoute
   '/language': typeof LanguageRoute
+  '/report': typeof ReportRoute
   '/topic': typeof TopicRoute
   '/information/birth': typeof InformationBirthRoute
   '/information/gender': typeof InformationGenderRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/date'
     | '/language'
+    | '/report'
     | '/topic'
     | '/information/birth'
     | '/information/gender'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/date'
     | '/language'
+    | '/report'
     | '/topic'
     | '/information/birth'
     | '/information/gender'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/date'
     | '/language'
+    | '/report'
     | '/topic'
     | '/information/birth'
     | '/information/gender'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   CameraRoute: typeof CameraRoute
   DateRoute: typeof DateRoute
   LanguageRoute: typeof LanguageRoute
+  ReportRoute: typeof ReportRoute
   TopicRoute: typeof TopicRoute
   InformationBirthRoute: typeof InformationBirthRoute
   InformationGenderRoute: typeof InformationGenderRoute
@@ -193,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/topic'
       fullPath: '/topic'
       preLoaderRoute: typeof TopicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report': {
+      id: '/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof ReportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/language': {
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   CameraRoute: CameraRoute,
   DateRoute: DateRoute,
   LanguageRoute: LanguageRoute,
+  ReportRoute: ReportRoute,
   TopicRoute: TopicRoute,
   InformationBirthRoute: InformationBirthRoute,
   InformationGenderRoute: InformationGenderRoute,
