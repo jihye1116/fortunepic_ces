@@ -33,8 +33,7 @@ function NicknamePage() {
   }, []);
 
   const handleNext = () => {
-    // Navigate to next page - need to determine where
-    router.navigate({ to: "/" }); // TODO: Update with correct route
+    router.navigate({ to: "/information/birth" });
   };
 
   const handleInputFocus = () => {

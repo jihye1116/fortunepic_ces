@@ -110,6 +110,7 @@
       "month": "MM",
       "day": "DD",
       "year": "YYYY",
+      "incorrectDate": "Unrecognized Date of Birth",
       "next": "Next"
     },
     "time": {
