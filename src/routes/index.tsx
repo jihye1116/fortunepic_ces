@@ -1,8 +1,11 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import Lottie from "lottie-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import homeLottie from "@/assets/lottie/home.json";
+import { backgroundOpacityAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -11,10 +14,16 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { t } = useTranslation();
   const router = useRouter();
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   const handleStartClick = () => {
+    setBackgroundOpacity(true);
     router.navigate({ to: "/language" });
   };
+
+  useEffect(() => {
+    setBackgroundOpacity(false);
+  }, [setBackgroundOpacity]);
 
   return (
     <main className="flex h-dvh flex-col">

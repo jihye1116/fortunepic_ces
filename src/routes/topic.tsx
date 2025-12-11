@@ -1,13 +1,20 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import DateSpecificSvg from "@/assets/icons/date-specific.svg?react";
+import FiveElementsSvg from "@/assets/icons/five-elements.svg?react";
+import KoreanTalismanSvg from "@/assets/icons/korean-talisman.svg?react";
+import LifetimeFortuneSvg from "@/assets/icons/lifetime-fortune.svg?react";
+import NewYearSvg from "@/assets/icons/new-year.svg?react";
+import TodayFortuneSvg from "@/assets/icons/today-fortune.svg?react";
+import ZodiacAnimalSvg from "@/assets/icons/zodiac-animal.svg?react";
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
 import { Title } from "@/components/Title";
-import { topicAtom } from "@/store/atoms";
+import { backgroundOpacityAtom, topicAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/topic")({
   component: TopicPage,
@@ -16,58 +23,68 @@ export const Route = createFileRoute("/topic")({
 interface TopicItem {
   id: string;
   label: string;
-  icon: string;
   color: "blue" | "red" | "yellow";
+  svg: React.FC<React.SVGAttributes<SVGElement>>; // SVG component for unique blob shape
 }
 
 function TopicPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const setTopicAtom = useSetAtom(topicAtom);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
+
+  // Expand animation after mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsExpanded(true);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const topics: TopicItem[] = [
     {
       id: "todayFortune",
       label: t("topic.topics.todayFortune"),
-      icon: "🌙",
       color: "blue",
+      svg: TodayFortuneSvg,
     },
     {
       id: "lifetimeFortune",
       label: t("topic.topics.lifetimeFortune"),
-      icon: "♾️",
       color: "blue",
+      svg: LifetimeFortuneSvg,
     },
     {
       id: "myZodiacAnimal",
       label: t("topic.topics.myZodiacAnimal"),
-      icon: "🐉",
       color: "red",
+      svg: ZodiacAnimalSvg,
     },
     {
       id: "koreanTalisman",
       label: t("topic.topics.koreanTalisman"),
-      icon: "🏮",
       color: "red",
+      svg: KoreanTalismanSvg,
     },
     {
       id: "fiveElementsAnalysis",
       label: t("topic.topics.fiveElementsAnalysis"),
-      icon: "☯️",
       color: "red",
+      svg: FiveElementsSvg,
     },
     {
       id: "dateSpecificReading",
       label: t("topic.topics.dateSpecificReading"),
-      icon: "📅",
       color: "yellow",
+      svg: DateSpecificSvg,
     },
     {
       id: "newYearFortune",
       label: t("topic.topics.newYearFortune"),
-      icon: "🎊",
       color: "yellow",
+      svg: NewYearSvg,
     },
   ];
 
@@ -78,34 +95,39 @@ function TopicPage() {
     if (isSelected) {
       switch (color) {
         case "blue":
-          return "bg-[#5b72b7]";
+          return "text-[#5b72b7]";
         case "red":
-          return "bg-[#ed474a]";
+          return "text-[#ed474a]";
         case "yellow":
-          return "bg-[#f6e24a]";
+          return "text-[#f6e24a]";
       }
     }
 
     switch (color) {
       case "blue":
-        return "bg-[#5b72b7]/60";
+        return "text-[#5b72b7]/60";
       case "red":
-        return "bg-[#ed474a]/60";
+        return "text-[#ed474a]/60";
       case "yellow":
-        return "bg-[#f6e24a]/60";
+        return "text-[#f6e24a]/60";
     }
   };
 
   const handleNext = () => {
     setTopicAtom(selectedTopic!);
 
-    if (selectedTopic === "dateSpecificReading") {
-      router.navigate({ to: "/date" });
-    } else if (selectedTopic === "koreanTalisman") {
-      router.navigate({ to: "/talisman-theme" });
-    } else {
-      router.navigate({ to: "/information" });
-    }
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      if (selectedTopic === "dateSpecificReading") {
+        router.navigate({ to: "/date" });
+      } else if (selectedTopic === "koreanTalisman") {
+        router.navigate({ to: "/talisman-theme" });
+      } else {
+        router.navigate({ to: "/information" });
+      }
+      setBackgroundOpacity(true);
+    }, 800);
   };
 
   return (
@@ -115,80 +137,139 @@ function TopicPage() {
       <Title text={t("topic.title")} />
 
       {/* Topic Buttons - 3 rows */}
-      <div className="flex flex-1 flex-col items-center justify-center gap-0 px-0 py-15">
+      <div className="relative flex min-h-[1000px] flex-1 flex-col items-center justify-center gap-0 px-0 py-15">
         {/* Row 1 - 2 items (blue) */}
-        <div className="-mb-8 flex items-center justify-center gap-0">
-          {topics.slice(0, 2).map((topic) => (
-            <button
-              key={topic.id}
-              onClick={() => setSelectedTopic(topic.id)}
-              className={cn(
-                "relative flex items-center justify-center gap-2.5 p-2 transition-all duration-300",
-                selectedTopic && selectedTopic !== topic.id && "opacity-50",
-              )}
-            >
-              <div
+        <div
+          className={cn(
+            "flex items-center justify-center transition-all duration-700",
+            isExpanded ? "rotate-0 gap-0" : "-rotate-15 gap-[60px]",
+          )}
+        >
+          {topics.slice(0, 2).map((topic, idx) => {
+            const SvgComponent = topic.svg;
+            return (
+              <button
+                key={topic.id}
+                onClick={() => setSelectedTopic(topic.id)}
                 className={cn(
-                  "flex h-75 w-75 flex-col items-center justify-center rounded-[9.375rem] px-10 py-25 transition-all duration-300",
-                  getColorClasses(topic.color, selectedTopic === topic.id),
+                  "relative flex items-center justify-center gap-2.5 p-2 transition-all duration-700",
+                  selectedTopic && selectedTopic !== topic.id && "opacity-50",
+                  isExpanded
+                    ? "h-[300px] w-[300px] rotate-0"
+                    : idx === 0
+                      ? "h-[132px] w-[132px] rotate-15"
+                      : "h-[132px] w-[132px] rotate-30",
                 )}
               >
-                <div className="text-center text-[2rem] leading-[1.3] font-medium tracking-[-0.054rem] whitespace-pre text-[#171719]">
-                  {topic.label}
+                <div className="relative size-full overflow-hidden">
+                  <SvgComponent
+                    className={cn(
+                      "absolute inset-0 h-full w-full transition-all duration-700",
+                      getColorClasses(topic.color, selectedTopic === topic.id),
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center px-10 text-center text-[2rem] leading-[1.3] font-medium tracking-[-0.054rem] whitespace-pre text-[#171719] transition-opacity delay-200 duration-500",
+                      isExpanded ? "opacity-100" : "opacity-0",
+                    )}
+                  >
+                    {topic.label}
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
 
         {/* Row 2 - 3 items (red) */}
-        <div className="-mb-8 flex items-center justify-center gap-0">
-          {topics.slice(2, 5).map((topic) => (
-            <button
-              key={topic.id}
-              onClick={() => setSelectedTopic(topic.id)}
-              className={cn(
-                "relative flex items-center justify-center gap-2.5 p-2 transition-all duration-300",
-                selectedTopic && selectedTopic !== topic.id && "opacity-50",
-              )}
-            >
-              <div
+        <div
+          className={cn(
+            "flex items-center justify-center transition-all duration-700",
+            isExpanded
+              ? "mt-0 mb-0 rotate-0 gap-0"
+              : "mt-[60px] mb-20 -rotate-15 gap-[60px]",
+          )}
+        >
+          {topics.slice(2, 5).map((topic, idx) => {
+            const SvgComponent = topic.svg;
+            return (
+              <button
+                key={topic.id}
+                onClick={() => setSelectedTopic(topic.id)}
                 className={cn(
-                  "flex h-75 w-75 flex-col items-center justify-center rounded-[9.375rem] px-10 py-25 transition-all duration-300",
-                  getColorClasses(topic.color, selectedTopic === topic.id),
+                  "relative flex items-center justify-center gap-2.5 p-2 transition-all duration-700",
+                  selectedTopic && selectedTopic !== topic.id && "opacity-50",
+                  isExpanded
+                    ? "h-[300px] w-[300px] rotate-0"
+                    : idx === 0
+                      ? "h-[132px] w-[132px] -rotate-15"
+                      : "h-[132px] w-[132px] rotate-30",
                 )}
               >
-                <div className="text-center text-[2rem] leading-[1.3] font-medium tracking-[-0.054rem] whitespace-pre text-[#171719]">
-                  {topic.label}
+                <div className="relative size-full overflow-hidden">
+                  <SvgComponent
+                    className={cn(
+                      "absolute inset-0 h-full w-full transition-all duration-700",
+                      getColorClasses(topic.color, selectedTopic === topic.id),
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center px-10 text-center text-[2rem] leading-[1.3] font-medium tracking-[-0.054rem] whitespace-pre text-[#171719] transition-opacity delay-200 duration-500",
+                      isExpanded ? "opacity-100" : "opacity-0",
+                    )}
+                  >
+                    {topic.label}
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
 
         {/* Row 3 - 2 items (yellow) */}
-        <div className="-mb-8 flex items-center justify-center gap-0">
-          {topics.slice(5, 7).map((topic) => (
-            <button
-              key={topic.id}
-              onClick={() => setSelectedTopic(topic.id)}
-              className={cn(
-                "relative flex items-center justify-center gap-2.5 p-2 transition-all duration-300",
-                selectedTopic && selectedTopic !== topic.id && "opacity-50",
-              )}
-            >
-              <div
+        <div
+          className={cn(
+            "flex items-center justify-center transition-all duration-700",
+            isExpanded ? "rotate-0 gap-0" : "rotate-15 gap-[60px]",
+          )}
+        >
+          {topics.slice(5, 7).map((topic, idx) => {
+            const SvgComponent = topic.svg;
+            return (
+              <button
+                key={topic.id}
+                onClick={() => setSelectedTopic(topic.id)}
                 className={cn(
-                  "flex h-75 w-75 flex-col items-center justify-center rounded-[9.375rem] px-10 py-25 transition-all duration-300",
-                  getColorClasses(topic.color, selectedTopic === topic.id),
+                  "relative flex items-center justify-center gap-2.5 p-2 transition-all duration-700",
+                  selectedTopic && selectedTopic !== topic.id && "opacity-50",
+                  isExpanded
+                    ? "h-[300px] w-[300px] rotate-0"
+                    : idx === 0
+                      ? "h-[132px] w-[132px] -rotate-15"
+                      : "h-[132px] w-[132px] rotate-30",
                 )}
               >
-                <div className="text-center text-[2rem] leading-[1.3] font-medium tracking-[-0.054rem] whitespace-pre text-[#171719]">
-                  {topic.label}
+                <div className="relative size-full overflow-hidden">
+                  <SvgComponent
+                    className={cn(
+                      "absolute inset-0 h-full w-full transition-all duration-700",
+                      getColorClasses(topic.color, selectedTopic === topic.id),
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center px-10 text-center text-[2rem] leading-[1.3] font-medium tracking-[-0.054rem] whitespace-pre text-[#171719] transition-opacity delay-200 duration-500",
+                      isExpanded ? "opacity-100" : "opacity-0",
+                    )}
+                  >
+                    {topic.label}
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import Lottie from "lottie-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,6 +9,7 @@ import infoLottie from "@/assets/lottie/information.json";
 import { NavigationBar } from "@/components/NavigationBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { Title } from "@/components/Title";
+import { backgroundOpacityAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/")({
   component: Information,
@@ -17,9 +19,15 @@ function Information() {
   const { t } = useTranslation();
   const router = useRouter();
   const [showButton, setShowButton] = useState(false);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   const handleNext = () => {
-    router.navigate({ to: "/information/nickname" });
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      setBackgroundOpacity(true);
+      router.navigate({ to: "/information/nickname" });
+    }, 800);
   };
 
   return (

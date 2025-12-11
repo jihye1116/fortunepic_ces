@@ -1,5 +1,6 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +12,7 @@ import { NumberKeyboard } from "@/components/NumberKeyboard";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
+import { backgroundOpacityAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/birth")({
   component: BirthPage,
@@ -27,6 +29,7 @@ function BirthPage() {
     "month",
   );
   const [hasError, setHasError] = useState(false);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   // 각 필드가 채워질 때마다 검증
   useEffect(() => {
@@ -107,7 +110,12 @@ function BirthPage() {
   };
 
   const handleNext = () => {
-    router.navigate({ to: "/information/time" });
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      setBackgroundOpacity(true);
+      router.navigate({ to: "/information/time" });
+    }, 800);
   };
 
   const displayValue = (field: "month" | "day" | "year") => {

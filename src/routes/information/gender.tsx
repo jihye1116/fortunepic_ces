@@ -1,6 +1,6 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -10,7 +10,7 @@ import { OutlineButton } from "@/components/OutlineButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
 import type { Gender } from "@/core/types";
-import { genderAtom } from "@/store/atoms";
+import { backgroundOpacityAtom, genderAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/gender")({
   component: GenderPage,
@@ -21,12 +21,16 @@ function GenderPage() {
   const router = useRouter();
   const [selectedGender, setSelectedGender] = useAtom(genderAtom);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   const handleGenderSelect = (gender: Gender) => {
     setSelectedGender(gender);
+    setBackgroundOpacity(false);
+
     setTimeout(() => {
+      setBackgroundOpacity(true);
       router.navigate({ to: "/camera" });
-    }, 300);
+    }, 800);
   };
 
   const handleBottomButton = () => {

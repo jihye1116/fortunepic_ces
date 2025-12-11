@@ -1,6 +1,6 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +11,7 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
-import { nicknameAtom } from "@/store/atoms";
+import { backgroundOpacityAtom, nicknameAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/nickname")({
   component: NicknamePage,
@@ -22,6 +22,7 @@ function NicknamePage() {
   const router = useRouter();
   const [nickname, setNickname] = useAtom(nicknameAtom);
   const [isFocused, setIsFocused] = useState(true);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   const currentLanguage = i18n.language;
   const isKorean = currentLanguage === "ko";
@@ -33,7 +34,12 @@ function NicknamePage() {
   }, []);
 
   const handleNext = () => {
-    router.navigate({ to: "/information/birth" });
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      setBackgroundOpacity(true);
+      router.navigate({ to: "/information/birth" });
+    }, 800);
   };
 
   const handleInputFocus = () => {

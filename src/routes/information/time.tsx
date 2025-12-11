@@ -1,5 +1,6 @@
 import { cn } from "@sglara/cn";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -10,6 +11,7 @@ import { OutlineButton } from "@/components/OutlineButton";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
+import { backgroundOpacityAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/time")({
   component: TimePage,
@@ -23,6 +25,7 @@ function TimePage() {
   const [period, setPeriod] = useState<"AM" | "PM">("AM");
   const [activeField, setActiveField] = useState<"hour" | "minute">("hour");
   const [hasError, setHasError] = useState(false);
+  const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
   // 각 필드가 채워질 때마다 검증
   useEffect(() => {
@@ -93,7 +96,12 @@ function TimePage() {
   };
 
   const handleNext = () => {
-    router.navigate({ to: "/information/gender" });
+    setBackgroundOpacity(false);
+
+    setTimeout(() => {
+      setBackgroundOpacity(true);
+      router.navigate({ to: "/information/gender" });
+    }, 800);
   };
 
   return (
