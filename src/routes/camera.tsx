@@ -368,10 +368,44 @@ function CameraPage() {
 
                 // 4. Store result
                 setFortuneResult({ 0: result as FortuneResult });
+                // 개발용: localStorage에도 저장
+                localStorage.setItem("fortuneResultAtom", JSON.stringify({ 0: result }));
 
-                // 5. Navigate to result page
+                // TODO :: 5. Navigate to result page 
+                // setTimeout(() => {
+                //   router.navigate({ to: "/result" });
+                //   setBackgroundOpacity(true);
+                // }, 800);
+
+                // theme 값에 따라 report 페이지로 이동
+                let reportPath = "/report";
+                switch ((topic || "basic") as ThemeType) {
+                  case "lifetime":
+                    reportPath = "/report/lifetime";
+                    break;
+                  case "yearly":
+                    reportPath = "/report/new-year";
+                    break;
+                  case "today":
+                    reportPath = "/report/today";
+                    break;
+                  case "specifiedDate":
+                    reportPath = "/report/date";
+                    break;
+                  case "fiveElementsV3":
+                    reportPath = "/report/five-elements";
+                    break;
+                  case "dayPillarAnimal":
+                    reportPath = "/report/daily-pilar";
+                    break;
+                  case "physiognomy":
+                    reportPath = "/report/talisman";
+                    break;
+                  default:
+                    reportPath = "/report";
+                }
                 setTimeout(() => {
-                  router.navigate({ to: "/result" });
+                  router.navigate({ to: reportPath });
                   setBackgroundOpacity(true);
                 }, 800);
               } catch (error) {

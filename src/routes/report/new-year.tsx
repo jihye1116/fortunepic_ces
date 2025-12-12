@@ -16,6 +16,7 @@ export const Route = createFileRoute("/report/new-year")({
 });
 
 function NewYearReportPage() {
+  // New year life phases remain static for now
   const newYearLifePhases = [
     {
       ageRange: "2025",
@@ -44,6 +45,23 @@ function NewYearReportPage() {
   ];
 
   const data = dummyReportData;
+  const fortuneResult = getFortuneResultFromStorage();
+  const lifetimeFortune = fortuneResult?.[0];
+
+  // Map data from localStorage if available, else fallback to dummy
+  const mappedPillars = lifetimeFortune?.result?.sajuInfo?.pillars
+    ? mapApiToPillars(lifetimeFortune.sajuInfo.pillars)
+    : data.pillars;
+
+  const mappedBeneficialEnergies = lifetimeFortune
+    ? mapBeneficialEnergies(lifetimeFortune.elementGuidance)
+    : data.beneficialEnergies;
+  const mappedRegulatingEnergies = lifetimeFortune
+    ? mapRegulatingEnergies(lifetimeFortune.elementGuidance)
+    : data.regulatingEnergies;
+  const nickname = lifetimeFortune?.nickname || data.nickname;
+  const mappedFaceReadingAreas = data.faceReadingAreas; // If you want to map from API, adjust here
+  const mappedAreaStrategies = data.areaStrategies; // If you want to map from API, adjust here
 
   return (
     <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
@@ -52,19 +70,19 @@ function NewYearReportPage() {
 
         <div className="px-4 space-y-8">
           <BasicEnergyInterpretation
-            nickname={data.nickname}
-            pillars={data.pillars}
+            nickname={nickname}
+            pillars={mappedPillars}
           />
 
-          <FaceReading faceReadingAreas={data.faceReadingAreas} />
+          <FaceReading faceReadingAreas={mappedFaceReadingAreas} />
 
           <LifePhaseFlow lifePhases={newYearLifePhases} />
 
-          <AreaSpecificStrategies areaStrategies={data.areaStrategies} />
+          <AreaSpecificStrategies areaStrategies={mappedAreaStrategies} />
 
           <PersonalizedAdvice
-            beneficialEnergies={data.beneficialEnergies}
-            regulatingEnergies={data.regulatingEnergies}
+            beneficialEnergies={mappedBeneficialEnergies}
+            regulatingEnergies={mappedRegulatingEnergies}
           />
 
           <ReportFooter />
@@ -72,4 +90,57 @@ function NewYearReportPage() {
       </main>
     </div>
   );
+}
+
+// Mapping functions (copied from lifetime.tsx)
+function mapApiToPillars(apiPillars: any): any[] {
+  const order = [
+    { key: "year", name: "Year Pillar", color: "#5B72B7" },
+    { key: "month", name: "Month Pillar", color: "#F6E24A" },
+    { key: "day", name: "Day Pillar", color: "#2C925E" },
+    { key: "hour", name: "Hour Pillar", color: "#E16B8C" },
+  ];
+  return order.map(({ key, name, color }) => {
+    const p = apiPillars[key];
+    return {
+      name,
+      color,
+      keywords: [
+        { text: p.stem },
+        { text: p.tenGodsStem },
+        { text: p.branch },
+        { text: p.tenGodsBranch },
+        { text: p.twelveStage },
+      ],
+    };
+  });
+}
+
+function mapBeneficialEnergies(api: any): any[] {
+  if (!api?.beneficialElements) return [];
+  return [
+    {
+      title: api.beneficialElements.elements,
+      description: api.beneficialElements.explanation,
+    },
+  ];
+}
+
+function mapRegulatingEnergies(api: any): any[] {
+  if (!api?.elementsToControl) return [];
+  return [
+    {
+      title: api.elementsToControl.elements,
+      description: api.elementsToControl.explanation,
+    },
+  ];
+}
+
+// LocalStorage util (copied from lifetime.tsx)
+function getFortuneResultFromStorage() {
+  try {
+    const saved = localStorage.getItem("fortuneResultAtom");
+    if (saved) return JSON.parse(saved);
+  } catch { /* empty */ }
+  return undefined;
 }

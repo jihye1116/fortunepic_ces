@@ -26,22 +26,9 @@ export const originalImagesAtom = atom<string[]>([]);
 export const designedImagesAtom = atom<string[]>([]);
 export const apiImageAtom = atom<string | null>(null);
 
-// API 운세 응답 데이터
-export interface FortuneResult {
-  key1?: string; // 사주 관상 해석
-  key2?: string; // 오늘의 운세
-  key3?: string; // 상세 운세
-  key4?: string; // 행운의 아이템
-  key5?: string; // 아이템 설명
-  key6?: string; // 조언
-  key7?: string; // 추가 조언
-  recommendedKorea?: string; // 추천 관광지
-  recommendedKoreaDescription?: string;
-  recommendedKoreaImage?: string;
-  recommendedKoreaFood?: string; // 추천 음식
-  recommendedKoreaFoodDescription?: string;
-  recommendedKoreaFoodImage?: string;
-}
+// API 운세 응답 데이터 (실제 타입 확정 전까지 any 사용)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FortuneResult = any;
 
 export const fortuneResultAtom = atom<Record<number, FortuneResult>>({});
 

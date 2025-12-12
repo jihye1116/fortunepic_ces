@@ -111,7 +111,8 @@ export const analyzeFortuneWithImages = async (
     // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
   formData.append("birthday", JSON.stringify(birthdayPayload));
   formData.append("theme", data.theme);
-  formData.append("language", JSON.stringify(data.language));
+  formData.append("language", 'ko');
+  // formData.append("language", JSON.stringify(data.language));
 
   console.log("요청 페이로드:", {
     birthday: birthdayPayload,
@@ -129,7 +130,7 @@ export const analyzeFortuneWithImages = async (
     "/anthropic/comprehensiveFortune",
     formData,
     {
-      timeout: 60000,
+      timeout: 120000,
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
     },
