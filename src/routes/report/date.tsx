@@ -2,7 +2,6 @@ import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
 
-import haeundaeImg from "@/assets/images/report/haeundae.png";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { CardCarousel } from "@/components/report/CardCarousel";
 import { DetailedEnergyAnalysis } from "@/components/report/DetailedEnergyAnalysis";
@@ -97,7 +96,7 @@ function DateFortunePage() {
 
           <ImageDetailSection
             title="Lucky Space • Activity"
-            imageUrl={haeundaeImg}
+            imageUrl="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop&q=60"
             subTitle="Haeundae"
             description="Haeundae is Busan's most famous and expansive beach"
             items={[

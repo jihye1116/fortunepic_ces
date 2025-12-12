@@ -2,7 +2,6 @@ import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
 
-import bibimbapImg from "@/assets/images/report/bibimbap.png";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { CardCarousel } from "@/components/report/CardCarousel";
 import { DetailedEnergyAnalysis } from "@/components/report/DetailedEnergyAnalysis";
@@ -93,7 +92,7 @@ function TodayFortunePage() {
 
           <ImageDetailSection
             title="Lucky Korean Food"
-            imageUrl={bibimbapImg}
+            imageUrl="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60"
             subTitle="Bibimbap"
             description="Bibimbap is Korea's iconic, healthy dish"
             items={[
