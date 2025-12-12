@@ -22,7 +22,7 @@ function TodayFortunePage() {
   return (
     <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
       <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
-        <ReportHeader sourceOfInsight={data.sourceOfInsight} />
+        <ReportHeader sourceOfInsight="Four Pillars of Destiny" />
 
         <div className="px-4 space-y-8">
           <BasicEnergyInterpretation

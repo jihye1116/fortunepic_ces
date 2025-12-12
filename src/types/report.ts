@@ -54,6 +54,12 @@ export interface ActionGuide {
   avoid: string;
 }
 
+export interface TenGodsAndLifeStages {
+  heavenlyStems: string;
+  earthlyBranches: string;
+  lifeStages: string;
+}
+
 export interface LifetimeReportData {
   nickname: string;
   sourceOfInsight: string;
@@ -66,6 +72,7 @@ export interface LifetimeReportData {
   beneficialEnergies: BeneficialEnergy[];
   regulatingEnergies: RegulatingEnergy[];
   timingPrediction: TimingPrediction;
+  tenGodsAndLifeStages?: TenGodsAndLifeStages;
   actionGuide: ActionGuide;
   backgroundImage?: string;
   faceReadingImage?: string;

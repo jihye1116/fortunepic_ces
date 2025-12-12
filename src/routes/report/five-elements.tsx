@@ -2,11 +2,10 @@ import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
 
+import { DetailedListSection } from "@/components/report/DetailedListSection";
 import { ImageDescriptionSection } from "@/components/report/ImageDescriptionSection";
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
-import { SimpleListSection } from "@/components/report/SimpleListSection";
-import { TagListSection } from "@/components/report/TagListSection";
 import { dummyReportData } from "@/data/reportDummy";
 
 export const Route = createFileRoute("/report/five-elements")({
@@ -19,36 +18,27 @@ function FiveElementsFortunePage() {
   return (
     <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
       <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
-        <ReportHeader sourceOfInsight={data.sourceOfInsight} />
+        <ReportHeader sourceOfInsight="The Five Elements" />
 
         <div className="px-4 space-y-8">
-          <SimpleListSection
-            title="Timing Prediction"
-            items={[
-              {
-                description: data.timingPrediction.bestTime,
-              },
-              {
-                description: data.timingPrediction.cautionTime,
-              },
-            ]}
-          />
-
-          <TagListSection
-            title="Action Guide"
-            items={[
-              {
-                tag: "Recommend",
-                tagColor: "#5B72B7",
-                description: data.actionGuide.recommend,
-              },
-              {
-                tag: "Avoid",
-                tagColor: "#F16C6E",
-                description: data.actionGuide.avoid,
-              },
-            ]}
-          />
+          {data.tenGodsAndLifeStages && (
+            <DetailedListSection
+              items={[
+                {
+                  title: "Heavenly Stems 10 Gods",
+                  description: data.tenGodsAndLifeStages.heavenlyStems,
+                },
+                {
+                  title: "Earthly Branch 10 Gods",
+                  description: data.tenGodsAndLifeStages.earthlyBranches,
+                },
+                {
+                  title: "12 Life Stages",
+                  description: data.tenGodsAndLifeStages.lifeStages,
+                },
+              ]}
+            />
+          )}
 
           <ImageDescriptionSection
             title="Growth Direction Gudiance"
