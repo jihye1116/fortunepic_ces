@@ -60,6 +60,39 @@ export interface TenGodsAndLifeStages {
   lifeStages: string;
 }
 
+export interface PillarData {
+  heavenlyStem: string;
+  heavenlyStem10Gods: string;
+  earthlyBranch: string;
+  earthlyBranch10Gods: string;
+  lifeStage12: string;
+}
+
+export interface FourPillarsData {
+  hour: PillarData;
+  day: PillarData;
+  month: PillarData;
+  year: PillarData;
+}
+
+export interface EssentialSelfItem {
+  label: string;
+  element: string;
+  description: string;
+}
+
+export interface RadialChartItem {
+  label: string;
+  value: number;
+  icon: string;
+}
+
+export interface ElementDistributionItem {
+  element: string;
+  percentage: number;
+  icon: string;
+}
+
 export interface LifetimeReportData {
   nickname: string;
   sourceOfInsight: string;
@@ -73,6 +106,9 @@ export interface LifetimeReportData {
   regulatingEnergies: RegulatingEnergy[];
   timingPrediction: TimingPrediction;
   tenGodsAndLifeStages?: TenGodsAndLifeStages;
+  fourPillarsData?: FourPillarsData;
+  essentialSelfItems?: EssentialSelfItem[];
+  elementDistributionItems?: ElementDistributionItem[];
   actionGuide: ActionGuide;
   backgroundImage?: string;
   faceReadingImage?: string;

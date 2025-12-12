@@ -192,6 +192,77 @@ export const dummyReportData: LifetimeReportData = {
     lifeStages:
       "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
   },
+  fourPillarsData: {
+    hour: {
+      heavenlyStem: "임수",
+      heavenlyStem10Gods: "임수",
+      earthlyBranch: "임수",
+      earthlyBranch10Gods: "임수",
+      lifeStage12: "임수",
+    },
+    day: {
+      heavenlyStem: "기토",
+      heavenlyStem10Gods: "기토",
+      earthlyBranch: "기토",
+      earthlyBranch10Gods: "기토",
+      lifeStage12: "기토",
+    },
+    month: {
+      heavenlyStem: "갑목",
+      heavenlyStem10Gods: "갑목",
+      earthlyBranch: "갑목",
+      earthlyBranch10Gods: "갑목",
+      lifeStage12: "갑목",
+    },
+    year: {
+      heavenlyStem: "경금",
+      heavenlyStem10Gods: "경금",
+      earthlyBranch: "경금",
+      earthlyBranch10Gods: "경금",
+      lifeStage12: "경금",
+    },
+  },
+  essentialSelfItems: [
+    {
+      label: "Daystem",
+      element: "Earth",
+      description:
+        "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+    },
+    {
+      label: "Useful God",
+      element: "Water",
+      description:
+        "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+    },
+  ],
+  elementDistributionItems: [
+    {
+      element: "Fire",
+      percentage: 20,
+      icon: "/src/assets/icons/elements/fire.svg",
+    },
+    {
+      element: "Earth",
+      percentage: 20,
+      icon: "/src/assets/icons/elements/earth.svg",
+    },
+    {
+      element: "Wood",
+      percentage: 20,
+      icon: "/src/assets/icons/elements/wood.svg",
+    },
+    {
+      element: "Metal",
+      percentage: 20,
+      icon: "/src/assets/icons/elements/metal.svg",
+    },
+    {
+      element: "Water",
+      percentage: 20,
+      icon: "/src/assets/icons/elements/water.svg",
+    },
+  ],
   actionGuide: {
     recommend:
       "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",

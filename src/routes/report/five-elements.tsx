@@ -3,6 +3,9 @@ import "../../global.css";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { DetailedListSection } from "@/components/report/DetailedListSection";
+import { DistributionChartSection } from "@/components/report/DistributionChartSection";
+import { EssentialSelfSection } from "@/components/report/EssentialSelfSection";
+import { FourPillarsAndFiveElements } from "@/components/report/FourPillarsAndFiveElements";
 import { ImageDescriptionSection } from "@/components/report/ImageDescriptionSection";
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
@@ -21,6 +24,30 @@ function FiveElementsFortunePage() {
         <ReportHeader sourceOfInsight="The Five Elements" />
 
         <div className="px-4 space-y-8">
+          {data.fourPillarsData && (
+            <FourPillarsAndFiveElements
+              nickname={data.nickname}
+              data={data.fourPillarsData}
+            />
+          )}
+
+
+          {data.elementDistributionItems && (
+            <DistributionChartSection
+              title="Energy Distribution"
+              items={data.elementDistributionItems.map((item) => ({
+                label: item.element,
+                value: item.percentage,
+                icon: item.icon,
+              }))}
+            />
+          )}
+
+
+          {data.essentialSelfItems && (
+            <EssentialSelfSection items={data.essentialSelfItems} />
+          )}
+          
           {data.tenGodsAndLifeStages && (
             <DetailedListSection
               items={[
