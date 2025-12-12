@@ -12,7 +12,7 @@ import { NumberKeyboard } from "@/components/NumberKeyboard";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
-import { backgroundOpacityAtom } from "@/store/atoms";
+import { backgroundOpacityAtom, birthdateAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/birth")({
   component: BirthPage,
@@ -30,6 +30,7 @@ function BirthPage() {
   );
   const [hasError, setHasError] = useState(false);
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
+  const setBirthdate = useSetAtom(birthdateAtom);
 
   // 각 필드가 채워질 때마다 검증
   useEffect(() => {
@@ -110,6 +111,7 @@ function BirthPage() {
   };
 
   const handleNext = () => {
+    setBirthdate(`${year}-${month}-${day}`);
     setBackgroundOpacity(false);
 
     setTimeout(() => {

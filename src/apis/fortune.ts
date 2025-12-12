@@ -1,3 +1,5 @@
+import { type Gender } from "@/core/types";
+
 import { instance } from "./instance";
 
 export interface BirthdayData {
@@ -19,29 +21,10 @@ export interface FortuneAnalysisRequest {
   theme: ThemeType;
   language: string;
   images: Blob[];
+  gender?: Gender;
 }
 
-export interface FortuneAnalysisResponse {
-  success?: boolean;
-  result?: {
-    key1?: string; // 사주 관상 해석
-    key2?: string; // 오늘의 운세
-    key3?: string; // 상세 운세
-    key4?: string; // 행운의 아이템
-    key5?: string; // 아이템 설명
-    key6?: string; // 조언
-    key7?: string; // 추가 조언
-    recommendedKorea?: string; // 추천 관광지
-    recommendedKoreaDescription?: string;
-    recommendedKoreaImage?: string;
-    recommendedKoreaFood?: string; // 추천 음식
-    recommendedKoreaFoodDescription?: string;
-    recommendedKoreaFoodImage?: string;
-    [key: string]: unknown;
-  };
-  analysisImage?: string;
-  originalData?: unknown;
-}
+export type FortuneAnalysisResponse = unknown;
 
 /**
  * 운세 분석 API 호출
@@ -57,6 +40,9 @@ export const analyzeFortuneWithImages = async (
   formData.append("relationship", JSON.stringify(data.relationship || ""));
   formData.append("theme", JSON.stringify(data.theme));
   formData.append("language", JSON.stringify(data.language));
+  if (data.gender && data.gender !== "prefer-not") {
+    formData.append("gender", JSON.stringify(data.gender));
+  }
 
   // 이미지를 File 객체로 변환하여 추가 (첫 번째 이미지만 전송)
   if (data.images && data.images.length > 0) {
@@ -95,7 +81,7 @@ export const analyzeFortuneWithImages = async (
     },
   );
 
-  // console.log("API 응답:", response.data);
+  console.log("API 응답:", response.data);
 
   return response.data;
 };

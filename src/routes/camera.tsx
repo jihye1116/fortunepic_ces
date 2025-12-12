@@ -1,21 +1,54 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import {
+  analyzeFortuneWithImages,
+  type FortuneAnalysisRequest,
+  type ThemeType,
+} from "@/apis/fortune";
 import GuideIcon from "@/assets/icons/guide.svg?react";
 import { CancelButton } from "@/components/CancelButton";
 import { NavigationBar } from "@/components/NavigationBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { Title } from "@/components/Title";
-import { backgroundOpacityAtom, capturedPhotosAtom } from "@/store/atoms";
+import {
+  backgroundOpacityAtom,
+  birthdateAtom,
+  birthtimeAtom,
+  capturedPhotosAtom,
+  type FortuneResult,
+  fortuneResultAtom,
+  genderAtom,
+  topicAtom,
+} from "@/store/atoms";
 
 export const Route = createFileRoute("/camera")({
   component: CameraPage,
 });
 
+const dataURLtoBlob = (dataurl: string) => {
+  const arr = dataurl.split(",");
+  if (arr.length < 2) {
+    return null;
+  }
+  const mimeMatch = arr[0].match(/:(.*?);/);
+  if (!mimeMatch || mimeMatch.length < 2) {
+    return null;
+  }
+  const mime = mimeMatch[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+};
+
 function CameraPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,6 +63,11 @@ function CameraPage() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
 
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
+  const birthdate = useAtomValue(birthdateAtom);
+  const birthtime = useAtomValue(birthtimeAtom);
+  const gender = useAtomValue(genderAtom);
+  const topic = useAtomValue(topicAtom);
+  const setFortuneResult = useSetAtom(fortuneResultAtom);
 
   // Info 화면에서 카메라 화면으로 전환
   const handleStartCamera = () => {
@@ -312,16 +350,64 @@ function CameraPage() {
 
       <div className="flex flex-col gap-5 px-20 py-10">
         <PrimaryButton
-          onClick={() => {
+          onClick={async () => {
             setBackgroundOpacity(false);
 
-            setTimeout(() => {
-              // 선택된 사진을 capturedPhotosAtom에 저장
-              const selectedPhoto = capturedPhotos[selectedPhotoIndex];
-              setCapturedPhotos([selectedPhoto]);
-              router.navigate({ to: "/" });
-              setBackgroundOpacity(true);
-            }, 800);
+            try {
+              // 1. Get selected photo and convert to Blob
+              const selectedPhotoDataUrl = capturedPhotos[selectedPhotoIndex];
+              const imageBlob = dataURLtoBlob(selectedPhotoDataUrl);
+
+              if (!imageBlob) {
+                console.error("Failed to convert data URL to Blob");
+                // Handle error - maybe show a message to the user
+                setBackgroundOpacity(true);
+                return;
+              }
+
+              // Update atom with just the selected photo
+              setCapturedPhotos([selectedPhotoDataUrl]);
+
+              // 2. Prepare request data
+              const [year, month, day] = birthdate.split("-");
+              const [hour, minute] = birthtime.split(":");
+
+              const requestData: FortuneAnalysisRequest = {
+                birthday: [
+                  {
+                    year,
+                    month,
+                    day,
+                    hour,
+                    minute,
+                    calendar: "solar",
+                    time: birthtime,
+                  },
+                ],
+                heads: 1,
+                relationship: "",
+                theme: (topic || "basic") as ThemeType,
+                language: i18n.language,
+                images: [imageBlob],
+                gender: gender || undefined,
+              };
+
+              // 3. Call API
+              const result = await analyzeFortuneWithImages(requestData);
+
+              // 4. Store result
+              setFortuneResult({ 0: result as FortuneResult });
+
+              // 5. Navigate to result page
+              setTimeout(() => {
+                router.navigate({ to: "/result" });
+                setBackgroundOpacity(true);
+              }, 800);
+            } catch (error) {
+              console.error("Fortune analysis API failed:", error);
+              // TODO: Show error message to the user
+              setBackgroundOpacity(true); // reset opacity on error
+            }
           }}
         >
           {t("camera.select.next")}

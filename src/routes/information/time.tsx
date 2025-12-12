@@ -12,6 +12,7 @@ import { PrimaryButton } from "@/components/PrimaryButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { Title } from "@/components/Title";
 import { backgroundOpacityAtom } from "@/store/atoms";
+import { birthtimeAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/information/time")({
   component: TimePage,
@@ -26,6 +27,7 @@ function TimePage() {
   const [activeField, setActiveField] = useState<"hour" | "minute">("hour");
   const [hasError, setHasError] = useState(false);
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
+  const setBirthtime = useSetAtom(birthtimeAtom);
 
   // 각 필드가 채워질 때마다 검증
   useEffect(() => {
@@ -95,9 +97,29 @@ function TimePage() {
     return field === "hour" ? hour.length > 0 : minute.length > 0;
   };
 
-  const handleNext = () => {
-    setBackgroundOpacity(false);
+  const handleNextWithTime = () => {
+    let h24 = parseInt(hour, 10);
+    if (period === "PM" && h24 !== 12) {
+      h24 += 12;
+    }
+    if (period === "AM" && h24 === 12) {
+      // Midnight case
+      h24 = 0;
+    }
+    const finalHour = String(h24).padStart(2, "0");
+    setBirthtime(`${finalHour}:${minute}`);
 
+    setBackgroundOpacity(false);
+    setTimeout(() => {
+      setBackgroundOpacity(true);
+      router.navigate({ to: "/information/gender" });
+    }, 800);
+  };
+
+  const handleNextWithoutTime = () => {
+    setBirthtime(""); // or some indicator for 'don't know'
+
+    setBackgroundOpacity(false);
     setTimeout(() => {
       setBackgroundOpacity(true);
       router.navigate({ to: "/information/gender" });
@@ -246,11 +268,11 @@ function TimePage() {
 
       {/* Bottom Buttons */}
       <div className="relative z-10 flex flex-col gap-5 px-20 py-10">
-        <OutlineButton onClick={handleNext}>
+        <OutlineButton onClick={handleNextWithoutTime}>
           {t("information.time.dontKnow")}
         </OutlineButton>
         <PrimaryButton
-          onClick={handleNext}
+          onClick={handleNextWithTime}
           disabled={hasError || hour.length !== 2 || minute.length !== 2}
         >
           {t("information.time.next")}
