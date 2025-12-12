@@ -4,18 +4,21 @@ interface TagListSectionItem {
   description: string;
 }
 
+
+
 interface TagListSectionProps {
   title: string;
-  items: [TagListSectionItem, TagListSectionItem];
+  items: TagListSectionItem[] | TagListSectionItem;
 }
 
 export function TagListSection({ title, items }: TagListSectionProps) {
+  const normalizedItems = Array.isArray(items) ? items : [items];
   return (
     <section className="rounded-2xl bg-[#171719] p-[28px_20px] space-y-8">
       <h2 className="text-[18px] font-semibold text-[#878A93]">{title}</h2>
 
       <div className="space-y-6">
-        {items.map((item, index) => (
+        {normalizedItems.map((item, index) => (
           <div key={item.tag}>
             <div className="space-y-4">
               <div className="flex items-center gap-2.5">

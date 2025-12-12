@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
