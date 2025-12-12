@@ -10,13 +10,13 @@
     "title": "Select a topic",
     "next": "Next",
     "topics": {
-      "todayFortune": "Today\nFortune",
+      "today": "Today\nFortune",
       "lifetimeFortune": "Lifetime\nFortune",
-      "myZodiacAnimal": "My Zodiac\nAnimal",
-      "koreanTalisman": "Korean\nTalisman",
-      "fiveElementsAnalysis": "Five Elements\nAnalysis",
-      "dateSpecificReading": "Date Specific\nReading",
-      "newYearFortune": "New Year\nFortune"
+      "dayPillarAnimal": "My Zodiac\nAnimal",
+      "physiognomy": "Korean\nTalisman",
+      "fiveElementsV3": "Five Elements\nAnalysis",
+      "specifiedDate": "Date Specific\nReading",
+      "yearly": "New Year\nFortune"
     }
   },
   "date": {
@@ -166,7 +166,7 @@
       "title": "Lifetime Fortune",
       "description": "Today is a day of great financial opportunity. A bold move will lead to significant gains. Trust your instincts in matters of investment."
     },
-    "todaysFortune": {
+    "today": {
       "title": "Today's Fortune",
       "subtitle": "October 26, 2023",
       "mainTitle": "A Day of Unexpected Opportunity",
@@ -174,20 +174,20 @@
       "chip2": "Creativity",
       "chip3": "Connection"
     },
-    "dateSpecific": {
+    "specifiedDate": {
       "title": "Your Fortune for October 26, 2024",
       "mainTitle": "A Day of Unexpected Opportunity",
       "chip1": "Luck",
       "chip2": "Creativity",
       "chip3": "Connection"
     },
-    "fiveElements": {
+    "fiveElementsV3": {
       "title": "Five Elements Analysis",
       "mainImage": "Main",
       "supportingImage": "Supporting",
       "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness."
     },
-    "zodiacAnimal": {
+    "dayPillarAnimal": {
       "title": "My Zodiac Animal",
       "mainTitle": "The Blue Dragon",
       "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness.",
@@ -195,7 +195,7 @@
       "chip2": "Creativity",
       "chip3": "Wisdom"
     },
-    "koreanTalisman": {
+    "physiognomy": {
       "title": "Korean Talisman",
       "mainTitle": "Lucky Talisman",
       "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness."

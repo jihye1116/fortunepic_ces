@@ -43,46 +43,47 @@ function TopicPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // 내부 코드값 매핑
   const topics: TopicItem[] = [
     {
-      id: "todayFortune",
-      label: t("topic.topics.todayFortune"),
+      id: "today",
+      label: t("topic.topics.today"),
       color: "blue",
       svg: TodayFortuneSvg,
     },
     {
-      id: "lifetimeFortune",
+      id: "lifetime",
       label: t("topic.topics.lifetimeFortune"),
       color: "blue",
       svg: LifetimeFortuneSvg,
     },
     {
-      id: "myZodiacAnimal",
-      label: t("topic.topics.myZodiacAnimal"),
+      id: "dayPillarAnimal",
+      label: t("topic.topics.dayPillarAnimal"),
       color: "red",
       svg: ZodiacAnimalSvg,
     },
     {
-      id: "koreanTalisman",
-      label: t("topic.topics.koreanTalisman"),
+      id: "physiognomy",
+      label: t("topic.topics.physiognomy"),
       color: "red",
       svg: KoreanTalismanSvg,
     },
     {
-      id: "fiveElementsAnalysis",
-      label: t("topic.topics.fiveElementsAnalysis"),
+      id: "fiveElementsV3",
+      label: t("topic.topics.fiveElementsV3"),
       color: "red",
       svg: FiveElementsSvg,
     },
     {
-      id: "dateSpecificReading",
-      label: t("topic.topics.dateSpecificReading"),
+      id: "specifiedDate",
+      label: t("topic.topics.specifiedDate"),
       color: "yellow",
       svg: DateSpecificSvg,
     },
     {
-      id: "newYearFortune",
-      label: t("topic.topics.newYearFortune"),
+      id: "yearly",
+      label: t("topic.topics.yearly"),
       color: "yellow",
       svg: NewYearSvg,
     },
@@ -115,13 +116,11 @@ function TopicPage() {
 
   const handleNext = () => {
     setTopicAtom(selectedTopic!);
-
     setBackgroundOpacity(false);
-
     setTimeout(() => {
-      if (selectedTopic === "dateSpecificReading") {
+      if (selectedTopic === "specifiedDate") {
         router.navigate({ to: "/date" });
-      } else if (selectedTopic === "koreanTalisman") {
+      } else if (selectedTopic === "physiognomy") {
         router.navigate({ to: "/talisman-theme" });
       } else {
         router.navigate({ to: "/information" });

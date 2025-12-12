@@ -42,50 +42,50 @@ function RouteComponent() {
           ],
           hasImages: false,
         };
-      case "dateSpecificReading":
+      case "specifiedDate":
         return {
-          title: t("result.dateSpecific.title"),
+          title: t("result.specifiedDate.title"),
           subtitle: null,
-          mainTitle: t("result.dateSpecific.mainTitle"),
+          mainTitle: t("result.specifiedDate.mainTitle"),
           description: null,
           chips: [
-            t("result.dateSpecific.chip1"),
-            t("result.dateSpecific.chip2"),
-            t("result.dateSpecific.chip3"),
+            t("result.specifiedDate.chip1"),
+            t("result.specifiedDate.chip2"),
+            t("result.specifiedDate.chip3"),
           ],
           hasImages: false,
         };
-      case "fiveElementsAnalysis":
+      case "fiveElementsV3":
         return {
-          title: t("result.fiveElements.title"),
+          title: t("result.fiveElementsV3.title"),
           subtitle: null,
           mainTitle: null,
-          description: t("result.fiveElements.description"),
+          description: t("result.fiveElementsV3.description"),
           chips: null,
           hasImages: true,
-          mainImageLabel: t("result.fiveElements.mainImage"),
-          supportingImageLabel: t("result.fiveElements.supportingImage"),
+          mainImageLabel: t("result.fiveElementsV3.mainImage"),
+          supportingImageLabel: t("result.fiveElementsV3.supportingImage"),
         };
-      case "myZodiacAnimal":
+      case "dayPillarAnimal":
         return {
-          title: t("result.zodiacAnimal.title"),
+          title: t("result.dayPillarAnimal.title"),
           subtitle: null,
-          mainTitle: t("result.zodiacAnimal.mainTitle"),
-          description: t("result.zodiacAnimal.description"),
+          mainTitle: t("result.dayPillarAnimal.mainTitle"),
+          description: t("result.dayPillarAnimal.description"),
           chips: [
-            t("result.zodiacAnimal.chip1"),
-            t("result.zodiacAnimal.chip2"),
-            t("result.zodiacAnimal.chip3"),
+            t("result.dayPillarAnimal.chip1"),
+            t("result.dayPillarAnimal.chip2"),
+            t("result.dayPillarAnimal.chip3"),
           ],
           hasImages: true,
           zodiacImage: true,
         };
-      case "koreanTalisman":
+      case "physiognomy":
         return {
-          title: t("result.koreanTalisman.title"),
+          title: t("result.physiognomy.title"),
           subtitle: null,
-          mainTitle: t("result.koreanTalisman.mainTitle"),
-          description: t("result.koreanTalisman.description"),
+          mainTitle: t("result.physiognomy.mainTitle"),
+          description: t("result.physiognomy.description"),
           chips: null,
           hasImages: true,
           talismanImage: true,

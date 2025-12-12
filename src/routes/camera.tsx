@@ -360,7 +360,7 @@ function CameraPage() {
 
               if (!imageBlob) {
                 console.error("Failed to convert data URL to Blob");
-                // Handle error - maybe show a message to the user
+                // Handle error - maybe show ap message to the user
                 setBackgroundOpacity(true);
                 return;
               }
