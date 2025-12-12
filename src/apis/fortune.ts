@@ -2,6 +2,50 @@ import { type Gender } from "@/core/types";
 
 import { instance } from "./instance";
 
+/**
+ * Converts an image Blob to a PNG Blob using a canvas.
+ * @param imageBlob The original image blob to convert.
+ * @returns A promise that resolves with the new PNG blob.
+ */
+const convertToPng = (imageBlob: Blob): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    // If it's already a PNG, no conversion is needed.
+    if (imageBlob.type === "image/png") {
+      resolve(imageBlob);
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        return reject(new Error("Could not get canvas context"));
+      }
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob(
+        blob => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Canvas to Blob conversion failed"));
+          }
+        },
+        "image/png",
+        1,
+      ); // 1 is for full quality
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = err => {
+      URL.revokeObjectURL(img.src);
+      reject(new Error(`Image load error: ${err}`));
+    };
+    img.src = URL.createObjectURL(imageBlob);
+  });
+};
+
 export interface BirthdayData {
   year: string;
   month: string;
@@ -49,24 +93,33 @@ export const analyzeFortuneWithImages = async (
     gender: data.gender && data.gender !== "prefer-not" ? data.gender : "male",
   }));
 
-  // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
+  // 이미지를 PNG로 변환하여 추가 (첫 번째 이미지만 전송)
+  if (data.images && data.images.length > 0) {
+    const image = data.images[0]; // 첫 번째 이미지만 사용
+    try {
+      const pngBlob = await convertToPng(image);
+      const file = new File([pngBlob], "original_image.png", {
+        type: "image/png",
+        lastModified: Date.now(),
+      });
+      formData.append("images", file);
+    } catch (error) {
+      console.error("Failed to convert image to PNG:", error);
+    }
+  }
+
+    // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
   formData.append("birthday", JSON.stringify(birthdayPayload));
-  formData.append("heads", JSON.stringify(data.heads));
-  formData.append("relationship", JSON.stringify(data.relationship || ""));
   formData.append("theme", data.theme);
   formData.append("language", JSON.stringify(data.language));
 
-  // 이미지를 File 객체로 변환하여 추가 (첫 번째 이미지만 전송)
-  if (data.images && data.images.length > 0) {
-    const image = data.images[0]; // 첫 번째 이미지만 사용
-    // Blob을 File 객체로 변환
-    // 문서 형식에 맞춰 파일명과 타입을 image/jpeg로 고정
-    const file = new File([image], "original_image.jpg", {
-      type: "image/jpeg",
-      lastModified: Date.now(),
-    });
-    formData.append("images", file);
-  }
+  console.log("요청 페이로드:", {
+    birthday: birthdayPayload,
+    theme: data.theme,
+    // heads: data.heads,
+  });
+
+
 
   // multipart/form-data로 전송
   // ⚠️ 중요: Content-Type을 수동으로 설정하면 boundary가 누락되어 400 에러 발생!

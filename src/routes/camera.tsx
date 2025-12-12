@@ -18,7 +18,7 @@ import {
   birthdateAtom,
   birthtimeAtom,
   capturedPhotosAtom,
-  type FortuneResult,
+  FortuneResult,
   fortuneResultAtom,
   genderAtom,
   topicAtom,
@@ -51,17 +51,22 @@ function CameraPage() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
+  // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  // Local State
   const [step, setStep] = useState<"info" | "capture" | "select">("info");
-  const [capturedPhotos, setCapturedPhotos] = useAtom(capturedPhotosAtom);
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [countdown, setCountdown] = useState<number>(5);
   const [remainingShots, setRemainingShots] = useState<number>(2);
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Global State (Jotai)
+  const [capturedPhotos, setCapturedPhotos] = useAtom(capturedPhotosAtom);
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
   const birthdate = useAtomValue(birthdateAtom);
   const birthtime = useAtomValue(birthtimeAtom);
@@ -76,7 +81,6 @@ function CameraPage() {
       setStep("capture");
       setBackgroundOpacity(true);
     }, 800);
-    //
   };
 
   // 카메라 권한 확인 및 스트림 시작
@@ -133,7 +137,7 @@ function CameraPage() {
     }
   }, [isCameraReady, isCountingDown, remainingShots, step]);
 
-  // 카운트다운 타이머
+  // 카운트다운 타이머 및 촬영 로직
   useEffect(() => {
     if (!isCountingDown || countdown < 0) return;
 
@@ -150,7 +154,7 @@ function CameraPage() {
               0,
               0,
               canvasRef.current.width,
-              canvasRef.current.height,
+              canvasRef.current.height
             );
             const photoDataUrl = canvasRef.current.toDataURL("image/jpeg", 0.9);
             setCapturedPhotos([...capturedPhotos, photoDataUrl]);
@@ -166,18 +170,18 @@ function CameraPage() {
           setTimeout(() => {
             setIsCountingDown(true);
             setCountdown(5);
-          }, 1000);
+          }, 100);
         } else {
           // 모든 촬영 완료 - select 화면으로 전환
           setTimeout(() => {
             setStep("select");
             setBackgroundOpacity(false);
-          }, 1000);
+          }, 100);
         }
       } else {
         setCountdown(countdown - 1);
       }
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [
@@ -189,34 +193,11 @@ function CameraPage() {
     setBackgroundOpacity,
   ]);
 
-  // 사진 촬영 (사용 안함 - 카운트다운에서 직접 처리)
-  // const handleCapture = () => {
-  //   if (!videoRef.current || !canvasRef.current) return;
-
-  //   const context = canvasRef.current.getContext("2d");
-  //   if (!context) return;
-
-  //   canvasRef.current.width = videoRef.current.videoWidth;
-  //   canvasRef.current.height = videoRef.current.videoHeight;
-
-  //   context.drawImage(
-  //     videoRef.current,
-  //     0,
-  //     0,
-  //     canvasRef.current.width,
-  //     canvasRef.current.height,
-  //   );
-
-  //   const photoDataUrl = canvasRef.current.toDataURL("image/jpeg", 0.9);
-  //   setCapturedPhotos([...capturedPhotos, photoDataUrl]);
-  // };
-
-  // Info 화면
+  // --- RENDER: Info Step ---
   if (step === "info") {
     return (
       <main className="h-dvh">
         <NavigationBar />
-
         <Title text={t("camera.info.title")} />
 
         {/* Contents */}
@@ -244,22 +225,7 @@ function CameraPage() {
     );
   }
 
-  // if (hasPermission === false) {
-  //   return (
-  //     <main className="h-dvh bg-black">
-  //       <div className="flex flex-col items-center justify-center gap-4 px-20 py-10">
-  //         <p className="text-center text-xl text-gray-300">
-  //           카메라 접근 권한이 필요합니다.
-  //         </p>
-  //         <p className="text-center text-sm text-gray-500">
-  //           브라우저 설정에서 카메라 권한을 허용해주세요.
-  //         </p>
-  //       </div>
-  //     </main>
-  //   );
-  // }
-
-  // Capture 화면
+  // --- RENDER: Capture Step ---
   if (step === "capture") {
     return (
       <main className="flex h-dvh flex-col bg-black">
@@ -283,7 +249,7 @@ function CameraPage() {
         {/* Countdown - 하단 */}
         <div className="flex flex-1 flex-col items-center bg-[#141415] px-20">
           <div className="h-fit py-20">
-            <p className="text-[6.25rem] leading-[1.3] font-semibold tracking-[-0.169rem] text-white">
+            <p className="text-[6.25rem] font-semibold leading-[1.3] tracking-[-0.169rem] text-white">
               {countdown}
             </p>
           </div>
@@ -300,134 +266,152 @@ function CameraPage() {
     );
   }
 
+  // --- RENDER: Select Step ---
   return (
-    <main className="flex h-dvh flex-col bg-black">
-      <NavigationBar />
+    <>
+      <main className="flex h-dvh flex-col bg-black">
+        <NavigationBar />
 
-      <Title
-        text={t("camera.select.title")}
-        subtext={t("camera.select.subtitle")}
-      />
+        <Title
+          text={t("camera.select.title")}
+          subtext={t("camera.select.subtitle")}
+        />
 
-      {/* 사진 선택 */}
-      <div className="flex gap-5 px-20 py-12">
-        {capturedPhotos.map((photo, idx) => (
-          <button
-            key={idx}
-            className="relative h-84.5 flex-1 overflow-hidden rounded-xl"
-            onClick={() => setSelectedPhotoIndex(idx)}
-          >
-            {/* 사진 이미지 */}
-            <img
-              src={photo}
-              alt={`Captured ${idx + 1}`}
-              className="h-full w-full object-cover"
-            />
+        {/* 사진 선택 */}
+        <div className="flex gap-5 px-20 py-12">
+          {capturedPhotos.map((photo, idx) => (
+            <button
+              key={idx}
+              className="relative h-84.5 flex-1 overflow-hidden rounded-xl"
+              onClick={() => setSelectedPhotoIndex(idx)}
+            >
+              {/* 사진 이미지 */}
+              <img
+                src={photo}
+                alt={`Captured ${idx + 1}`}
+                className="h-full w-full object-cover"
+              />
 
-            {/* 선택된 사진: 그라데이션 테두리 */}
-            {idx === selectedPhotoIndex && (
-              <>
-                {/* 그라데이션 배경 레이어 */}
-                <div className="absolute inset-0 rounded-xl bg-linear-to-br from-[#5b72b7] via-[#8495c9] to-[#ed474a] p-[5px]">
-                  <div className="h-full w-full rounded-[7px] bg-black" />
-                </div>
-                {/* 이미지를 다시 위에 표시 */}
-                <img
-                  src={photo}
-                  alt={`Captured ${idx + 1}`}
-                  className="absolute inset-[5px] h-[calc(100%-10px)] w-[calc(100%-10px)] rounded-[7px] object-cover"
-                />
-              </>
-            )}
+              {/* 선택된 사진: 그라데이션 테두리 */}
+              {idx === selectedPhotoIndex && (
+                <>
+                  {/* 그라데이션 배경 레이어 */}
+                  <div className="absolute inset-0 rounded-xl bg-linear-to-br from-[#5b72b7] via-[#8495c9] to-[#ed474a] p-[5px]">
+                    <div className="h-full w-full rounded-[7px] bg-black" />
+                  </div>
+                  {/* 이미지를 다시 위에 표시 */}
+                  <img
+                    src={photo}
+                    alt={`Captured ${idx + 1}`}
+                    className="absolute inset-[5px] h-[calc(100%-10px)] w-[calc(100%-10px)] rounded-[7px] object-cover"
+                  />
+                </>
+              )}
 
-            {/* 선택되지 않은 사진: 흰색 반투명 테두리 */}
-            {idx !== selectedPhotoIndex && (
-              <div className="absolute inset-0 rounded-xl border border-white/20 opacity-80" />
-            )}
-          </button>
-        ))}
-      </div>
+              {/* 선택되지 않은 사진: 흰색 반투명 테두리 */}
+              {idx !== selectedPhotoIndex && (
+                <div className="absolute inset-0 rounded-xl border border-white/20 opacity-80" />
+              )}
+            </button>
+          ))}
+        </div>
 
-      <div className="flex flex-col gap-5 px-20 py-10">
-        <PrimaryButton
-          onClick={async () => {
-            setBackgroundOpacity(false);
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-5 px-20 py-10">
+          <PrimaryButton
+            disabled={isLoading}
+            onClick={async () => {
+              setIsLoading(true);
+              setBackgroundOpacity(false);
 
-            try {
-              // 1. Get selected photo and convert to Blob
-              const selectedPhotoDataUrl = capturedPhotos[selectedPhotoIndex];
-              const imageBlob = dataURLtoBlob(selectedPhotoDataUrl);
+              try {
+                // 1. Get selected photo and convert to Blob
+                const selectedPhotoDataUrl = capturedPhotos[selectedPhotoIndex];
+                const imageBlob = dataURLtoBlob(selectedPhotoDataUrl);
 
-              if (!imageBlob) {
-                console.error("Failed to convert data URL to Blob");
-                // Handle error - maybe show ap message to the user
+                if (!imageBlob) {
+                  console.error("Failed to convert data URL to Blob");
+                  setBackgroundOpacity(true);
+                  setIsLoading(false);
+                  return;
+                }
+
+                // Update atom with just the selected photo
+                setCapturedPhotos([selectedPhotoDataUrl]);
+
+                // 2. Prepare request data
+                const [year, month, day] = birthdate.split("-");
+                const [hour, minute] = birthtime.split(":");
+
+                const requestData: FortuneAnalysisRequest = {
+                  birthday: [
+                    {
+                      year,
+                      month,
+                      day,
+                      hour,
+                      minute,
+                      calendar: "solar",
+                      time: birthtime,
+                    },
+                  ],
+                  heads: 1,
+                  relationship: "",
+                  theme: (topic || "basic") as ThemeType,
+                  language: i18n.language,
+                  images: [imageBlob],
+                  gender: gender || undefined,
+                };
+
+                // 3. Call API
+                const result = await analyzeFortuneWithImages(requestData);
+
+                // 4. Store result
+                setFortuneResult({ 0: result as FortuneResult });
+
+                // 5. Navigate to result page
+                setTimeout(() => {
+                  router.navigate({ to: "/result" });
+                  setBackgroundOpacity(true);
+                }, 800);
+              } catch (error) {
+                console.error("Fortune analysis API failed:", error);
                 setBackgroundOpacity(true);
-                return;
+                setIsLoading(false);
               }
+            }}
+          >
+            {isLoading ? "분석 중..." : t("camera.select.next")}
+          </PrimaryButton>
 
-              // Update atom with just the selected photo
-              setCapturedPhotos([selectedPhotoDataUrl]);
-
-              // 2. Prepare request data
-              const [year, month, day] = birthdate.split("-");
-              const [hour, minute] = birthtime.split(":");
-
-              const requestData: FortuneAnalysisRequest = {
-                birthday: [
-                  {
-                    year,
-                    month,
-                    day,
-                    hour,
-                    minute,
-                    calendar: "solar",
-                    time: birthtime,
-                  },
-                ],
-                heads: 1,
-                relationship: "",
-                theme: (topic || "basic") as ThemeType,
-                language: i18n.language,
-                images: [imageBlob],
-                gender: gender || undefined,
-              };
-
-              // 3. Call API
-              const result = await analyzeFortuneWithImages(requestData);
-
-              // 4. Store result
-              setFortuneResult({ 0: result as FortuneResult });
-
-              // 5. Navigate to result page
+          <CancelButton
+            onCancel={() => {
+              setBackgroundOpacity(false);
               setTimeout(() => {
-                router.navigate({ to: "/result" });
+                setStep("capture");
+                setCapturedPhotos([]);
+                setRemainingShots(2);
+                setIsCameraReady(false);
                 setBackgroundOpacity(true);
               }, 800);
-            } catch (error) {
-              console.error("Fortune analysis API failed:", error);
-              // TODO: Show error message to the user
-              setBackgroundOpacity(true); // reset opacity on error
-            }
-          }}
-        >
-          {t("camera.select.next")}
-        </PrimaryButton>
+            }}
+          >
+            {t("camera.select.retake")}
+          </CancelButton>
+        </div>
+      </main>
 
-        <CancelButton
-          onCancel={() => {
-            setBackgroundOpacity(false);
-            setTimeout(() => {
-              setStep("capture");
-              setCapturedPhotos([]);
-              setRemainingShots(2);
-              setIsCameraReady(false);
-              setBackgroundOpacity(true);
-            }, 800);
-          }}
-        >
-          {t("camera.select.retake")}
-        </CancelButton>
-      </div>
-    </main>
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="text-center">
+            <p className="text-2xl font-semibold text-white">
+              Analyzing your fortune...
+            </p>
+            <p className="mt-2 text-white/70">Please wait a moment.</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
