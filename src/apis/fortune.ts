@@ -110,8 +110,7 @@ export const analyzeFortuneWithImages = async (
 
     // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
   formData.append("birthday", JSON.stringify(birthdayPayload));
-  formData.append("theme", 'today');
-  // formData.append("theme", data.theme);
+  formData.append("theme", data.theme);
   formData.append("language", 'ko');
   // formData.append("language", JSON.stringify(data.language));
 
