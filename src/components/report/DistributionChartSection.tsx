@@ -3,7 +3,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 interface DistributionChartItem {
   label: string;
   value: number;
-  icon: string;
+  icon: string | React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
 
 interface DistributionChartSectionProps {
@@ -26,7 +26,7 @@ export function DistributionChartSection({
   const chartData = items.map((item) => ({
     name: item.label,
     value: item.value,
-    icon: item.icon,
+    icon: item.icon, // We won't use this directly in Recharts default tooltip/legend, but it's here if needed
   }));
 
   return (
@@ -70,11 +70,15 @@ export function DistributionChartSection({
                 {/* Left: Icon + Label */}
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 flex items-center justify-center">
-                    <img 
-                      src={item.icon} 
-                      alt={item.label} 
-                      className="w-full h-full object-contain"
-                    />
+                    {typeof item.icon === "string" ? (
+                      <img 
+                        src={item.icon} 
+                        alt={item.label} 
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <item.icon className="w-full h-full" />
+                    )}
                   </div>
                   <div className="h-8 flex items-center">
                     <span className="text-[15px] font-medium leading-[1.46] tracking-[0.5%] text-[#E1E2E4]">
