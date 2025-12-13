@@ -1,8 +1,10 @@
 interface DailyAnimalCardProps {
   nickname: string;
+  animal?: string;
+  description?: string;
 }
 
-export function DailyAnimalCard({ nickname }: DailyAnimalCardProps) {
+export function DailyAnimalCard({ nickname, animal, description }: DailyAnimalCardProps) {
   return (
     <section className="rounded-2xl bg-linear-to-b from-black/20 to-[#171719] p-[28px_20px] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)] relative">
       {/* Header */}
@@ -33,10 +35,10 @@ export function DailyAnimalCard({ nickname }: DailyAnimalCardProps) {
       <h2
         className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#1E2F63] text-[22px] font-bold text-center"
       >
-        Tiger
+        {animal || "Tiger"}
       </h2>
-      <div className="text-[14px] leading-[1.57] text-[#AEB0B6] whitespace-pre-line">
-        당신의 오늘의 필살기 동물은 용맹함과 지혜를 상징하는 동물로, 오늘 하루 동안 당신에게 특별한 보호와 행운을 가져다 줄 것입니다. 이 동물의 에너지를 느끼며 자신감을 가지고 하루를 보내세요.
+      <div className="text-[14px] leading-[1.57] text-[#AEB0B6] whitespace-pre-line text-center">
+        {description || "당신의 오늘의 필살기 동물은 용맹함과 지혜를 상징하는 동물로, 오늘 하루 동안 당신에게 특별한 보호와 행운을 가져다 줄 것입니다. 이 동물의 에너지를 느끼며 자신감을 가지고 하루를 보내세요."}
       </div>
     </section>
   );
