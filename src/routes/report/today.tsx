@@ -19,25 +19,41 @@ export const Route = createFileRoute("/report/today")({
 });
 
 function TodayFortunePage() {
+    // 운세 점수 및 키워드 추출 함수
+    function extractScoreAndKeywords(summary: string | undefined) {
+      if (!summary) return { score: undefined, keywords: [] };
+      // 점수 추출 (예: "오늘의 운세 점수는 65점으로, ...")
+      const scoreMatch = summary.match(/운세 점수는 (\d+)점/);
+      const score = scoreMatch ? parseInt(scoreMatch[1], 10) : undefined;
+      // 키워드 추출 (예: "'적응', '성장', '신중함'을 키워드로 꼽을 수 있습니다.")
+      const keywordsMatch = summary.match(/'([^']+)'(?:, '([^']+)')?(?:, '([^']+)')?/);
+      const keywords = keywordsMatch
+        ? keywordsMatch.slice(1).filter(Boolean)
+        : [];
+      return { score, keywords };
+    }
   const data = dummyReportData;
 
+
+
   const fortuneResult = getFortuneResultFromStorage();
-  const todayFortune = fortuneResult?.find((item: any) => item.result?.todayFortune);
+  const todayFortune = fortuneResult?.[0]?.result?.todayFortune;
+  const sajuInfo = fortuneResult?.[0]?.sajuInfo;
+  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
 
   // pillars 매핑
-  const mappedPillars = todayFortune?.sajuInfo?.pillars
-    ? mapApiToPillars(todayFortune.sajuInfo.pillars)
+  const mappedPillars = sajuInfo?.pillars
+    ? mapApiToPillars(sajuInfo.pillars)
     : data.pillars;
 
-  const nickname = todayFortune?.nickname || data.nickname;
-
   // overallSummary를 DetailedEnergyAnalysis의 description으로 사용
-  const overallSummary = todayFortune?.result?.todayFortune?.overallSummary ||
+  const overallSummary = todayFortune?.overallSummary ||
     `당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.`;
+  const { score: extractedScore, keywords: extractedKeywords } = extractScoreAndKeywords(todayFortune?.overallSummary);
 
   // timeAnalysis를 CardCarousel용으로 매핑
-  const mappedTimeFlows = todayFortune?.result?.todayFortune?.timeAnalysis
-    ? mapTimeFlows(todayFortune.result.todayFortune.timeAnalysis)
+  const mappedTimeFlows = todayFortune?.timeAnalysis
+    ? mapTimeFlows(todayFortune.timeAnalysis)
     : data.timeFlows.map((flow) => ({
         id: flow.time,
         imageUrl: {
@@ -53,8 +69,8 @@ function TodayFortunePage() {
       }));
 
   // Timing Prediction 매핑
-  const mappedTimingPrediction = todayFortune?.result?.todayFortune
-    ? mapTimingPrediction(todayFortune.result.todayFortune)
+  const mappedTimingPrediction = todayFortune
+    ? mapTimingPrediction(todayFortune)
     : [
         {
           tag: "Best Time",
@@ -69,8 +85,8 @@ function TodayFortunePage() {
       ];
 
   // Action Guide 매핑
-  const mappedActionGuide = todayFortune?.result?.todayFortune
-    ? mapActionGuide(todayFortune.result.todayFortune)
+  const mappedActionGuide = todayFortune
+    ? mapActionGuide(todayFortune)
     : [
         {
           tag: "Recommend",
@@ -85,8 +101,8 @@ function TodayFortunePage() {
       ];
 
   // Lucky Food 매핑
-  const mappedLuckyFood = todayFortune?.result?.todayFortune?.luckyFood
-    ? mapLuckyFood(todayFortune.result.todayFortune.luckyFood)
+  const mappedLuckyFood = todayFortune?.luckyFood
+    ? mapLuckyFood(todayFortune.luckyFood)
     : {
         title: "Lucky Korean Food",
         imageUrl: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
@@ -101,6 +117,8 @@ function TodayFortunePage() {
         ],
       };
 
+
+      console.log("todayFortune:", fortuneResult);
   return (
     <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
       <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
@@ -115,8 +133,8 @@ function TodayFortunePage() {
           <FaceReading faceReadingAreas={data.faceReadingAreas} />
 
           <DetailedEnergyAnalysis
-            score={85}
-            keywords={["Growth", "Harmony", "Opportunity"]}
+            score={extractedScore ?? 85}
+            keywords={extractedKeywords.length > 0 ? extractedKeywords : ["Growth", "Harmony", "Opportunity"]}
             description={overallSummary}
           />
 
