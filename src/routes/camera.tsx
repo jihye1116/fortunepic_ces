@@ -21,6 +21,7 @@ import {
   FortuneResult,
   fortuneResultAtom,
   genderAtom,
+  targetDateAtom,
   topicAtom,
 } from "@/store/atoms";
 
@@ -72,6 +73,7 @@ function CameraPage() {
   const birthtime = useAtomValue(birthtimeAtom);
   const gender = useAtomValue(genderAtom);
   const topic = useAtomValue(topicAtom);
+  const targetDate = useAtomValue(targetDateAtom);
   const setFortuneResult = useSetAtom(fortuneResultAtom);
 
   // Info 화면에서 카메라 화면으로 전환
@@ -361,6 +363,9 @@ function CameraPage() {
                   language: i18n.language,
                   images: [imageBlob],
                   gender: gender || undefined,
+                  targetDate: targetDate
+                    ? `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, "0")}-${String(targetDate.getDate()).padStart(2, "0")}`
+                    : undefined,
                 };
 
                 // 3. Call API

@@ -1,19 +1,23 @@
 
 interface DetailedEnergyAnalysisProps {
+  title?: string;
   score: number;
   keywords: string[];
   description: string;
+  tagColor?: string;
 }
 
 export function DetailedEnergyAnalysis({
+  title = "Detailed Energy Analysis",
   score,
   keywords,
   description,
+  tagColor = "#5B72B7",
 }: DetailedEnergyAnalysisProps) {
   return (
     <section className="rounded-2xl bg-[#171719] p-6 space-y-6">
       <h2 className="text-[18px] font-semibold text-[#878A93]">
-        Detailed Energy Analysis
+        {title}
       </h2>
 
       <div className="space-y-1">
@@ -33,7 +37,11 @@ export function DetailedEnergyAnalysis({
 
       <div className="flex flex-wrap gap-2">
         {keywords.map((keyword) => (
-          <div key={keyword} className="rounded-full bg-[#5B72B7] px-3 py-1.5">
+          <div
+            key={keyword}
+            className="rounded-full px-3 py-1.5"
+            style={{ backgroundColor: tagColor }}
+          >
             <span className="text-[13px] text-black/70">{keyword}</span>
           </div>
         ))}

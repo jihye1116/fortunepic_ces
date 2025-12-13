@@ -1,5 +1,6 @@
 import { cn } from "@sglara/cn";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -7,6 +8,7 @@ import BackIcon from "@/assets/icons/back.svg?react";
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
 import { MONTHS, WEEKDAYS } from "@/core/constants";
+import { targetDateAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/date")({
   component: DatePage,
@@ -14,6 +16,8 @@ export const Route = createFileRoute("/date")({
 
 function DatePage() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const setTargetDate = useSetAtom(targetDateAtom);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -158,7 +162,12 @@ function DatePage() {
 
         {/* Next Button */}
         {selectedDate && (
-          <SecondaryButton onClick={() => console.log(selectedDate)}>
+          <SecondaryButton
+            onClick={() => {
+              setTargetDate(selectedDate);
+              router.navigate({ to: "/information" });
+            }}
+          >
             Next
           </SecondaryButton>
         )}

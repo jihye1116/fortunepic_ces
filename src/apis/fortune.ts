@@ -73,6 +73,7 @@ export interface FortuneAnalysisRequest {
   language: string;
   images: Blob[];
   gender?: Gender;
+  targetDate?: string;
 }
 
 export type FortuneAnalysisResponse = unknown;
@@ -111,6 +112,11 @@ export const analyzeFortuneWithImages = async (
     // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
   formData.append("birthday", JSON.stringify(birthdayPayload));
   formData.append("theme", data.theme);
+
+  if (data.theme === "specifiedDate" && data.targetDate) {
+    formData.append("targetDate", data.targetDate);
+  }
+
   formData.append("language", 'ko');
   // formData.append("language", JSON.stringify(data.language));
 
