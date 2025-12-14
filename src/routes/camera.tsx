@@ -10,6 +10,7 @@ import {
 } from "@/apis/fortune";
 import GuideIcon from "@/assets/icons/guide.svg?react";
 import { CancelButton } from "@/components/CancelButton";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import { NavigationBar } from "@/components/NavigationBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { Title } from "@/components/Title";
@@ -420,7 +421,7 @@ function CameraPage() {
               }
             }}
           >
-            {isLoading ? "분석 중..." : t("camera.select.next")}
+            {t("camera.select.next")}
           </PrimaryButton>
 
           <CancelButton
@@ -441,16 +442,7 @@ function CameraPage() {
       </main>
 
       {/* Loading Overlay */}
-      {isLoading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-          <div className="text-center">
-            <p className="text-2xl font-semibold text-white">
-              Analyzing your fortune...
-            </p>
-            <p className="mt-2 text-white/70">Please wait a moment.</p>
-          </div>
-        </div>
-      )}
+      {isLoading && <LoadingScreen />}
     </>
   );
 }

@@ -7,6 +7,7 @@ interface PersonalizedAdviceProps {
 
 export function PersonalizedAdvice({
   beneficialEnergies,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   regulatingEnergies,
 }: PersonalizedAdviceProps) {
   return (
@@ -30,7 +31,7 @@ export function PersonalizedAdvice({
             ))}
           </div>
         </div>
-
+        {/* changed planning
         <div className="h-0.5 w-full bg-[#212225]" />
 
         <div className="space-y-4">
@@ -46,7 +47,7 @@ export function PersonalizedAdvice({
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
