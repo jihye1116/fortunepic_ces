@@ -25,6 +25,8 @@ function FiveElementsFortunePage() {
 
   const fortuneResult = getFortuneResultFromStorage();
   const sajuInfo = fortuneResult?.[0]?.sajuInfo;
+  const imageAnalysis = fortuneResult?.[0]?.result?.imageAnalysis;
+  const analysisV3 = fortuneResult?.[0]?.result?.fiveElementsAnalysisV3;
   const nickname = fortuneResult?.[0]?.nickname || data.nickname;
 
   // 1. Four Pillars Data Mapping
@@ -46,7 +48,55 @@ function FiveElementsFortunePage() {
     ? mapEssentialSelf(sajuInfo)
     : data.essentialSelfItems;
 
-  
+  // 4. Image Analysis Mapping
+  const mappedImageAnalysis = imageAnalysis
+    ? {
+        title: "Growth Direction Guidance",
+        imageUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
+        subTitle: imageAnalysis.mood || "Analysis",
+        description: imageAnalysis.description,
+        detailedDescription: `Camera Angle: ${imageAnalysis.cameraAngle}\nBackground: ${imageAnalysis.backgroundColor}`,
+      }
+    : {
+        title: "Growth Direction Guidance",
+        imageUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
+        subTitle: "Donations",
+        description: "donate to non-profit organizations that support the education",
+        detailedDescription: "Prepare your bowl by arranging the cooked rice, various colorful vegetables, and marinated meat on top. Fry an egg sunny-side up, ensuring the yolk remains runny and bright. Place the fried egg, a generous dollop of gochujang (chili paste), and sesame oil onto the rice. Mix all ingredients thoroughly, adjusting the sauce quantity to match your preferred taste. Enjoy your beautifully mixed Bibimbap immediately while it's warm!",
+      };
+
+  // 5. Detailed List Mapping (10 Gods & Life Stages)
+  const mappedDetailedList = analysisV3?.dayPillarAnalysis
+    ? [
+        {
+          title: "Heavenly Stems 10 Gods",
+          description: analysisV3.dayPillarAnalysis.heavenlyStemAnalysis,
+        },
+        {
+          title: "Earthly Branch 10 Gods",
+          description: analysisV3.dayPillarAnalysis.earthlyBranchAnalysis,
+        },
+        {
+          title: "12 Life Stages",
+          description: analysisV3.dayPillarAnalysis.twelveStageAnalysis?.combinedAnalysis,
+        },
+      ]
+    : data.tenGodsAndLifeStages
+      ? [
+          {
+            title: "Heavenly Stems 10 Gods",
+            description: data.tenGodsAndLifeStages.heavenlyStems,
+          },
+          {
+            title: "Earthly Branch 10 Gods",
+            description: data.tenGodsAndLifeStages.earthlyBranches,
+          },
+          {
+            title: "12 Life Stages",
+            description: data.tenGodsAndLifeStages.lifeStages,
+          },
+        ]
+      : null;
 
   return (
     <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
@@ -72,32 +122,16 @@ function FiveElementsFortunePage() {
             <EssentialSelfSection items={mappedEssentialSelf} />
           )}
           
-          {/* DetailedListSection omitted for API data as descriptions are missing */}
-          { data.tenGodsAndLifeStages && (
-            <DetailedListSection
-              items={[
-                {
-                  title: "Heavenly Stems 10 Gods",
-                  description: data.tenGodsAndLifeStages.heavenlyStems,
-                },
-                {
-                  title: "Earthly Branch 10 Gods",
-                  description: data.tenGodsAndLifeStages.earthlyBranches,
-                },
-                {
-                  title: "12 Life Stages",
-                  description: data.tenGodsAndLifeStages.lifeStages,
-                },
-              ]}
-            />
+          {mappedDetailedList && (
+            <DetailedListSection items={mappedDetailedList} />
           )}
 
           <ImageDescriptionSection
-            title="Growth Direction Gudiance"
-            imageUrl="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60"
-            subTitle="Donations"
-            description="donate to non-profit organizations that support the education"
-            detailedDescription="Prepare your bowl by arranging the cooked rice, various colorful vegetables, and marinated meat on top. Fry an egg sunny-side up, ensuring the yolk remains runny and bright. Place the fried egg, a generous dollop of gochujang (chili paste), and sesame oil onto the rice. Mix all ingredients thoroughly, adjusting the sauce quantity to match your preferred taste. Enjoy your beautifully mixed Bibimbap immediately while it's warm!"
+            title={mappedImageAnalysis.title}
+            imageUrl={mappedImageAnalysis.imageUrl}
+            subTitle={mappedImageAnalysis.subTitle}
+            description={mappedImageAnalysis.description}
+            detailedDescription={mappedImageAnalysis.detailedDescription}
           />
 
           <ReportFooter />
