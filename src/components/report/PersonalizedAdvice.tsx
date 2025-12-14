@@ -8,7 +8,7 @@ interface PersonalizedAdviceProps {
 export function PersonalizedAdvice({
   beneficialEnergies,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  regulatingEnergies,
+  // regulatingEnergies,
 }: PersonalizedAdviceProps) {
   return (
     <section className="rounded-2xl bg-[#171719] p-[28px_20px] space-y-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">

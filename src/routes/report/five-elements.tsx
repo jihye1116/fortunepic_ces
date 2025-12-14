@@ -25,7 +25,6 @@ function FiveElementsFortunePage() {
 
   const fortuneResult = getFortuneResultFromStorage();
   const sajuInfo = fortuneResult?.[0]?.sajuInfo;
-  const imageAnalysis = fortuneResult?.[0]?.result?.imageAnalysis;
   const analysisV3 = fortuneResult?.[0]?.result?.fiveElementsAnalysisV3;
   const nickname = fortuneResult?.[0]?.nickname || data.nickname;
 
@@ -49,20 +48,12 @@ function FiveElementsFortunePage() {
     : data.essentialSelfItems;
 
   // 4. Image Analysis Mapping
-  const mappedImageAnalysis = imageAnalysis
-    ? {
-        title: "Growth Direction Guidance",
-        imageUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
-        subTitle: imageAnalysis.mood || "Analysis",
-        description: imageAnalysis.description,
-        detailedDescription: `Camera Angle: ${imageAnalysis.cameraAngle}\nBackground: ${imageAnalysis.backgroundColor}`,
-      }
-    : {
+  const mappedImageAnalysis = {
         title: "Growth Direction Guidance",
         imageUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
         subTitle: "Donations",
         description: "donate to non-profit organizations that support the education",
-        detailedDescription: "Prepare your bowl by arranging the cooked rice, various colorful vegetables, and marinated meat on top. Fry an egg sunny-side up, ensuring the yolk remains runny and bright. Place the fried egg, a generous dollop of gochujang (chili paste), and sesame oil onto the rice. Mix all ingredients thoroughly, adjusting the sauce quantity to match your preferred taste. Enjoy your beautifully mixed Bibimbap immediately while it's warm!",
+       detailedDescription: analysisV3.lackingElement.solution,
       };
 
   // 5. Detailed List Mapping (10 Gods & Life Stages)
