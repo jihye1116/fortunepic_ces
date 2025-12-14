@@ -19,9 +19,9 @@ import {
   birthdateAtom,
   birthtimeAtom,
   capturedPhotosAtom,
-  FortuneResult,
   fortuneResultAtom,
   genderAtom,
+  nicknameAtom,
   targetDateAtom,
   topicAtom,
 } from "@/store/atoms";
@@ -73,6 +73,7 @@ function CameraPage() {
   const birthdate = useAtomValue(birthdateAtom);
   const birthtime = useAtomValue(birthtimeAtom);
   const gender = useAtomValue(genderAtom);
+  const nickname = useAtomValue(nicknameAtom);
   const topic = useAtomValue(topicAtom);
   const targetDate = useAtomValue(targetDateAtom);
   const setFortuneResult = useSetAtom(fortuneResultAtom);
@@ -373,9 +374,10 @@ function CameraPage() {
                 const result = await analyzeFortuneWithImages(requestData);
 
                 // 4. Store result
-                setFortuneResult({ 0: result as FortuneResult });
+                const resultWithNickname = { ...(result as object), nickname };
+                setFortuneResult({ 0: resultWithNickname });
                 // 개발용: localStorage에도 저장
-                localStorage.setItem("fortuneResultAtom", JSON.stringify({ 0: result }));
+                localStorage.setItem("fortuneResultAtom", JSON.stringify({ 0: resultWithNickname }));
 
                 // TODO :: 5. Navigate to result page 
                 // setTimeout(() => {

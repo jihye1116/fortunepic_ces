@@ -1,8 +1,10 @@
+import { useSetAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { Drawer } from "vaul";
 
 import { CancelButton } from "@/components/CancelButton";
 import { SecondaryButton } from "@/components/SecondaryButton";
+import { resetAllAtoms } from "@/store/atoms";
 
 interface ConfirmBottomSheetProps {
   open: boolean;
@@ -16,8 +18,10 @@ export const ConfirmBottomSheet = ({
   onConfirm,
 }: ConfirmBottomSheetProps) => {
   const { t } = useTranslation();
+  const resetAtoms = useSetAtom(resetAllAtoms);
 
   const handleConfirm = () => {
+    resetAtoms();
     onConfirm();
     onOpenChange(false);
   };
