@@ -2,6 +2,8 @@
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
@@ -18,6 +20,7 @@ export const Route = createFileRoute("/report/lifetime")({
 
 
 function LifetimeReportPage() {
+  const { t } = useTranslation();
   const data = dummyReportData;
   // localStorage 우선, 없으면 jotai atom
 
@@ -26,13 +29,13 @@ function LifetimeReportPage() {
 
   // pillars 매핑: sajuInfo.pillars에서 추출
   const mappedPillars = lifetimeFortune?.sajuInfo?.pillars
-    ? mapApiToPillars(lifetimeFortune.sajuInfo.pillars)
+    ? mapApiToPillars(lifetimeFortune.sajuInfo.pillars, t)
     : data.pillars;
 
 
   // lifePhases 매핑
   const mappedLifePhases = lifetimeFortune?.result?.lifetimeFortune?.lifePeriodFlow
-    ? mapLifePhases(lifetimeFortune.result.lifetimeFortune.lifePeriodFlow)
+    ? mapLifePhases(lifetimeFortune.result.lifetimeFortune.lifePeriodFlow, t)
     : data.lifePhases;
 
 
@@ -47,7 +50,7 @@ function LifetimeReportPage() {
 
   // AreaSpecificStrategies 매핑
   const mappedAreaStrategies = lifetimeFortune?.result?.lifetimeFortune?.domainKaiun
-    ? mapAreaStrategies(lifetimeFortune.result.lifetimeFortune.domainKaiun)
+    ? mapAreaStrategies(lifetimeFortune.result.lifetimeFortune.domainKaiun, t)
     : data.areaStrategies;
 
   // 디버깅용 콘솔
@@ -82,12 +85,12 @@ function LifetimeReportPage() {
   );
 }
 
-function mapApiToPillars(apiPillars: any): any[] {
+function mapApiToPillars(apiPillars: any, t: TFunction): any[] {
   const order = [
-    { key: "year", name: "Year Pillar", color: "#5B72B7" },
-    { key: "month", name: "Month Pillar", color: "#F6E24A" },
-    { key: "day", name: "Day Pillar", color: "#2C925E" },
-    { key: "hour", name: "Hour Pillar", color: "#E16B8C" },
+    { key: "year", name: t("report.pillars.year"), color: "#5B72B7" },
+    { key: "month", name: t("report.pillars.month"), color: "#F6E24A" },
+    { key: "day", name: t("report.pillars.day"), color: "#2C925E" },
+    { key: "hour", name: t("report.pillars.hour"), color: "#E16B8C" },
   ];
   return order.map(({ key, name, color }) => {
     const p = apiPillars[key];
@@ -105,7 +108,7 @@ function mapApiToPillars(apiPillars: any): any[] {
   });
 }
 
-function mapLifePhases(apiLifePeriodFlow: any): any[] {
+function mapLifePhases(apiLifePeriodFlow: any, t: TFunction): any[] {
   console.log('apiLifePeriodFlow:', apiLifePeriodFlow);
 
   if (!apiLifePeriodFlow) return [];
@@ -116,8 +119,8 @@ function mapLifePhases(apiLifePeriodFlow: any): any[] {
     const youth = apiLifePeriodFlow.youthPeriod;
     const match = youth.title?.match(/^(.+?)\((.+?)\)/);
     phases.push({
-      ageRange: match ? match[2] : "20~39세",
-      phase: match ? match[1] : "청년기",
+      ageRange: match ? match[2] : t("report.lifePhases.defaultAge.youth"),
+      phase: match ? match[1] : t("report.lifePhases.youth"),
       description: youth.analysis || "",
     });
   }
@@ -126,8 +129,8 @@ function mapLifePhases(apiLifePeriodFlow: any): any[] {
     const middle = apiLifePeriodFlow.middleAgePeriod;
     const match = middle.title?.match(/^(.+?)\((.+?)\)/);
     phases.push({
-      ageRange: match ? match[2] : "40~59세",
-      phase: match ? match[1] : "중년기",
+      ageRange: match ? match[2] : t("report.lifePhases.defaultAge.middle"),
+      phase: match ? match[1] : t("report.lifePhases.middleAge"),
       description: middle.analysis || "",
     });
   }
@@ -136,8 +139,8 @@ function mapLifePhases(apiLifePeriodFlow: any): any[] {
     const senior = apiLifePeriodFlow.seniorAgePeriod;
     const match = senior.title?.match(/^(.+?)\((.+?)\)/);
     phases.push({
-      ageRange: match ? match[2] : "60세 이상",
-      phase: match ? match[1] : "노년기",
+      ageRange: match ? match[2] : t("report.lifePhases.defaultAge.senior"),
+      phase: match ? match[1] : t("report.lifePhases.seniorAge"),
       description: senior.analysis || "",
     });
   }
@@ -165,7 +168,7 @@ function mapRegulatingEnergies(api: any): any[] {
   ];
 }
 
-function mapAreaStrategies(domainKaiun: any): any[] {
+function mapAreaStrategies(domainKaiun: any, t: TFunction): any[] {
   if (!domainKaiun) return [];
 
   const strategies = [];
@@ -175,7 +178,7 @@ function mapAreaStrategies(domainKaiun: any): any[] {
     const peak = domainKaiun.career.peakTiming || "";
     strategies.push({
       area: "career" as const,
-      title: domainKaiun.career.title || "커리어 운",
+      title: domainKaiun.career.title || t("report.strategies.career"),
       description: innate + "\n\n" + peak,
       bgColor: "#324EA5",
     });
@@ -186,7 +189,7 @@ function mapAreaStrategies(domainKaiun: any): any[] {
     const manage = domainKaiun.health.management || "";
     strategies.push({
       area: "health" as const,
-      title: domainKaiun.health.title || "건강 운",
+      title: domainKaiun.health.title || t("report.strategies.health"),
       description: strong + "\n\n" + manage,
       bgColor: "#2C925E",
     });
@@ -197,7 +200,7 @@ function mapAreaStrategies(domainKaiun: any): any[] {
     const prep = domainKaiun.wealth.preparation || "";
     strategies.push({
       area: "wealth" as const,
-      title: domainKaiun.wealth.title || "부(재물) 운",
+      title: domainKaiun.wealth.title || t("report.strategies.wealth"),
       description: method + "\n\n" + prep,
       bgColor: "#F6E24A",
     });
@@ -208,7 +211,7 @@ function mapAreaStrategies(domainKaiun: any): any[] {
     const attitude = domainKaiun.relationship.requiredAttitude || "";
     strategies.push({
       area: "relationship" as const,
-      title: domainKaiun.relationship.title || "관계 운",
+      title: domainKaiun.relationship.title || t("report.strategies.relationship"),
       description: style + "\n\n" + attitude,
       bgColor: "#F16C6E",
     });

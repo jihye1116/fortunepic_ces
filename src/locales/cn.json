@@ -1,1 +1,342 @@
-{}
+{
+  "home": {
+    "title": "查看你的\n运势",
+    "start": "触摸屏幕\n开始"
+  },
+  "language": {
+    "title": "选择语言"
+  },
+  "topic": {
+    "title": "选择主题",
+    "next": "下一步",
+    "topics": {
+      "today": "今日\n运势",
+      "lifetimeFortune": "终身\n运势",
+      "dayPillarAnimal": "我的\n生肖",
+      "physiognomy": "韩国\n符咒",
+      "fiveElementsV3": "五行\n分析",
+      "specifiedDate": "特定日期\n运势",
+      "yearly": "新年\n运势"
+    }
+  },
+  "date": {
+    "title": "选择日期",
+    "subtitle": "选择您要查看运势的具体日期"
+  },
+  "confirm": {
+    "restart": {
+      "title": "重新开始？",
+      "description": "当前的进度将会丢失。",
+      "confirm": "重新开始",
+      "cancel": "取消"
+    }
+  },
+  "talisman-theme": {
+    "title": "选择符咒主题",
+    "subtitle": "选择符合您当前需求的主题"
+  },
+  "talisman": {
+    "happiness": {
+      "title": "幸福符",
+      "subtitle": "选择您想要的幸福类型",
+      "overallSuccess": "万事如意",
+      "goalAchievement": "心想事成",
+      "mentalPeace": "身心平安",
+      "divineProtection": "神明保佑"
+    },
+    "wealth": {
+      "title": "财运符",
+      "subtitle": "选择您想要的财运类型",
+      "fortuneBoost": "财运亨通",
+      "moneyAttraction": "招财进宝",
+      "windfallWish": "意外之财",
+      "greatLuckFlow": "鸿运当头"
+    },
+    "career": {
+      "title": "事业符",
+      "subtitle": "选择您想要的事业类型",
+      "legalTroubleSolve": "官非化解",
+      "gossipPrevention": "防小人",
+      "promotionWish": "升职加薪",
+      "jobSuccess": "工作顺利"
+    },
+    "love": {
+      "title": "爱情符",
+      "subtitle": "选择您想要的爱情类型",
+      "coupleHarmony": "夫妻和睦",
+      "relationshipRepair": "感情修复",
+      "relationshipCall": "良缘来到",
+      "maritalPeace": "家庭和睦"
+    },
+    "family": {
+      "title": "家庭符",
+      "subtitle": "选择您想要的家庭类型",
+      "familyHarmony": "家宅平安",
+      "movingSafety": "搬家平安",
+      "homePeace": "阖家安康",
+      "fetalProtection": "安胎保产"
+    },
+    "health": {
+      "title": "健康符",
+      "subtitle": "选择您想要的健康类型",
+      "diseaseHealing": "祛病延年",
+      "illnessRepel": "百病不侵",
+      "accidentPrevention": "出入平安",
+      "longLifeHealth": "健康长寿"
+    },
+    "business": {
+      "title": "生意符",
+      "subtitle": "选择您想要的生意类型",
+      "businessProsperity": "生意兴隆",
+      "salesSuccess": "开市大吉",
+      "salesActivation": "客似云来",
+      "investmentSuccess": "投资获利"
+    }
+  },
+  "information": {
+    "intro": {
+      "title": "您的 K-Energy 坐标",
+      "description": "发现影响您运势和命运的独特 K-Energy 坐标。",
+      "okay": "确定"
+    },
+    "nickname": {
+      "title": "创建您的昵称",
+      "placeholder": "输入您的昵称",
+      "helpText": "请输入 1-20 个字符。",
+      "next": "下一步"
+    },
+    "birth": {
+      "title": "输入出生日期",
+      "month": "月",
+      "day": "日",
+      "year": "年",
+      "incorrectDate": "无法识别的出生日期",
+      "next": "下一步"
+    },
+    "time": {
+      "title": "输入出生时间",
+      "hour": "时",
+      "minute": "分",
+      "am": "上午",
+      "pm": "下午",
+      "error": "请再次检查",
+      "dontKnow": "我不知道",
+      "next": "下一步"
+    },
+    "gender": {
+      "title": "选择您的性别",
+      "subtitle": "请选择您出生时的性别",
+      "male": "男性",
+      "female": "女性",
+      "preferNot": "不愿透露",
+      "next": "下一步",
+      "bottomSheet": {
+        "title": "在您继续之前",
+        "description": "如果没有性别信息，结果可能不太完整。",
+        "continue": "仍然继续",
+        "selectGender": "选择性别"
+      }
+    }
+  },
+  "camera": {
+    "info": {
+      "title": "相机即将启动",
+      "instruction1": "请确保您的耳朵清晰可见",
+      "instruction2": "将拍摄两张照片",
+      "button": "确定"
+    },
+    "capture": {
+      "loading": "相机加载中...",
+      "remainingShots": "剩余拍摄次数",
+      "earVisibility": "请确保您的耳朵清晰可见"
+    },
+    "select": {
+      "title": "选择最好的一张",
+      "subtitle": "选择一张用于运势分析",
+      "next": "下一步",
+      "retake": "重拍"
+    }
+  },
+  "loading": {
+    "analyzing": "分析中..."
+  },
+  "result": {
+    "qrCode": "扫描查看完整详情",
+    "reportSuffix": "的报告",
+    "finish": "结束",
+    "removeData": "删除我的数据",
+    "lifetimeFortune": {
+      "title": "终身运势",
+      "description": "今天是一个拥有巨大财务机会的日子。大胆的举动将带来巨大的收益。在投资方面相信你的直觉。"
+    },
+    "today": {
+      "title": "今日运势",
+      "subtitle": "2023年 10月 26日",
+      "mainTitle": "充满意外机遇的一天",
+      "chip1": "幸运",
+      "chip2": "创造力",
+      "chip3": "连接"
+    },
+    "specifiedDate": {
+      "title": "2024年 10月 26日的运势",
+      "mainTitle": "充满意外机遇的一天",
+      "chip1": "幸运",
+      "chip2": "创造力",
+      "chip3": "连接"
+    },
+    "fiveElementsV3": {
+      "title": "五行分析",
+      "mainImage": "主五行",
+      "supportingImage": "辅五行",
+      "description": "作为一条青龙，你拥有天生的权威和开拓精神。你的道路是创新并激励他人成就伟业。"
+    },
+    "dayPillarAnimal": {
+      "title": "我的生肖",
+      "mainTitle": "青龙",
+      "description": "作为一条青龙，你拥有天生的权威和开拓精神。你的道路是创新并激励他人成就伟业。",
+      "chip1": "领导力",
+      "chip2": "创造力",
+      "chip3": "智慧"
+    },
+    "physiognomy": {
+      "title": "韩国符咒",
+      "mainTitle": "幸运符咒",
+      "description": "作为一条青龙，你拥有天生的权威和开拓精神。你的道路是创新并激励他人成就伟业。"
+    }
+  },
+  "report": {
+    "pillars": {
+      "year": "年柱",
+      "month": "月柱",
+      "day": "日柱",
+      "hour": "时柱"
+    },
+    "lifePhases": {
+      "youth": "青年期",
+      "middleAge": "中年期",
+      "seniorAge": "老年期",
+      "firstHalf": "上半年",
+      "secondHalf": "下半年",
+      "defaultAge": {
+        "youth": "20~39岁",
+        "middle": "40~59岁",
+        "senior": "60岁以上"
+      }
+    },
+    "date": {
+      "yearSuffix": "年"
+    },
+    "time": {
+      "morning": "早晨",
+      "afternoon": "下午",
+      "evening": "晚上"
+    },
+    "sections": {
+      "beneficialEnergies": "有益五行/能量",
+      "generalAnalysis": "综合分析",
+      "brightestProspects": "最光明的前景",
+      "cloudiestProspects": "最黯淡的前景",
+      "timeBasedFlow": "时间流向",
+      "timingPrediction": "时机预测",
+      "actionGuide": "行动指南",
+      "luckyFood": "幸运食物",
+      "luckySpace": "幸运空间 • 活动",
+      "overallImpression": "整体印象",
+      "personalityTraits": "性格特征",
+      "advice": "建议",
+      "growthDirection": "成长方向指南",
+      "energyDistribution": "能量分布",
+      "tenGodsHeavenly": "天干十神",
+      "tenGodsEarthly": "地支十神",
+      "twelveLifeStages": "十二长生",
+      "areaSpecificStrategies": "各领域策略",
+      "nearDailyPilarAnimal": "今日生肖附近",
+      "detailedEnergyAnalysis": "详细能量分析",
+      "essentialSelf": "本质自我与财富之钥",
+      "faceReading": "面相"
+    },
+    "elements": {
+      "wood": "木",
+      "fire": "火",
+      "earth": "土",
+      "metal": "金",
+      "water": "水"
+    },
+    "animals": {
+      "sheep": "羊",
+      "dog": "狗",
+      "monkey": "猴",
+      "pig": "猪",
+      "ox": "牛"
+    },
+    "essentialSelf": {
+      "daystem": "日元",
+      "strongest": "最强五行",
+      "usefulGod": "用神"
+    },
+    "faceReading": {
+      "areas": {
+        "forehead": "额头",
+        "eyes": "眼睛",
+        "areaBetweenTheEyebrows": "眉间",
+        "cheekbones": "颧骨",
+        "nose": "鼻子",
+        "cheeks": "脸颊",
+        "mouth": "嘴",
+        "chin": "下巴"
+      }
+    },
+    "tags": {
+      "bestTime": "最佳时间",
+      "cautionTime": "谨慎时间"
+    },
+    "defaults": {
+      "growth": "成长",
+      "harmony": "和谐",
+      "opportunity": "机遇"
+    },
+    "dummy": {
+      "strength": "细腻而深刻的感性",
+      "weakness": "过度的内心烦恼"
+    },
+    "strategies": {
+      "career": "事业运",
+      "health": "健康运",
+      "wealth": "财运",
+      "relationship": "关系运"
+    },
+    "dailyPillar": {
+      "tags": {
+        "strength": "优势",
+        "weakness": "劣势",
+        "recommend": "推荐",
+        "avoid": "避免",
+        "helpful": "有益",
+        "challenging": "挑战"
+      },
+      "defaultDescription": "您的青年期主要集中在早期稳定巩固环境适应能力和基本能力上，随后展开为最大限度地发挥能力和扩展成果的成长结构。其特点是先整顿内部，再向外部飞跃，呈现阶段性平衡的上升流。"
+    },
+    "physiognomy": {
+      "noAnalysis": "暂无面相分析结果。"
+    },
+    "basicEnergyInterpretation": {
+      "title": "{{nickname}}的基本能量解读"
+    },
+    "dailyAnimalCard": {
+      "title": "{{nickname}}的每日生肖",
+      "defaultAnimal": "老虎",
+      "defaultDescription": "您今天的特殊动物象征着勇敢和智慧，在一天中为您带来特殊的保护和好运。感受这只动物的能量，自信地度过这一天。"
+    },
+    "fourPillars": {
+      "title": "{{nickname}}的四柱五行",
+      "pillar": "柱",
+      "rowLabels": {
+        "heavenlyStem": "天干",
+        "heavenlyStem10Gods": "天干十神",
+        "earthlyBranch": "地支",
+        "earthlyBranch10Gods": "地支十神",
+        "lifeStage12": "十二长生"
+      }
+    }
+  }
+}

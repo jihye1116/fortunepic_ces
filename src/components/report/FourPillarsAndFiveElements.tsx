@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { FourPillarsData } from "@/types/report";
 
@@ -7,18 +8,19 @@ interface FourPillarsAndFiveElementsProps {
   data: FourPillarsData;
 }
 
-const ROW_LABELS = [
-  "Heavenly Stem",
-  "Heavenly Stem 10 Gods",
-  "Earthly Branch",
-  "Earthly Branch 10 Gods",
-  "12 Life Stages",
+const ROW_LABEL_KEYS = [
+  "heavenlyStem",
+  "heavenlyStem10Gods",
+  "earthlyBranch",
+  "earthlyBranch10Gods",
+  "lifeStage12",
 ];
 
 export function FourPillarsAndFiveElements({
   nickname,
   data,
 }: FourPillarsAndFiveElementsProps) {
+  const { t } = useTranslation();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -59,12 +61,7 @@ export function FourPillarsAndFiveElements({
   };
 
   const pillars = ["hour", "day", "month", "year"] as const;
-  const pillarData = [
-    data.hour,
-    data.day,
-    data.month,
-    data.year,
-  ];
+  const pillarData = [data.hour, data.day, data.month, data.year];
 
   const rowsData = [
     pillarData.map((p) => p.heavenlyStem),
@@ -77,14 +74,8 @@ export function FourPillarsAndFiveElements({
   return (
     <section className="rounded-2xl bg-gradient-to-b from-black/20 to-[#171719] p-[28px_20px] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
       <div className="space-y-0">
-        <div className="flex items-center gap-1">
-          <span className="text-[18px] font-medium text-[#878A93]">
-            {nickname}
-          </span>
-          <span className="text-[18px] font-medium text-[#878A93]">'s</span>
-        </div>
         <h2 className="text-[18px] font-medium text-[#878A93]">
-          Four pillars and Five Elements
+          {t("report.fourPillars.title", { nickname })}
         </h2>
       </div>
 
@@ -104,14 +95,14 @@ export function FourPillarsAndFiveElements({
             {/* Header Row */}
             <div className="flex bg-[#5B72B7] rounded-4xl">
               <div className="w-[164px] text-center py-2.5 px-2.5 text-[13px] font-medium text-[#C2C4C8]">
-                Pillar
+                {t("report.fourPillars.pillar")}
               </div>
               {pillars.map((pillar) => (
                 <div
                   key={pillar}
                   className="w-[88px] text-center py-2.5 px-2.5 text-[13px] font-medium text-[#C2C4C8] capitalize"
                 >
-                  {pillar}
+                  {t(`report.pillars.${pillar}`)}
                 </div>
               ))}
             </div>
@@ -119,12 +110,12 @@ export function FourPillarsAndFiveElements({
             <div className="flex justify-between w-[516px]">
               {/* Left Column - Row Labels */}
               <div className="w-[164px] bg-[#171719] rounded-xl overflow-hidden">
-                {ROW_LABELS.map((label, index) => (
-                  <div key={label}>
+                {ROW_LABEL_KEYS.map((labelKey, index) => (
+                  <div key={labelKey}>
                     <div className="h-[38px] px-4 flex items-center text-[13px] text-[#70737C]">
-                      {label}
+                      {t(`report.fourPillars.rowLabels.${labelKey}`)}
                     </div>
-                    {index < ROW_LABELS.length - 1 && (
+                    {index < ROW_LABEL_KEYS.length - 1 && (
                       <div className="h-0.5 bg-[#37383C]" />
                     )}
                   </div>
@@ -153,7 +144,7 @@ export function FourPillarsAndFiveElements({
             </div>
           </div>
         </div>
-        
+
         {/* Gradient overlay */}
         {/* <div className="pointer-events-none absolute right-0 top-0 h-full w-[71px] bg-linear-to-l from-[#171719] to-transparent z-10" /> */}
 

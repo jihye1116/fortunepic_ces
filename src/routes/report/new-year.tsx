@@ -2,6 +2,8 @@
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
@@ -10,6 +12,7 @@ import { LifePhaseFlow } from "@/components/report/LifePhaseFlow";
 import { PersonalizedAdvice } from "@/components/report/PersonalizedAdvice";
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
+import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 import { AreaStrategy, RegulatingEnergy } from "@/types/report";
 
@@ -19,6 +22,7 @@ export const Route = createFileRoute("/report/new-year")({
 
 
 function NewYearReportPage() {
+  const { t } = useTranslation();
   // 실제 API 응답을 localStorage에서 가져오거나, 없으면 dummy 사용
   const data = dummyReportData;
   const fortuneResult = getFortuneResultFromStorage();
@@ -27,21 +31,21 @@ function NewYearReportPage() {
   const sajuInfo = fortuneResult?.[0]?.sajuInfo;
 
   // Pillars 매핑 (sajuInfo.pillars)
-  const mappedPillars = sajuInfo?.pillars ? mapApiToPillars(sajuInfo.pillars) : data.pillars;
+  const mappedPillars = sajuInfo?.pillars ? mapApiToPillars(sajuInfo.pillars, t) : data.pillars;
 
   // LifePhases 매핑 (yearlyFortune.firstHalf, secondHalf, futureYears)
   const mappedLifePhases = yearlyFortune
-    ? mapYearlyLifePhases(yearlyFortune)
+    ? mapYearlyLifePhases(yearlyFortune, t)
     : data.lifePhases;
 
   // AreaSpecificStrategies 매핑 (yearlyFortune.categoryFortune)
   const mappedAreaStrategies = yearlyFortune
-    ? mapYearlyAreaStrategies(yearlyFortune.categoryFortune)
+    ? mapYearlyAreaStrategies(yearlyFortune.categoryFortune, t)
     : data.areaStrategies;
 
   // PersonalizedAdvice 매핑 (yearlyFortune.elementGuidance)
   const mappedBeneficialEnergies = yearlyFortune
-    ? mapYearlyBeneficialEnergies(yearlyFortune.elementGuidance)
+    ? mapYearlyBeneficialEnergies(yearlyFortune.elementGuidance, t)
     : data.beneficialEnergies;
   const mappedRegulatingEnergies: RegulatingEnergy[] = [];
 
@@ -72,26 +76,26 @@ function NewYearReportPage() {
 }
 
 // 연도별 운세 lifePhases 매핑
-function mapYearlyLifePhases(yearlyFortune: any) {
+function mapYearlyLifePhases(yearlyFortune: any, t: TFunction) {
   const phases = [];
   if (yearlyFortune.firstHalf) {
     phases.push({
-      ageRange: yearlyFortune.firstHalf.period || "상반기",
-      phase: "상반기",
+      ageRange: yearlyFortune.firstHalf.period || t("report.lifePhases.firstHalf"),
+      phase: t("report.lifePhases.firstHalf"),
       description: yearlyFortune.firstHalf.analysis || "",
     });
   }
   if (yearlyFortune.secondHalf) {
     phases.push({
-      ageRange: yearlyFortune.secondHalf.period || "하반기",
-      phase: "하반기",
+      ageRange: yearlyFortune.secondHalf.period || t("report.lifePhases.secondHalf"),
+      phase: t("report.lifePhases.secondHalf"),
       description: yearlyFortune.secondHalf.analysis || "",
     });
   }
   if (yearlyFortune.futureYears) {
     Object.entries(yearlyFortune.futureYears).forEach(([year, info]: any) => {
       phases.push({
-        ageRange: year + "년",
+        ageRange: year + t("report.date.yearSuffix"),
         phase: info.yearPillar || year,
         description: info.analysis || "",
       });
@@ -101,30 +105,30 @@ function mapYearlyLifePhases(yearlyFortune: any) {
 }
 
 // 연도별 운세 areaStrategies 매핑
-function mapYearlyAreaStrategies(categoryFortune: any): AreaStrategy[] {
+function mapYearlyAreaStrategies(categoryFortune: any, t: TFunction): AreaStrategy[] {
   if (!categoryFortune) return [];
   return [
     {
       area: "career",
-      title: "커리어 운",
+      title: t("report.strategies.career"),
       description: categoryFortune.career || "",
       bgColor: "#324EA5",
     },
     {
       area: "health",
-      title: "건강 운",
+      title: t("report.strategies.health"),
       description: categoryFortune.health || "",
       bgColor: "#2C925E",
     },
     {
       area: "wealth",
-      title: "부(재물) 운",
+      title: t("report.strategies.wealth"),
       description: categoryFortune.wealth || "",
       bgColor: "#F6E24A",
     },
     {
       area: "relationship",
-      title: "관계 운",
+      title: t("report.strategies.relationship"),
       description: categoryFortune.relationship || "",
       bgColor: "#F16C6E",
     },
@@ -132,43 +136,17 @@ function mapYearlyAreaStrategies(categoryFortune: any): AreaStrategy[] {
 }
 
 // 연도별 운세 beneficialEnergies 매핑
-function mapYearlyBeneficialEnergies(elementGuidance: any) {
+function mapYearlyBeneficialEnergies(elementGuidance: any, t: TFunction) {
   if (!elementGuidance) return [];
   return [
     {
-      title: "이로운 오행/에너지",
+      title: t("report.sections.beneficialEnergies"),
       description: elementGuidance,
     },
   ];
 }
 
 // 연도별 운세 regulatingEnergies 매핑 (여기선 없음, 빈 배열)
-
-
-// Mapping functions (copied from lifetime.tsx)
-function mapApiToPillars(apiPillars: any): any[] {
-  const order = [
-    { key: "year", name: "Year Pillar", color: "#5B72B7" },
-    { key: "month", name: "Month Pillar", color: "#F6E24A" },
-    { key: "day", name: "Day Pillar", color: "#2C925E" },
-    { key: "hour", name: "Hour Pillar", color: "#E16B8C" },
-  ];
-  return order.map(({ key, name, color }) => {
-    const p = apiPillars[key];
-    return {
-      name,
-      color,
-      keywords: [
-        { text: p.stem },
-        { text: p.tenGodsStem },
-        { text: p.branch },
-        { text: p.tenGodsBranch },
-        { text: p.twelveStage },
-      ],
-    };
-  });
-}
-
 
 
 // LocalStorage util (copied from lifetime.tsx)

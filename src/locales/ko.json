@@ -1,1 +1,342 @@
-{}
+{
+  "home": {
+    "title": "운세를\n확인하세요",
+    "start": "화면을 터치하여\n시작하세요"
+  },
+  "language": {
+    "title": "언어를 선택하세요"
+  },
+  "topic": {
+    "title": "주제를 선택하세요",
+    "next": "다음",
+    "topics": {
+      "today": "오늘의\n운세",
+      "lifetimeFortune": "평생\n총운",
+      "dayPillarAnimal": "나의 띠\n동물",
+      "physiognomy": "한국\n부적",
+      "fiveElementsV3": "오행\n분석",
+      "specifiedDate": "특정 날짜\n운세",
+      "yearly": "신년\n운세"
+    }
+  },
+  "date": {
+    "title": "날짜를 선택하세요",
+    "subtitle": "운세를 볼 특정 날짜를 선택하세요"
+  },
+  "confirm": {
+    "restart": {
+      "title": "다시 시작하시겠습니까?",
+      "description": "현재 진행 상황이 사라집니다.",
+      "confirm": "다시 시작",
+      "cancel": "취소"
+    }
+  },
+  "talisman-theme": {
+    "title": "부적 테마를 선택하세요",
+    "subtitle": "현재 필요한 테마를 선택하세요"
+  },
+  "talisman": {
+    "happiness": {
+      "title": "행복 부적",
+      "subtitle": "원하는 행복의 종류를 선택하세요",
+      "overallSuccess": "만사형통",
+      "goalAchievement": "소원성취",
+      "mentalPeace": "심신평안",
+      "divineProtection": "신명가호"
+    },
+    "wealth": {
+      "title": "재물 부적",
+      "subtitle": "원하는 재물의 종류를 선택하세요",
+      "fortuneBoost": "재수대길",
+      "moneyAttraction": "금전도래",
+      "windfallWish": "횡재기원",
+      "greatLuckFlow": "운수대통"
+    },
+    "career": {
+      "title": "직업 부적",
+      "subtitle": "원하는 직업의 종류를 선택하세요",
+      "legalTroubleSolve": "관재해결",
+      "gossipPrevention": "구설방지",
+      "promotionWish": "승진기원",
+      "jobSuccess": "직장안정"
+    },
+    "love": {
+      "title": "사랑 부적",
+      "subtitle": "원하는 사랑의 종류를 선택하세요",
+      "coupleHarmony": "부부화합",
+      "relationshipRepair": "애정회복",
+      "relationshipCall": "인연도래",
+      "maritalPeace": "가정평화"
+    },
+    "family": {
+      "title": "가족 부적",
+      "subtitle": "원하는 가족의 종류를 선택하세요",
+      "familyHarmony": "가내화목",
+      "movingSafety": "이사안전",
+      "homePeace": "가택평안",
+      "fetalProtection": "태아보호"
+    },
+    "health": {
+      "title": "건강 부적",
+      "subtitle": "원하는 건강의 종류를 선택하세요",
+      "diseaseHealing": "질병퇴치",
+      "illnessRepel": "액운퇴치",
+      "accidentPrevention": "사고방지",
+      "longLifeHealth": "무병장수"
+    },
+    "business": {
+      "title": "사업 부적",
+      "subtitle": "원하는 사업의 종류를 선택하세요",
+      "businessProsperity": "사업번창",
+      "salesSuccess": "영업성공",
+      "salesActivation": "매매성사",
+      "investmentSuccess": "투자성공"
+    }
+  },
+  "information": {
+    "intro": {
+      "title": "당신의 K-에너지 좌표",
+      "description": "운세와 운명에 영향을 미치는 당신만의 고유한 K-에너지 좌표를 발견해보세요.",
+      "okay": "확인"
+    },
+    "nickname": {
+      "title": "닉네임을 입력하세요",
+      "placeholder": "닉네임 입력",
+      "helpText": "1~20자 이내로 입력해주세요.",
+      "next": "다음"
+    },
+    "birth": {
+      "title": "생년월일을 입력하세요",
+      "month": "월",
+      "day": "일",
+      "year": "년",
+      "incorrectDate": "잘못된 생년월일입니다",
+      "next": "다음"
+    },
+    "time": {
+      "title": "태어난 시간을 입력하세요",
+      "hour": "시",
+      "minute": "분",
+      "am": "오전",
+      "pm": "오후",
+      "error": "다시 확인해주세요",
+      "dontKnow": "모름",
+      "next": "다음"
+    },
+    "gender": {
+      "title": "성별을 선택하세요",
+      "subtitle": "출생 시 성별을 선택해주세요",
+      "male": "남성",
+      "female": "여성",
+      "preferNot": "선택하지 않음",
+      "next": "다음",
+      "bottomSheet": {
+        "title": "계속하시겠습니까?",
+        "description": "성별 정보 없이는 결과가 덜 정확할 수 있습니다.",
+        "continue": "계속하기",
+        "selectGender": "성별 선택하기"
+      }
+    }
+  },
+  "camera": {
+    "info": {
+      "title": "곧 카메라가 시작됩니다",
+      "instruction1": "귀가 잘 보이도록 해주세요",
+      "instruction2": "사진은 2장 촬영됩니다",
+      "button": "확인"
+    },
+    "capture": {
+      "loading": "카메라 로딩 중...",
+      "remainingShots": "남은 촬영 횟수",
+      "earVisibility": "귀가 잘 보이도록 해주세요"
+    },
+    "select": {
+      "title": "가장 잘 나온 사진을 선택하세요",
+      "subtitle": "운세 분석에 사용할 사진을 선택하세요",
+      "next": "다음",
+      "retake": "재촬영"
+    }
+  },
+  "loading": {
+    "analyzing": "분석 중..."
+  },
+  "result": {
+    "qrCode": "QR코드로 상세 결과 확인",
+    "reportSuffix": "님의 리포트",
+    "finish": "종료",
+    "removeData": "데이터 삭제",
+    "lifetimeFortune": {
+      "title": "평생 총운",
+      "description": "오늘은 재정적으로 큰 기회가 있는 날입니다. 과감한 움직임이 큰 이익으로 이어질 것입니다. 투자 문제에서는 본능을 믿으세요."
+    },
+    "today": {
+      "title": "오늘의 운세",
+      "subtitle": "2023년 10월 26일",
+      "mainTitle": "뜻밖의 기회가 찾아오는 날",
+      "chip1": "행운",
+      "chip2": "창의성",
+      "chip3": "연결"
+    },
+    "specifiedDate": {
+      "title": "2024년 10월 26일의 운세",
+      "mainTitle": "뜻밖의 기회가 찾아오는 날",
+      "chip1": "행운",
+      "chip2": "창의성",
+      "chip3": "연결"
+    },
+    "fiveElementsV3": {
+      "title": "오행 분석",
+      "mainImage": "주오행",
+      "supportingImage": "보조오행",
+      "description": "푸른 용으로서 당신은 타고난 권위와 개척 정신을 가지고 있습니다. 당신의 길은 혁신과 타인에게 위대함을 고무시키는 것입니다."
+    },
+    "dayPillarAnimal": {
+      "title": "나의 띠 동물",
+      "mainTitle": "푸른 용",
+      "description": "푸른 용으로서 당신은 타고난 권위와 개척 정신을 가지고 있습니다. 당신의 길은 혁신과 타인에게 위대함을 고무시키는 것입니다.",
+      "chip1": "리더십",
+      "chip2": "창의성",
+      "chip3": "지혜"
+    },
+    "physiognomy": {
+      "title": "한국 부적",
+      "mainTitle": "행운의 부적",
+      "description": "푸른 용으로서 당신은 타고난 권위와 개척 정신을 가지고 있습니다. 당신의 길은 혁신과 타인에게 위대함을 고무시키는 것입니다."
+    }
+  },
+  "report": {
+    "pillars": {
+      "year": "년주",
+      "month": "월주",
+      "day": "일주",
+      "hour": "시주"
+    },
+    "lifePhases": {
+      "youth": "청년기",
+      "middleAge": "중년기",
+      "seniorAge": "노년기",
+      "firstHalf": "상반기",
+      "secondHalf": "하반기",
+      "defaultAge": {
+        "youth": "20~39세",
+        "middle": "40~59세",
+        "senior": "60세 이상"
+      }
+    },
+    "date": {
+      "yearSuffix": "년"
+    },
+    "time": {
+      "morning": "아침",
+      "afternoon": "오후",
+      "evening": "저녁"
+    },
+    "sections": {
+      "beneficialEnergies": "이로운 오행/에너지",
+      "generalAnalysis": "종합 분석",
+      "brightestProspects": "가장 밝은 전망",
+      "cloudiestProspects": "가장 흐린 전망",
+      "timeBasedFlow": "시간별 흐름",
+      "timingPrediction": "타이밍 예측",
+      "actionGuide": "행동 가이드",
+      "luckyFood": "행운의 음식",
+      "luckySpace": "행운의 장소 • 활동",
+      "overallImpression": "전체적인 인상",
+      "personalityTraits": "성격 특성",
+      "advice": "조언",
+      "growthDirection": "성장 방향 가이드",
+      "energyDistribution": "에너지 분포",
+      "tenGodsHeavenly": "천간 십신",
+      "tenGodsEarthly": "지지 십신",
+      "twelveLifeStages": "12운성",
+      "areaSpecificStrategies": "분야별 전략",
+      "nearDailyPilarAnimal": "오늘의 띠 동물 주변",
+      "detailedEnergyAnalysis": "상세 에너지 분석",
+      "essentialSelf": "본질적 자아와 행운의 열쇠",
+      "faceReading": "얼굴 관상"
+    },
+    "elements": {
+      "wood": "목",
+      "fire": "화",
+      "earth": "토",
+      "metal": "금",
+      "water": "수"
+    },
+    "animals": {
+      "sheep": "양",
+      "dog": "개",
+      "monkey": "원숭이",
+      "pig": "돼지",
+      "ox": "소"
+    },
+    "essentialSelf": {
+      "daystem": "일간",
+      "strongest": "최강 오행",
+      "usefulGod": "용신"
+    },
+    "faceReading": {
+      "areas": {
+        "forehead": "이마",
+        "eyes": "눈",
+        "areaBetweenTheEyebrows": "미간",
+        "cheekbones": "광대",
+        "nose": "코",
+        "cheeks": "뺨",
+        "mouth": "입",
+        "chin": "턱"
+      }
+    },
+    "tags": {
+      "bestTime": "최고의 시간",
+      "cautionTime": "주의할 시간"
+    },
+    "defaults": {
+      "growth": "성장",
+      "harmony": "조화",
+      "opportunity": "기회"
+    },
+    "dummy": {
+      "strength": "섬세하고 깊이 있는 감수성",
+      "weakness": "과도한 내적 고민"
+    },
+    "strategies": {
+      "career": "커리어 운",
+      "health": "건강 운",
+      "wealth": "부(재물) 운",
+      "relationship": "관계 운"
+    },
+    "dailyPillar": {
+      "tags": {
+        "strength": "강점",
+        "weakness": "약점",
+        "recommend": "추천",
+        "avoid": "주의",
+        "helpful": "도움되는",
+        "challenging": "부담스러운"
+      },
+      "defaultDescription": "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다."
+    },
+    "physiognomy": {
+      "noAnalysis": "인상 분석 결과가 없습니다."
+    },
+    "basicEnergyInterpretation": {
+      "title": "{{nickname}}님의 기본 에너지 해석"
+    },
+    "dailyAnimalCard": {
+      "title": "{{nickname}}님의 일일 띠 동물",
+      "defaultAnimal": "호랑이",
+      "defaultDescription": "당신의 오늘의 필살기 동물은 용맹함과 지혜를 상징하는 동물로, 오늘 하루 동안 당신에게 특별한 보호와 행운을 가져다 줄 것입니다. 이 동물의 에너지를 느끼며 자신감을 가지고 하루를 보내세요."
+    },
+    "fourPillars": {
+      "title": "{{nickname}}님의 사주 오행",
+      "pillar": "기둥",
+      "rowLabels": {
+        "heavenlyStem": "천간",
+        "heavenlyStem10Gods": "천간 십신",
+        "earthlyBranch": "지지",
+        "earthlyBranch10Gods": "지지 십신",
+        "lifeStage12": "12 운성"
+      }
+    }
+  }
+}

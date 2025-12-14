@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 interface DistributionChartItem {
@@ -23,6 +24,8 @@ export function DistributionChartSection({
   title,
   items,
 }: DistributionChartSectionProps) {
+  const { t } = useTranslation();
+
   const chartData = items.map((item) => ({
     name: item.label,
     value: item.value,
@@ -63,47 +66,50 @@ export function DistributionChartSection({
 
         {/* List / Legend */}
         <div className="w-full flex flex-col items-center gap-3">
-          {items.map((item, index) => (
-            <div key={item.label} className="w-full">
-              {/* List Item */}
-              <div className="w-full flex items-center justify-between gap-3">
-                {/* Left: Icon + Label */}
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 flex items-center justify-center">
-                    {typeof item.icon === "string" ? (
-                      <img 
-                        src={item.icon} 
-                        alt={item.label} 
-                        className="w-full h-full object-contain"
-                      />
-                    ) : (
-                      <item.icon className="w-full h-full" />
-                    )}
+          {items.map((item, index) => {
+            const translatedLabel = t(`report.elements.${item.label.toLowerCase()}`, { defaultValue: item.label });
+            return (
+              <div key={item.label} className="w-full">
+                {/* List Item */}
+                <div className="w-full flex items-center justify-between gap-3">
+                  {/* Left: Icon + Label */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 flex items-center justify-center">
+                      {typeof item.icon === "string" ? (
+                        <img 
+                          src={item.icon} 
+                          alt={translatedLabel} 
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <item.icon className="w-full h-full" />
+                      )}
+                    </div>
+                    <div className="h-8 flex items-center">
+                      <span className="text-[15px] font-medium leading-[1.46] tracking-[0.5%] text-[#E1E2E4]">
+                        {translatedLabel}
+                      </span>
+                    </div>
                   </div>
-                  <div className="h-8 flex items-center">
-                    <span className="text-[15px] font-medium leading-[1.46] tracking-[0.5%] text-[#E1E2E4]">
-                      {item.label}
+
+                  {/* Right: Value */}
+                  <div className="flex items-center">
+                    <span className="text-[18px] font-medium leading-[1.44] tracking-[-0.2%] text-[#E1E2E4]">
+                      {item.value}
+                    </span>
+                    <span className="text-[16px] font-semibold leading-normal tracking-[0.5%] text-[#C2C4C8]">
+                      %
                     </span>
                   </div>
                 </div>
 
-                {/* Right: Value */}
-                <div className="flex items-center">
-                  <span className="text-[18px] font-medium leading-[1.44] tracking-[-0.2%] text-[#E1E2E4]">
-                    {item.value}
-                  </span>
-                  <span className="text-[16px] font-semibold leading-normal tracking-[0.5%] text-[#C2C4C8]">
-                    %
-                  </span>
-                </div>
+                {/* Divider */}
+                {index < items.length - 1 && (
+                  <div className="w-full h-0.5 bg-[#212225] mt-3" />
+                )}
               </div>
-
-              {/* Divider */}
-              {index < items.length - 1 && (
-                <div className="w-full h-0.5 bg-[#212225] mt-3" />
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

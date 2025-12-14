@@ -1,6 +1,7 @@
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { DailyAnimalCard } from "@/components/report/DailyAnimalCard";
 import { DailyPilarCard } from "@/components/report/DailyPilarCard";
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/report/daily-pilar")({
 });
 
 function DailyPilarFortunePage() {
+  const { t } = useTranslation();
   const data = dummyReportData;
 
   const fortuneResult = getFortuneResultFromStorage();
@@ -25,28 +27,26 @@ function DailyPilarFortunePage() {
   const mappedStrengthWeakness = dayPillarAnimal
     ? [
         {
-          tag: "Strength",
+          tag: t("report.dailyPillar.tags.strength"),
           tagColor: "#5B72B7",
           description: dayPillarAnimal.strengths,
         },
         {
-          tag: "Weakness",
+          tag: t("report.dailyPillar.tags.weakness"),
           tagColor: "#F16C6E",
           description: dayPillarAnimal.weaknesses,
         },
       ]
     : [
         {
-          tag: "Recommend",
+          tag: t("report.dailyPillar.tags.recommend"),
           tagColor: "#5B72B7",
-          description:
-            "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+          description: t("report.dailyPillar.defaultDescription"),
         },
         {
-          tag: "Avoid",
+          tag: t("report.dailyPillar.tags.avoid"),
           tagColor: "#F16C6E",
-          description:
-            "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+          description: t("report.dailyPillar.defaultDescription"),
         },
       ];
 
@@ -57,36 +57,34 @@ function DailyPilarFortunePage() {
         physiognomy: dayPillarAnimal.currentLifeStageStatus.physiognomyBasis,
       }
     : {
-        status: "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
-        physiognomy: "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+        status: t("report.dailyPillar.defaultDescription"),
+        physiognomy: t("report.dailyPillar.defaultDescription"),
       };
 
   // 3. Compatible & Incompatible People Mapping
   const mappedCompatible = dayPillarAnimal?.compatibleAnimals
     ? [
         {
-          tag: "Helpful",
+          tag: t("report.dailyPillar.tags.helpful"),
           tagColor: "#5B72B7",
           description: dayPillarAnimal.compatibleAnimals.helpful,
         },
         {
-          tag: "Challenging",
+          tag: t("report.dailyPillar.tags.challenging"),
           tagColor: "#F16C6E",
           description: dayPillarAnimal.compatibleAnimals.challenging,
         },
       ]
     : [
         {
-          tag: "Recommend",
+          tag: t("report.dailyPillar.tags.recommend"),
           tagColor: "#5B72B7",
-          description:
-            "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+          description: t("report.dailyPillar.defaultDescription"),
         },
         {
-          tag: "Avoid",
+          tag: t("report.dailyPillar.tags.avoid"),
           tagColor: "#F16C6E",
-          description:
-            "당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.",
+          description: t("report.dailyPillar.defaultDescription"),
         },
       ];
 

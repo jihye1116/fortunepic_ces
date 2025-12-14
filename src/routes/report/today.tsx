@@ -2,6 +2,8 @@
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { CardCarousel } from "@/components/report/CardCarousel";
@@ -19,6 +21,7 @@ export const Route = createFileRoute("/report/today")({
 });
 
 function TodayFortunePage() {
+  const { t } = useTranslation();
     // 운세 점수 및 키워드 추출 함수
     function extractScoreAndKeywords(summary: string | undefined) {
       if (!summary) return { score: undefined, keywords: [] };
@@ -43,17 +46,16 @@ function TodayFortunePage() {
 
   // pillars 매핑
   const mappedPillars = sajuInfo?.pillars
-    ? mapApiToPillars(sajuInfo.pillars)
+    ? mapApiToPillars(sajuInfo.pillars, t)
     : data.pillars;
 
   // overallSummary를 DetailedEnergyAnalysis의 description으로 사용
-  const overallSummary = todayFortune?.overallSummary ||
-    `당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.`;
+  const overallSummary = todayFortune?.overallSummary || t("report.dailyPillar.defaultDescription");
   const { score: extractedScore, keywords: extractedKeywords } = extractScoreAndKeywords(todayFortune?.overallSummary);
 
   // timeAnalysis를 CardCarousel용으로 매핑
   const mappedTimeFlows = todayFortune?.timeAnalysis
-    ? mapTimeFlows(todayFortune.timeAnalysis)
+    ? mapTimeFlows(todayFortune.timeAnalysis, t)
     : data.timeFlows.map((flow) => ({
         id: flow.time,
         imageUrl: {
@@ -64,21 +66,21 @@ function TodayFortunePage() {
           Evening:
             "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
         }[flow.time],
-        chipText: flow.time,
+        chipText: t(`report.time.${flow.time.toLowerCase()}` as any),
         description: flow.description,
       }));
 
   // Timing Prediction 매핑
   const mappedTimingPrediction = todayFortune
-    ? mapTimingPrediction(todayFortune)
+    ? mapTimingPrediction(todayFortune, t)
     : [
         {
-          tag: "Best Time",
+          tag: t("report.tags.bestTime"),
           tagColor: "#5B72B7",
           description: data.timingPrediction.bestTime,
         },
         {
-          tag: "Caution Time",
+          tag: t("report.tags.cautionTime"),
           tagColor: "#F16C6E",
           description: data.timingPrediction.cautionTime,
         },
@@ -86,15 +88,15 @@ function TodayFortunePage() {
 
   // Action Guide 매핑
   const mappedActionGuide = todayFortune
-    ? mapActionGuide(todayFortune)
+    ? mapActionGuide(todayFortune, t)
     : [
         {
-          tag: "Recommend",
+          tag: t("report.dailyPillar.tags.recommend"),
           tagColor: "#5B72B7",
           description: data.actionGuide.recommend,
         },
         {
-          tag: "Avoid",
+          tag: t("report.dailyPillar.tags.avoid"),
           tagColor: "#F16C6E",
           description: data.actionGuide.avoid,
         },
@@ -102,9 +104,9 @@ function TodayFortunePage() {
 
   // Lucky Food 매핑
   const mappedLuckyFood = todayFortune?.luckyFood
-    ? mapLuckyFood(todayFortune.luckyFood)
+    ? mapLuckyFood(todayFortune.luckyFood, t)
     : {
-        title: "Lucky Korean Food",
+        title: t("report.sections.luckyFood"),
         imageUrl: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
         subTitle: "Bibimbap",
         description: "Bibimbap is Korea's iconic, healthy dish",
@@ -134,23 +136,23 @@ function TodayFortunePage() {
 
           <DetailedEnergyAnalysis
             score={extractedScore ?? 85}
-            keywords={extractedKeywords.length > 0 ? extractedKeywords : ["Growth", "Harmony", "Opportunity"]}
+            keywords={extractedKeywords.length > 0 ? extractedKeywords : [t("report.defaults.growth"), t("report.defaults.harmony"), t("report.defaults.opportunity")]}
             description={overallSummary}
           />
 
           <CardCarousel
-            title="Time Based Flow"
+            title={t("report.sections.timeBasedFlow")}
             cardWidth="w-[240px]"
             items={mappedTimeFlows}
           />
 
           <TagListSection
-            title="Timing Prediction"
+            title={t("report.sections.timingPrediction")}
             items={mappedTimingPrediction}
           />
 
           <TagListSection
-            title="Action Guide"
+            title={t("report.sections.actionGuide")}
             items={mappedActionGuide}
           />
 
@@ -169,14 +171,14 @@ function TodayFortunePage() {
   );
 }
 
-function mapTimeFlows(timeAnalysis: any): any[] {
+function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   const flows = [];
 
   if (timeAnalysis.morning) {
     flows.push({
       id: "Morning",
       imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
-      chipText: "Morning",
+      chipText: t("report.time.morning"),
       description: `${timeAnalysis.morning.analysis}\n\n${timeAnalysis.morning.advice}`,
     });
   }
@@ -185,7 +187,7 @@ function mapTimeFlows(timeAnalysis: any): any[] {
     flows.push({
       id: "Afternoon",
       imageUrl: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&auto=format&fit=crop&q=60",
-      chipText: "Afternoon",
+      chipText: t("report.time.afternoon"),
       description: `${timeAnalysis.afternoon.analysis}\n\n${timeAnalysis.afternoon.advice}`,
     });
   }
@@ -194,7 +196,7 @@ function mapTimeFlows(timeAnalysis: any): any[] {
     flows.push({
       id: "Evening",
       imageUrl: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
-      chipText: "Evening",
+      chipText: t("report.time.evening"),
       description: `${timeAnalysis.evening.analysis}\n\n${timeAnalysis.evening.advice}`,
     });
   }
@@ -202,13 +204,13 @@ function mapTimeFlows(timeAnalysis: any): any[] {
   return flows;
 }
 
-function mapTimingPrediction(todayFortune: any): any[] {
+function mapTimingPrediction(todayFortune: any, t: TFunction): any[] {
   const items = [];
 
   if (todayFortune.bestHour) {
     const bestHour = todayFortune.bestHour;
     items.push({
-      tag: "Best Time",
+      tag: t("report.tags.bestTime"),
       tagColor: "#5B72B7",
       description: `${bestHour.time}\n\n${bestHour.reason}\n\nActivities: ${bestHour.activities.join(", ")}`,
     });
@@ -217,7 +219,7 @@ function mapTimingPrediction(todayFortune: any): any[] {
   if (todayFortune.worstHour) {
     const worstHour = todayFortune.worstHour;
     items.push({
-      tag: "Caution Time",
+      tag: t("report.tags.cautionTime"),
       tagColor: "#F16C6E",
       description: `${worstHour.time}\n\n${worstHour.reason}\n\nCaution: ${worstHour.caution.join(", ")}`,
     });
@@ -226,12 +228,12 @@ function mapTimingPrediction(todayFortune: any): any[] {
   return items;
 }
 
-function mapActionGuide(todayFortune: any): any[] {
+function mapActionGuide(todayFortune: any, t: TFunction): any[] {
   const items = [];
 
   if (todayFortune.recommendedActions) {
     items.push({
-      tag: "Recommend",
+      tag: t("report.dailyPillar.tags.recommend"),
       tagColor: "#5B72B7",
       description: todayFortune.recommendedActions.content,
     });
@@ -239,7 +241,7 @@ function mapActionGuide(todayFortune: any): any[] {
 
   if (todayFortune.thingsToAvoid) {
     items.push({
-      tag: "Avoid",
+      tag: t("report.dailyPillar.tags.avoid"),
       tagColor: "#F16C6E",
       description: todayFortune.thingsToAvoid.content,
     });
@@ -248,9 +250,9 @@ function mapActionGuide(todayFortune: any): any[] {
   return items;
 }
 
-function mapLuckyFood(luckyFood: any): any {
+function mapLuckyFood(luckyFood: any, t: TFunction): any {
   return {
-    title: "Lucky Korean Food",
+    title: t("report.sections.luckyFood"),
     imageUrl: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
     subTitle: luckyFood.food,
     description: luckyFood.reason,

@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import cheekbonesIcon from "@/assets/icons/face-reading/cheekbones.svg?url";
 import cheeksIcon from "@/assets/icons/face-reading/cheeks.svg?url";
@@ -15,12 +16,25 @@ interface FaceReadingProps {
   faceReadingAreas: LifetimeReportData["faceReadingAreas"];
 }
 
+const areaMap: Record<string, string> = {
+  Forehead: "forehead",
+  Eyes: "eyes",
+  "Area between the Eyebrows": "areaBetweenTheEyebrows",
+  Cheekbones: "cheekbones",
+  Nose: "nose",
+  Cheeks: "cheeks",
+  Mouth: "mouth",
+  Chin: "chin",
+};
+
 export function FaceReading({ faceReadingAreas }: FaceReadingProps) {
+  const { t } = useTranslation();
   const faceReadingScrollRef = useRef<HTMLDivElement>(null);
   const [faceReadingIndex, setFaceReadingIndex] = useState(0);
   const [isFaceReadingDragging, setIsFaceReadingDragging] = useState(false);
   const [faceReadingStartX, setFaceReadingStartX] = useState(0);
-  const [faceReadingStartScrollLeft, setFaceReadingStartScrollLeft] = useState(0);
+  const [faceReadingStartScrollLeft, setFaceReadingStartScrollLeft] =
+    useState(0);
 
   const handleFaceReadingScroll = () => {
     if (faceReadingScrollRef.current) {
@@ -64,14 +78,14 @@ export function FaceReading({ faceReadingAreas }: FaceReadingProps) {
   };
 
   const faceIcons: Record<string, string> = {
-    "Forehead": foreheadIcon,
-    "Eyes": eyesIcon,
+    Forehead: foreheadIcon,
+    Eyes: eyesIcon,
     "Area between the Eyebrows": eyebrowsIcon,
-    "Cheekbones": cheekbonesIcon,
-    "Nose": noseIcon,
-    "Cheeks": cheeksIcon,
-    "Mouth": mouthIcon,
-    "Chin": chinIcon,
+    Cheekbones: cheekbonesIcon,
+    Nose: noseIcon,
+    Cheeks: cheeksIcon,
+    Mouth: mouthIcon,
+    Chin: chinIcon,
   };
 
   // Group face reading areas into pairs
@@ -82,13 +96,15 @@ export function FaceReading({ faceReadingAreas }: FaceReadingProps) {
 
   return (
     <section className="rounded-2xl bg-[#171719] p-[28px_20px] space-y-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-      <h2 className="text-[18px] font-medium text-[#878A93]">Face Reading</h2>
+      <h2 className="text-[18px] font-medium text-[#878A93]">
+        {t("report.sections.faceReading")}
+      </h2>
 
       <div className="flex flex-col items-center gap-8">
         <div className="w-full rounded-[12px] overflow-hidden">
           <img
             src={faceMain}
-            alt="Face Reading"
+            alt={t("report.sections.faceReading")}
             className="w-full h-[226px] object-cover"
           />
         </div>
@@ -117,13 +133,19 @@ export function FaceReading({ faceReadingAreas }: FaceReadingProps) {
                     <div className="shrink-0 h-8 w-8 rounded-full bg-[#8495C9] flex items-center justify-center ">
                       <img
                         src={faceIcons[area.area]}
-                        alt={area.area}
+                        alt={t(
+                          `report.faceReading.areas.${areaMap[area.area]}`,
+                          { defaultValue: area.area },
+                        )}
                         className="w-full h-full"
                       />
                     </div>
                     <div className="space-y-1">
                       <h4 className="text-[15px] font-medium text-[#E1E2E4]">
-                        {area.area}
+                        {t(
+                          `report.faceReading.areas.${areaMap[area.area]}`,
+                          { defaultValue: area.area },
+                        )}
                       </h4>
                       <p className="text-[14px] leading-[1.57] text-[#AEB0B6]">
                         {area.description}

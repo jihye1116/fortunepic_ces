@@ -1,1 +1,342 @@
-{}
+{
+  "home": {
+    "title": "Consulta tu\nFortuna",
+    "start": "Toca la pantalla\npara comenzar"
+  },
+  "language": {
+    "title": "Selecciona un idioma"
+  },
+  "topic": {
+    "title": "Selecciona un tema",
+    "next": "Siguiente",
+    "topics": {
+      "today": "Fortuna\nde Hoy",
+      "lifetimeFortune": "Fortuna\nde Vida",
+      "dayPillarAnimal": "Mi Animal\ndel Zodiaco",
+      "physiognomy": "Talismán\nCoreano",
+      "fiveElementsV3": "Análisis de\nCinco Elementos",
+      "specifiedDate": "Lectura de\nFecha Específica",
+      "yearly": "Fortuna de\nAño Nuevo"
+    }
+  },
+  "date": {
+    "title": "Selecciona tu fecha",
+    "subtitle": "Elige una fecha específica para tu lectura de fortuna"
+  },
+  "confirm": {
+    "restart": {
+      "title": "¿Empezar de nuevo?",
+      "description": "Tu progreso actual se perderá.",
+      "confirm": "Empezar de nuevo",
+      "cancel": "Cancelar"
+    }
+  },
+  "talisman-theme": {
+    "title": "Elige tu tema de Talismán",
+    "subtitle": "Selecciona un tema que resuene con tus necesidades actuales"
+  },
+  "talisman": {
+    "happiness": {
+      "title": "Talismán de Felicidad",
+      "subtitle": "Elige tu enfoque de felicidad específico",
+      "overallSuccess": "Éxito General y Fluidez",
+      "goalAchievement": "Logro de Metas Específicas",
+      "mentalPeace": "Paz Mental",
+      "divineProtection": "Protección Divina"
+    },
+    "wealth": {
+      "title": "Talismán de Riqueza",
+      "subtitle": "Elige tu enfoque de manifestación de riqueza",
+      "fortuneBoost": "Impulso de Buena Fortuna",
+      "moneyAttraction": "Atracción de Dinero",
+      "windfallWish": "Deseo de Ganancia Inesperada",
+      "greatLuckFlow": "Gran Flujo de Suerte"
+    },
+    "career": {
+      "title": "Talismán de Carrera",
+      "subtitle": "Elige tu enfoque de éxito profesional",
+      "legalTroubleSolve": "Resolución de Problemas Legales",
+      "gossipPrevention": "Prevención de Chismes",
+      "promotionWish": "Deseo de Promoción",
+      "jobSuccess": "Éxito Laboral"
+    },
+    "love": {
+      "title": "Talismán de Amor",
+      "subtitle": "Elige tu enfoque de amor y relaciones",
+      "coupleHarmony": "Armonía de Pareja",
+      "relationshipRepair": "Reparación de Relaciones",
+      "relationshipCall": "Llamada de Relación",
+      "maritalPeace": "Paz Marital"
+    },
+    "family": {
+      "title": "Talismán Familiar",
+      "subtitle": "Elige tu enfoque de armonía familiar",
+      "familyHarmony": "Armonía Familiar",
+      "movingSafety": "Seguridad en Mudanza",
+      "homePeace": "Paz en el Hogar",
+      "fetalProtection": "Protección Fetal"
+    },
+    "health": {
+      "title": "Talismán de Salud",
+      "subtitle": "Elige tu enfoque de protección de salud",
+      "diseaseHealing": "Curación de Enfermedades",
+      "illnessRepel": "Repeler Enfermedades",
+      "accidentPrevention": "Prevención de Accidentes",
+      "longLifeHealth": "Salud y Larga Vida"
+    },
+    "business": {
+      "title": "Talismán de Negocios",
+      "subtitle": "Elige tu enfoque de éxito empresarial",
+      "businessProsperity": "Prosperidad Empresarial",
+      "salesSuccess": "Éxito en Ventas",
+      "salesActivation": "Activación de Ventas",
+      "investmentSuccess": "Éxito en Inversiones"
+    }
+  },
+  "information": {
+    "intro": {
+      "title": "Tus Coordenadas de K-Energy",
+      "description": "Descubre tus coordenadas únicas de K-Energy que influyen en tu fortuna y destino.",
+      "okay": "De acuerdo"
+    },
+    "nickname": {
+      "title": "Crea tu apodo",
+      "placeholder": "Escribe tu apodo",
+      "helpText": "Por favor ingresa de 1 a 20 caracteres.",
+      "next": "Siguiente"
+    },
+    "birth": {
+      "title": "Ingresa fecha de nacimiento",
+      "month": "MM",
+      "day": "DD",
+      "year": "AAAA",
+      "incorrectDate": "Fecha de nacimiento no reconocida",
+      "next": "Siguiente"
+    },
+    "time": {
+      "title": "Ingresa hora de nacimiento",
+      "hour": "Hora",
+      "minute": "Minuto",
+      "am": "AM",
+      "pm": "PM",
+      "error": "Por favor verifica de nuevo",
+      "dontKnow": "No lo sé",
+      "next": "Siguiente"
+    },
+    "gender": {
+      "title": "Elige tu género",
+      "subtitle": "Por favor selecciona tu sexo asignado al nacer",
+      "male": "Masculino",
+      "female": "Femenino",
+      "preferNot": "Prefiero no decir",
+      "next": "Siguiente",
+      "bottomSheet": {
+        "title": "Antes de continuar",
+        "description": "Los resultados pueden ser menos completos sin el género.",
+        "continue": "Continuar de todos modos",
+        "selectGender": "Seleccionar género"
+      }
+    }
+  },
+  "camera": {
+    "info": {
+      "title": "La cámara comenzará pronto",
+      "instruction1": "Asegúrate de que tus orejas sean claramente visibles",
+      "instruction2": "Se tomarán dos fotos",
+      "button": "De acuerdo"
+    },
+    "capture": {
+      "loading": "Cargando cámara...",
+      "remainingShots": "Fotos restantes",
+      "earVisibility": "Asegúrate de que tus orejas sean claramente visibles"
+    },
+    "select": {
+      "title": "Elige tu mejor foto",
+      "subtitle": "Selecciona una para tu lectura de fortuna",
+      "next": "Siguiente",
+      "retake": "Volver a tomar"
+    }
+  },
+  "loading": {
+    "analyzing": "Analizando..."
+  },
+  "result": {
+    "qrCode": "Escanea para ver detalles completos",
+    "reportSuffix": " reporte",
+    "finish": "Finalizar",
+    "removeData": "Eliminar mis datos",
+    "lifetimeFortune": {
+      "title": "Fortuna de Vida",
+      "description": "Hoy es un día de gran oportunidad financiera. Un movimiento audaz conducirá a ganancias significativas. Confía en tus instintos en asuntos de inversión."
+    },
+    "today": {
+      "title": "Fortuna de Hoy",
+      "subtitle": "26 de Octubre de 2023",
+      "mainTitle": "Un Día de Oportunidades Inesperadas",
+      "chip1": "Suerte",
+      "chip2": "Creatividad",
+      "chip3": "Conexión"
+    },
+    "specifiedDate": {
+      "title": "Tu Fortuna para el 26 de Octubre de 2024",
+      "mainTitle": "Un Día de Oportunidades Inesperadas",
+      "chip1": "Suerte",
+      "chip2": "Creatividad",
+      "chip3": "Conexión"
+    },
+    "fiveElementsV3": {
+      "title": "Análisis de Cinco Elementos",
+      "mainImage": "Principal",
+      "supportingImage": "Secundario",
+      "description": "Como Dragón Azul, posees autoridad natural y un espíritu pionero. Tu camino es el de la innovación e inspirar a otros a lograr la grandeza."
+    },
+    "dayPillarAnimal": {
+      "title": "Mi Animal del Zodiaco",
+      "mainTitle": "El Dragón Azul",
+      "description": "Como Dragón Azul, posees autoridad natural y un espíritu pionero. Tu camino es el de la innovación e inspirar a otros a lograr la grandeza.",
+      "chip1": "Liderazgo",
+      "chip2": "Creatividad",
+      "chip3": "Sabiduría"
+    },
+    "physiognomy": {
+      "title": "Talismán Coreano",
+      "mainTitle": "Talismán de la Suerte",
+      "description": "Como Dragón Azul, posees autoridad natural y un espíritu pionero. Tu camino es el de la innovación e inspirar a otros a lograr la grandeza."
+    }
+  },
+  "report": {
+    "pillars": {
+      "year": "Pilar del Año",
+      "month": "Pilar del Mes",
+      "day": "Pilar del Día",
+      "hour": "Pilar de la Hora"
+    },
+    "lifePhases": {
+      "youth": "Juventud",
+      "middleAge": "Edad Media",
+      "seniorAge": "Vejez",
+      "firstHalf": "Primera Mitad",
+      "secondHalf": "Segunda Mitad",
+      "defaultAge": {
+        "youth": "20~39",
+        "middle": "40~59",
+        "senior": "60+"
+      }
+    },
+    "date": {
+      "yearSuffix": ""
+    },
+    "time": {
+      "morning": "Mañana",
+      "afternoon": "Tarde",
+      "evening": "Noche"
+    },
+    "sections": {
+      "beneficialEnergies": "Elementos/Energías Beneficiosos",
+      "generalAnalysis": "Análisis General",
+      "brightestProspects": "Perspectivas Más Brillantes",
+      "cloudiestProspects": "Perspectivas Más Nubladas",
+      "timeBasedFlow": "Flujo Basado en el Tiempo",
+      "timingPrediction": "Predicción de Tiempo",
+      "actionGuide": "Guía de Acción",
+      "luckyFood": "Comida de la Suerte",
+      "luckySpace": "Espacio de Suerte • Actividad",
+      "overallImpression": "Impresión General",
+      "personalityTraits": "Rasgos de Personalidad",
+      "advice": "Consejo",
+      "growthDirection": "Guía de Dirección de Crecimiento",
+      "energyDistribution": "Distribución de Energía",
+      "tenGodsHeavenly": "10 Dioses del Tallo Celestial",
+      "tenGodsEarthly": "10 Dioses de la Rama Terrenal",
+      "twelveLifeStages": "12 Etapas de la Vida",
+      "areaSpecificStrategies": "Estrategias Específicas por Área",
+      "nearDailyPilarAnimal": "Animal del Pilar Diario Cercano",
+      "detailedEnergyAnalysis": "Análisis Detallado de Energía",
+      "essentialSelf": "Ser Esencial y Clave de la Fortuna",
+      "faceReading": "Lectura de Rostro"
+    },
+    "elements": {
+      "wood": "Madera",
+      "fire": "Fuego",
+      "earth": "Tierra",
+      "metal": "Metal",
+      "water": "Agua"
+    },
+    "animals": {
+      "sheep": "Oveja",
+      "dog": "Perro",
+      "monkey": "Mono",
+      "pig": "Cerdo",
+      "ox": "Buey"
+    },
+    "essentialSelf": {
+      "daystem": "Tallo del Día",
+      "strongest": "Más Fuerte",
+      "usefulGod": "Dios Útil"
+    },
+    "faceReading": {
+      "areas": {
+        "forehead": "Frente",
+        "eyes": "Ojos",
+        "areaBetweenTheEyebrows": "Entrecejo",
+        "cheekbones": "Pómulos",
+        "nose": "Nariz",
+        "cheeks": "Mejillas",
+        "mouth": "Boca",
+        "chin": "Barbilla"
+      }
+    },
+    "tags": {
+      "bestTime": "Mejor Hora",
+      "cautionTime": "Hora de Precaución"
+    },
+    "defaults": {
+      "growth": "Crecimiento",
+      "harmony": "Armonía",
+      "opportunity": "Oportunidad"
+    },
+    "dummy": {
+      "strength": "Sensibilidad delicada y profunda",
+      "weakness": "Preocupación interna excesiva"
+    },
+    "strategies": {
+      "career": "Suerte Profesional",
+      "health": "Suerte en Salud",
+      "wealth": "Suerte en Riqueza",
+      "relationship": "Suerte en Relaciones"
+    },
+    "dailyPillar": {
+      "tags": {
+        "strength": "Fortaleza",
+        "weakness": "Debilidad",
+        "recommend": "Recomendado",
+        "avoid": "Evitar",
+        "helpful": "Útil",
+        "challenging": "Desafiante"
+      },
+      "defaultDescription": "Su período de juventud se centra en la energía de consolidar de manera estable la adaptabilidad ambiental y las capacidades básicas en las primeras etapas, y luego se despliega en una estructura de crecimiento donde se despliega la energía de maximizar la manifestación de habilidades y la expansión del rendimiento. Se caracteriza por un flujo ascendente equilibrado paso a paso de reorganizar el interior y luego saltar al exterior."
+    },
+    "physiognomy": {
+      "noAnalysis": "No hay análisis de fisonomía disponible."
+    },
+    "basicEnergyInterpretation": {
+      "title": "Interpretación de Energía Básica de {{nickname}}"
+    },
+    "dailyAnimalCard": {
+      "title": "Animal del Pilar Diario de {{nickname}}",
+      "defaultAnimal": "Tigre",
+      "defaultDescription": "Tu animal especial para hoy simboliza la valentía y la sabiduría, trayéndote protección especial y suerte durante todo el día. Siente la energía de este animal y pasa el día con confianza."
+    },
+    "fourPillars": {
+      "title": "Los Cuatro Pilares y Cinco Elementos de {{nickname}}",
+      "pillar": "Pilar",
+      "rowLabels": {
+        "heavenlyStem": "Tallo Celestial",
+        "heavenlyStem10Gods": "10 Dioses del Tallo Celestial",
+        "earthlyBranch": "Rama Terrenal",
+        "earthlyBranch10Gods": "10 Dioses de la Rama Terrenal",
+        "lifeStage12": "12 Etapas de Vida"
+      }
+    }
+  }
+}

@@ -2,6 +2,8 @@
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { CardCarousel } from "@/components/report/CardCarousel";
@@ -19,6 +21,7 @@ export const Route = createFileRoute("/report/date")({
 });
 
 function DateFortunePage() {
+  const { t } = useTranslation();
   const data = dummyReportData;
 
   const fortuneResult = getFortuneResultFromStorage();
@@ -28,7 +31,7 @@ function DateFortunePage() {
 
   // pillars 매핑
   const mappedPillars = sajuInfo?.pillars
-    ? mapApiToPillars(sajuInfo.pillars)
+    ? mapApiToPillars(sajuInfo.pillars, t)
     : data.pillars;
 
   // domainFortune에서 점수 평균 계산 및 bestDomain 정보 사용
@@ -36,7 +39,7 @@ function DateFortunePage() {
 
   // timeAnalysis를 CardCarousel용으로 매핑
   const mappedTimeFlows = dateFortune?.timeAnalysis
-    ? mapTimeFlows(dateFortune.timeAnalysis)
+    ? mapTimeFlows(dateFortune.timeAnalysis, t)
     : data.timeFlows.map((flow) => ({
         id: flow.time,
         imageUrl: {
@@ -47,7 +50,7 @@ function DateFortunePage() {
           Evening:
             "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
         }[flow.time],
-        chipText: flow.time,
+        chipText: t(`report.time.${flow.time.toLowerCase()}` as any),
         description: flow.description,
       }));
 
@@ -56,14 +59,14 @@ function DateFortunePage() {
   const mappedCloudiestDomain = mapCloudiestDomain(dateFortune);
 
   // Timing/Action Guide Mapping
-  const mappedTimingPrediction = mapTimingPrediction(dateFortune, data);
-  const mappedActionGuide = mapActionGuide(dateFortune, data);
+  const mappedTimingPrediction = mapTimingPrediction(dateFortune, data, t);
+  const mappedActionGuide = mapActionGuide(dateFortune, data, t);
 
   // Lucky Food 매핑
   const mappedLuckyFood = dateFortune?.luckyFood
-    ? mapLuckyFood(dateFortune.luckyFood)
+    ? mapLuckyFood(dateFortune.luckyFood, t)
     : {
-        title: "Lucky Space • Activity",
+        title: t("report.sections.luckySpace"),
         imageUrl: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop&q=60",
         subTitle: "Haeundae",
         description: "Haeundae is Busan's most famous and expansive beach",
@@ -90,14 +93,14 @@ function DateFortunePage() {
           <FaceReading faceReadingAreas={data.faceReadingAreas} />
 
           <DetailedEnergyAnalysis
-            title="General Analysis"
+            title={t("report.sections.generalAnalysis")}
             score={score ?? 85}
-            keywords={keywords.length > 0 ? keywords : ["Growth", "Harmony", "Opportunity"]}
-            description={description || `당신의 청년기는 초기에는 환경 적응력과 기본 역량을 안정적으로 다지는 기운이 중심이 되고, 이후에는 능력 발현과 성과 확장을 극대화하는 기운이 펼쳐지는 성장 구조로 전개되는 시기입니다. 내부를 정비한 뒤 외부로 도약하는, 단계적으로 균형 잡힌 상승 흐름이 특징입니다.`}
+            keywords={keywords.length > 0 ? keywords : [t("report.defaults.growth"), t("report.defaults.harmony"), t("report.defaults.opportunity")]}
+            description={description || t("report.dailyPillar.defaultDescription")}
           />
 
           <CardCarousel
-            title="Time Based Flow"
+            title={t("report.sections.timeBasedFlow")}
             cardWidth="w-[240px]"
             items={mappedTimeFlows}
           />
@@ -105,7 +108,7 @@ function DateFortunePage() {
           {/* Brightest Prospects - Best Domain */}
           {mappedBrightestDomain && (
             <DetailedEnergyAnalysis
-              title="Brightest Prospects"
+              title={t("report.sections.brightestProspects")}
               score={mappedBrightestDomain.score}
               keywords={[mappedBrightestDomain.domain]}
               description={`${mappedBrightestDomain.reason}\n\n${mappedBrightestDomain.advice}`}
@@ -115,7 +118,7 @@ function DateFortunePage() {
           {/* Cloudiest Prospects - Worst Domain */}
           {mappedCloudiestDomain && (
             <DetailedEnergyAnalysis
-              title="Cloudiest Prospects"
+              title={t("report.sections.cloudiestProspects")}
               score={mappedCloudiestDomain.score}
               keywords={[mappedCloudiestDomain.domain]}
               description={`${mappedCloudiestDomain.reason}\n\n${mappedCloudiestDomain.advice}`}
@@ -124,12 +127,12 @@ function DateFortunePage() {
           )}
 
           <TagListSection
-            title="Timing Prediction"
+            title={t("report.sections.timingPrediction")}
             items={mappedTimingPrediction}
           />
 
           <TagListSection
-            title="Action Guide"
+            title={t("report.sections.actionGuide")}
             items={mappedActionGuide}
           />
 
@@ -180,14 +183,14 @@ function extractAnalysisData(dateFortune: any) {
   return { score: averageScore, keywords, description };
 }
 
-function mapTimeFlows(timeAnalysis: any): any[] {
+function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   const flows = [];
 
   if (timeAnalysis.morning) {
     flows.push({
       id: "Morning",
       imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
-      chipText: "Morning",
+      chipText: t("report.time.morning"),
       description: `${timeAnalysis.morning.analysis}\n\n${timeAnalysis.morning.advice.join("\n")}`,
     });
   }
@@ -196,7 +199,7 @@ function mapTimeFlows(timeAnalysis: any): any[] {
     flows.push({
       id: "Afternoon",
       imageUrl: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&auto=format&fit=crop&q=60",
-      chipText: "Afternoon",
+      chipText: t("report.time.afternoon"),
       description: `${timeAnalysis.afternoon.analysis}\n\n${timeAnalysis.afternoon.advice.join("\n")}`,
     });
   }
@@ -205,7 +208,7 @@ function mapTimeFlows(timeAnalysis: any): any[] {
     flows.push({
       id: "Evening",
       imageUrl: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
-      chipText: "Evening",
+      chipText: t("report.time.evening"),
       description: `${timeAnalysis.evening.analysis}\n\n${timeAnalysis.evening.advice.join("\n")}`,
     });
   }
@@ -240,16 +243,16 @@ function mapCloudiestDomain(dateFortune: any) {
   };
 }
 
-function mapTimingPrediction(dateFortune: any, defaultData: any): any[] {
+function mapTimingPrediction(dateFortune: any, defaultData: any, t: TFunction): any[] {
   if (!dateFortune) {
     return [
       {
-        tag: "Best Time",
+        tag: t("report.tags.bestTime"),
         tagColor: "#5B72B7",
         description: defaultData.timingPrediction.bestTime,
       },
       {
-        tag: "Caution Time",
+        tag: t("report.tags.cautionTime"),
         tagColor: "#F16C6E",
         description: defaultData.timingPrediction.cautionTime,
       },
@@ -261,7 +264,7 @@ function mapTimingPrediction(dateFortune: any, defaultData: any): any[] {
   if (dateFortune.bestHour) {
     const bestHour = dateFortune.bestHour;
     items.push({
-      tag: "Best Time",
+      tag: t("report.tags.bestTime"),
       tagColor: "#5B72B7",
       description: `${bestHour.time}\n\n${bestHour.reason}\n\nActivities: ${bestHour.activities.join(", ")}`,
     });
@@ -270,7 +273,7 @@ function mapTimingPrediction(dateFortune: any, defaultData: any): any[] {
   if (dateFortune.worstHour) {
     const worstHour = dateFortune.worstHour;
     items.push({
-      tag: "Caution Time",
+      tag: t("report.tags.cautionTime"),
       tagColor: "#F16C6E",
       description: `${worstHour.time}\n\n${worstHour.reason}\n\nCaution: ${worstHour.caution.join(", ")}`,
     });
@@ -279,16 +282,16 @@ function mapTimingPrediction(dateFortune: any, defaultData: any): any[] {
   return items;
 }
 
-function mapActionGuide(dateFortune: any, defaultData: any): any[] {
+function mapActionGuide(dateFortune: any, defaultData: any, t: TFunction): any[] {
    if (!dateFortune) {
     return [
       {
-        tag: "Recommend",
+        tag: t("report.dailyPillar.tags.recommend"),
         tagColor: "#5B72B7",
         description: defaultData.actionGuide.recommend,
       },
       {
-        tag: "Avoid",
+        tag: t("report.dailyPillar.tags.avoid"),
         tagColor: "#F16C6E",
         description: defaultData.actionGuide.avoid,
       },
@@ -299,7 +302,7 @@ function mapActionGuide(dateFortune: any, defaultData: any): any[] {
 
   if (dateFortune.recommendedActions) {
     items.push({
-      tag: "Recommend",
+      tag: t("report.dailyPillar.tags.recommend"),
       tagColor: "#5B72B7",
       description: dateFortune.recommendedActions.content,
     });
@@ -307,7 +310,7 @@ function mapActionGuide(dateFortune: any, defaultData: any): any[] {
 
   if (dateFortune.thingsToAvoid) {
     items.push({
-      tag: "Avoid",
+      tag: t("report.dailyPillar.tags.avoid"),
       tagColor: "#F16C6E",
       description: dateFortune.thingsToAvoid.content,
     });
@@ -316,9 +319,9 @@ function mapActionGuide(dateFortune: any, defaultData: any): any[] {
   return items;
 }
 
-function mapLuckyFood(luckyFood: any): any {
+function mapLuckyFood(luckyFood: any, t: TFunction): any {
   return {
-    title: "Lucky Food",
+    title: t("report.sections.luckyFood"),
     imageUrl: "https://images.unsplash.com/photo-1553621642-f6e147245754?w=800&auto=format&fit=crop&q=60",
     subTitle: luckyFood.food,
     description: luckyFood.reason,

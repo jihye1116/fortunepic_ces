@@ -157,6 +157,9 @@
       "retake": "Retake"
     }
   },
+  "loading": {
+    "analyzing": "Analyzing..."
+  },
   "result": {
     "qrCode": "Scan for Full Details",
     "reportSuffix": "'s report",
@@ -199,6 +202,141 @@
       "title": "Korean Talisman",
       "mainTitle": "Lucky Talisman",
       "description": "As a Blue Dragon, you possess natural authority and a pioneering spirit. Your path is one of innovation and inspiring others to achieve greatness."
+    }
+  },
+  "report": {
+    "pillars": {
+      "year": "Year Pillar",
+      "month": "Month Pillar",
+      "day": "Day Pillar",
+      "hour": "Hour Pillar"
+    },
+    "lifePhases": {
+      "youth": "Youth Period",
+      "middleAge": "Middle Age Period",
+      "seniorAge": "Senior Age Period",
+      "firstHalf": "First Half",
+      "secondHalf": "Second Half",
+      "defaultAge": {
+        "youth": "20~39",
+        "middle": "40~59",
+        "senior": "60+"
+      }
+    },
+    "date": {
+      "yearSuffix": ""
+    },
+    "time": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "sections": {
+      "beneficialEnergies": "Beneficial Elements/Energies",
+      "generalAnalysis": "General Analysis",
+      "brightestProspects": "Brightest Prospects",
+      "cloudiestProspects": "Cloudiest Prospects",
+      "timeBasedFlow": "Time Based Flow",
+      "timingPrediction": "Timing Prediction",
+      "actionGuide": "Action Guide",
+      "luckyFood": "Lucky Food",
+      "luckySpace": "Lucky Space • Activity",
+      "overallImpression": "Overall Impression",
+      "personalityTraits": "Personality Traits",
+      "advice": "Advice",
+      "growthDirection": "Growth Direction Guidance",
+      "energyDistribution": "Energy Distribution",
+      "tenGodsHeavenly": "Heavenly Stems 10 Gods",
+      "tenGodsEarthly": "Earthly Branch 10 Gods",
+      "twelveLifeStages": "12 Life Stages",
+      "areaSpecificStrategies": "Area-Specific Strategies",
+      "nearDailyPilarAnimal": "Near Daily Pilar Animal",
+      "detailedEnergyAnalysis": "Detailed Energy Analysis",
+      "essentialSelf": "Essential Self & Key to Fortune",
+      "faceReading": "Face Reading"
+    },
+    "elements": {
+      "wood": "Wood",
+      "fire": "Fire",
+      "earth": "Earth",
+      "metal": "Metal",
+      "water": "Water"
+    },
+    "animals": {
+      "sheep": "Sheep",
+      "dog": "Dog",
+      "monkey": "Monkey",
+      "pig": "Pig",
+      "ox": "Ox"
+    },
+    "essentialSelf": {
+      "daystem": "Daystem",
+      "strongest": "Strongest",
+      "usefulGod": "Useful God"
+    },
+    "faceReading": {
+      "areas": {
+        "forehead": "Forehead",
+        "eyes": "Eyes",
+        "areaBetweenTheEyebrows": "Area between the Eyebrows",
+        "cheekbones": "Cheekbones",
+        "nose": "Nose",
+        "cheeks": "Cheeks",
+        "mouth": "Mouth",
+        "chin": "Chin"
+      }
+    },
+    "tags": {
+      "bestTime": "Best Time",
+      "cautionTime": "Caution Time"
+    },
+    "defaults": {
+      "growth": "Growth",
+      "harmony": "Harmony",
+      "opportunity": "Opportunity"
+    },
+    "dummy": {
+      "strength": "Delicate and deep sensitivity",
+      "weakness": "Excessive internal worry"
+    },
+    "strategies": {
+      "career": "Career Luck",
+      "health": "Health Luck",
+      "wealth": "Wealth Luck",
+      "relationship": "Relationship Luck"
+    },
+    "dailyPillar": {
+      "tags": {
+        "strength": "Strength",
+        "weakness": "Weakness",
+        "recommend": "Recommend",
+        "avoid": "Avoid",
+        "helpful": "Helpful",
+        "challenging": "Challenging"
+      },
+      "defaultDescription": "Your youth period is centered on the energy of stably consolidating environmental adaptability and basic capabilities in the early stages, and later unfolds into a growth structure where the energy of maximizing ability manifestation and performance expansion unfolds. It is characterized by a step-by-step balanced upward flow of reorganizing the inside and then leaping to the outside."
+    },
+    "physiognomy": {
+      "noAnalysis": "No physiognomy analysis available."
+    },
+    "basicEnergyInterpretation": {
+      "title": "{{nickname}}'s Basic Energy Interpretation"
+    },
+    "dailyAnimalCard": {
+      "title": "{{nickname}}'s Daily Pilar Animal",
+      "defaultAnimal": "Tiger",
+      "defaultDescription": "Your special animal for today symbolizes bravery and wisdom, bringing you special protection and luck throughout the day. Feel this animal's energy and spend the day with confidence."
+    },
+    "fourPillars": {
+      "title": "{{nickname}}'s Four pillars and Five Elements",
+      "pillar": "Pillar",
+      "rowLabels": {
+        "heavenlyStem": "Heavenly Stem",
+        "heavenlyStem10Gods": "Heavenly Stem 10 Gods",
+        "earthlyBranch": "Earthly Branch",
+        "earthlyBranch10Gods": "Earthly Branch 10 Gods",
+        "lifeStage12": "12 Life Stages"
+      }
     }
   }
 }

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { LifetimeReportData } from "@/types/report";
 
 import { CardCarousel } from "./CardCarousel";
@@ -9,6 +11,8 @@ interface AreaSpecificStrategiesProps {
 export function AreaSpecificStrategies({
   areaStrategies,
 }: AreaSpecificStrategiesProps) {
+  const { t } = useTranslation();
+
   const areaImages: Record<string, string> = {
     career:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
@@ -29,9 +33,11 @@ export function AreaSpecificStrategies({
     }[strategy.area] || { bg: strategy.bgColor, text: "#171719" };
 
     return {
-      id: strategy.title,
+      id: strategy.area,
       imageUrl: areaImages[strategy.area],
-      chipText: strategy.title,
+      chipText: t(`report.strategies.${strategy.area}`, {
+        defaultValue: strategy.title,
+      }),
       chipStyle: {
         backgroundColor: styles.bg,
         color: styles.text,
@@ -42,7 +48,7 @@ export function AreaSpecificStrategies({
 
   return (
     <CardCarousel
-      title="Area-Specific Strategies"
+      title={t("report.sections.areaSpecificStrategies")}
       items={items}
       cardWidth="w-[305px]"
     />

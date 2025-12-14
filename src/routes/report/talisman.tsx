@@ -2,6 +2,7 @@
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { DetailedEnergyAnalysis } from "@/components/report/DetailedEnergyAnalysis";
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/report/talisman")({
 });
 
 function TalismanFortunePage() {
+  const { t } = useTranslation();
   const data = dummyReportData;
 
   const fortuneResult = getFortuneResultFromStorage();
@@ -26,7 +28,7 @@ function TalismanFortunePage() {
 
   // 1. Pillars Mapping
   const mappedPillars = sajuInfo?.pillars
-    ? mapApiToPillars(sajuInfo.pillars)
+    ? mapApiToPillars(sajuInfo.pillars, t)
     : data.pillars;
 
   // 2. Face Reading Areas Mapping
@@ -43,7 +45,7 @@ function TalismanFortunePage() {
   // 3. Strength & Weakness Mapping
   const mappedStrengths = physiognomy?.strengths
     ? physiognomy.strengths.map((s: string) => ({
-        tag: "Strength",
+        tag: t("report.dailyPillar.tags.strength"),
         tagColor: "#5B72B7",
         description: s,
       }))
@@ -51,7 +53,7 @@ function TalismanFortunePage() {
 
   const mappedWeaknesses = physiognomy?.weaknesses
     ? physiognomy.weaknesses.map((w: string) => ({
-        tag: "Weakness",
+        tag: t("report.dailyPillar.tags.weakness"),
         tagColor: "#F16C6E",
         description: w,
       }))
@@ -64,14 +66,14 @@ function TalismanFortunePage() {
     ? combinedTraits 
     : [
         {
-            tag: "Strength",
+            tag: t("report.dailyPillar.tags.strength"),
             tagColor: "#5B72B7",
-            description: "섬세하고 깊이 있는 감수성",
+            description: t("report.dummy.strength"),
         },
         {
-            tag: "Weakness",
+            tag: t("report.dailyPillar.tags.weakness"),
             tagColor: "#F16C6E",
-            description: "과도한 내적 고민",
+            description: t("report.dummy.weakness"),
         }
     ];
 
@@ -87,22 +89,22 @@ function TalismanFortunePage() {
           />
 
           <DetailedEnergyAnalysis
-            title="Overall Impression"
+            title={t("report.sections.overallImpression")}
             score={85} // Physiognomy might not have a score, using default high
             keywords={["Sensitivity", "Analysis", "Growth"]} // Extract keywords if possible
-            description={physiognomy?.physiognomyAnalysis?.overallImpression || physiognomy?.overallImpression || "인상 분석 결과가 없습니다."}
+            description={physiognomy?.physiognomyAnalysis?.overallImpression || physiognomy?.overallImpression || t("report.physiognomy.noAnalysis")}
           />
 
           <FaceReading faceReadingAreas={mappedFaceReadingAreas} />
 
           <TagListSection
-            title="Personality Traits"
+            title={t("report.sections.personalityTraits")}
             items={finalTraits}
           />
 
           {physiognomy?.overallAdvice && (
              <DetailedEnergyAnalysis
-                title="Advice"
+                title={t("report.sections.advice")}
                 score={90}
                 keywords={["Growth", "Mindset"]}
                 description={physiognomy.overallAdvice}

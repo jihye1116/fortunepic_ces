@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 
 interface DetailedEnergyAnalysisProps {
   title?: string;
@@ -8,16 +9,19 @@ interface DetailedEnergyAnalysisProps {
 }
 
 export function DetailedEnergyAnalysis({
-  title = "Detailed Energy Analysis",
+  title,
   score,
   keywords,
   description,
   tagColor = "#5B72B7",
 }: DetailedEnergyAnalysisProps) {
+  const { t } = useTranslation();
+  const finalTitle = title || t("report.sections.detailedEnergyAnalysis");
+
   return (
     <section className="rounded-2xl bg-[#171719] p-6 space-y-6">
       <h2 className="text-[18px] font-semibold text-[#878A93]">
-        {title}
+        {finalTitle}
       </h2>
 
       <div className="space-y-1">

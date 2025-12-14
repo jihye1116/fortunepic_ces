@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { LifetimeReportData } from "@/types/report";
 
@@ -7,10 +8,18 @@ interface BasicEnergyInterpretationProps {
   pillars: LifetimeReportData["pillars"];
 }
 
+const pillarNameMap: Record<string, string> = {
+  "Year Pillar": "year",
+  "Month Pillar": "month",
+  "Day Pillar": "day",
+  "Hour Pillar": "hour",
+};
+
 export function BasicEnergyInterpretation({
   nickname,
   pillars,
 }: BasicEnergyInterpretationProps) {
+  const { t } = useTranslation();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -53,14 +62,8 @@ export function BasicEnergyInterpretation({
   return (
     <section className="rounded-2xl bg-linear-to-b from-black/20 to-[#171719] p-[28px_20px] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
       <div className="space-y-0">
-        <div className="flex items-center gap-1">
-          <span className="text-[18px] font-medium text-[#878A93]">
-            {nickname}
-          </span>
-          <span className="text-[18px] font-medium text-[#878A93]">'s</span>
-        </div>
         <h2 className="text-[18px] font-medium text-[#878A93]">
-          Basic Energy Interpretation
+          {t("report.basicEnergyInterpretation.title", { nickname })}
         </h2>
       </div>
 
@@ -86,7 +89,9 @@ export function BasicEnergyInterpretation({
               className="shrink-0 flex flex-col gap-3 snap-center"
             >
               <h3 className="text-[16px] font-medium text-[#E1E2E4]">
-                {pillar.name}
+                {t(`report.pillars.${pillarNameMap[pillar.name]}`, {
+                  defaultValue: pillar.name,
+                })}
               </h3>
               <div className="flex flex-col gap-2 items-start">
                 {pillar.keywords.map((keyword) => (

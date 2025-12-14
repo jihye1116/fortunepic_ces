@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "../../global.css";
 
 import { createFileRoute } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import EarthIcon from "@/assets/icons/elements/earth.svg";
 import FireIcon from "@/assets/icons/elements/fire.svg";
@@ -21,6 +24,7 @@ export const Route = createFileRoute("/report/five-elements")({
 });
 
 function FiveElementsFortunePage() {
+  const { t } = useTranslation();
   const data = dummyReportData;
 
   const fortuneResult = getFortuneResultFromStorage();
@@ -35,21 +39,21 @@ function FiveElementsFortunePage() {
 
   // 2. Element Distribution Mapping
   const mappedDistribution = sajuInfo?.fiveElements
-    ? mapFiveElementsDistribution(sajuInfo.fiveElements)
+    ? mapFiveElementsDistribution(sajuInfo.fiveElements, t)
     : data.elementDistributionItems?.map(item => ({
-        label: item.element,
+        label: t(`report.elements.${item.element.toLowerCase()}` as any),
         value: item.percentage,
         icon: item.icon,
       }));
 
   // 3. Essential Self Mapping
   const mappedEssentialSelf = sajuInfo
-    ? mapEssentialSelf(sajuInfo)
+    ? mapEssentialSelf(sajuInfo, t)
     : data.essentialSelfItems;
 
   // 4. Image Analysis Mapping
   const mappedImageAnalysis = {
-        title: "Growth Direction Guidance",
+        title: t("report.sections.growthDirection"),
         imageUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
         subTitle: "Donations",
         description: "donate to non-profit organizations that support the education",
@@ -60,30 +64,30 @@ function FiveElementsFortunePage() {
   const mappedDetailedList = analysisV3?.dayPillarAnalysis
     ? [
         {
-          title: "Heavenly Stems 10 Gods",
+          title: t("report.sections.tenGodsHeavenly"),
           description: analysisV3.dayPillarAnalysis.heavenlyStemAnalysis,
         },
         {
-          title: "Earthly Branch 10 Gods",
+          title: t("report.sections.tenGodsEarthly"),
           description: analysisV3.dayPillarAnalysis.earthlyBranchAnalysis,
         },
         {
-          title: "12 Life Stages",
+          title: t("report.sections.twelveLifeStages"),
           description: analysisV3.dayPillarAnalysis.twelveStageAnalysis?.combinedAnalysis,
         },
       ]
     : data.tenGodsAndLifeStages
       ? [
           {
-            title: "Heavenly Stems 10 Gods",
+            title: t("report.sections.tenGodsHeavenly"),
             description: data.tenGodsAndLifeStages.heavenlyStems,
           },
           {
-            title: "Earthly Branch 10 Gods",
+            title: t("report.sections.tenGodsEarthly"),
             description: data.tenGodsAndLifeStages.earthlyBranches,
           },
           {
-            title: "12 Life Stages",
+            title: t("report.sections.twelveLifeStages"),
             description: data.tenGodsAndLifeStages.lifeStages,
           },
         ]
@@ -104,7 +108,7 @@ function FiveElementsFortunePage() {
 
           {mappedDistribution && (
             <DistributionChartSection
-              title="Energy Distribution"
+              title={t("report.sections.energyDistribution")}
               items={mappedDistribution}
             />
           )}
@@ -177,7 +181,7 @@ function mapToFourPillarsData(pillars: any) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapFiveElementsDistribution(fiveElements: any) {
+function mapFiveElementsDistribution(fiveElements: any, t: TFunction) {
   const total =
     fiveElements.wood +
     fiveElements.fire +
@@ -189,27 +193,27 @@ function mapFiveElementsDistribution(fiveElements: any) {
 
   return [
     {
-      label: "Wood",
+      label: t("report.elements.wood"),
       value: getPercentage(fiveElements.wood),
       icon: WoodIcon,
     },
     {
-      label: "Fire",
+      label: t("report.elements.fire"),
       value: getPercentage(fiveElements.fire),
       icon: FireIcon,
     },
     {
-      label: "Earth",
+      label: t("report.elements.earth"),
       value: getPercentage(fiveElements.earth),
       icon: EarthIcon,
     },
     {
-      label: "Metal",
+      label: t("report.elements.metal"),
       value: getPercentage(fiveElements.metal),
       icon: MetalIcon,
     },
     {
-      label: "Water",
+      label: t("report.elements.water"),
       value: getPercentage(fiveElements.water),
       icon: WaterIcon,
     },
@@ -217,14 +221,11 @@ function mapFiveElementsDistribution(fiveElements: any) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapEssentialSelf(sajuInfo: any) {
+function mapEssentialSelf(sajuInfo: any, t: TFunction) {
   const items = [
     {
-      label: "Daystem",
-      element: sajuInfo.dayMaster.element, // e.g. "토" -> Translate? Usually UI expects English or mapped string.
-      // If the component just displays string, "토" is fine for Korean locale.
-      // But let's check dummy data: "Earth".
-      // If I want English, I need a mapper.
+      label: t("report.essentialSelf.daystem"),
+      element: sajuInfo.dayMaster.element, 
       description: `Day Master is ${sajuInfo.dayMaster.stem} (${sajuInfo.dayMaster.element}).`,
     }
   ];
@@ -232,7 +233,7 @@ function mapEssentialSelf(sajuInfo: any) {
   // Strongest/Weakest as extra info?
   if (sajuInfo.strongestElement) {
       items.push({
-          label: "Strongest",
+          label: t("report.essentialSelf.strongest"),
           element: sajuInfo.strongestElement,
           description: `Strongest element is ${sajuInfo.strongestElement}.`
       });
