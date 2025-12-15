@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 interface DistributionChartItem {
@@ -13,19 +13,17 @@ interface DistributionChartSectionProps {
 }
 
 const COLORS: { [key: string]: string } = {
-  Wood: '#2C925E', // Green
-  Fire: '#ED474A', // Red
-  Earth: '#F6E24A', // Yellow
-  Metal: '#CACACA', // Gray
-  Water: '#5B72B7', // Blue
+  Wood: "#2C925E", // Green
+  Fire: "#ED474A", // Red
+  Earth: "#F6E24A", // Yellow
+  Metal: "#CACACA", // Gray
+  Water: "#5B72B7", // Blue
 };
 
 export function DistributionChartSection({
   title,
   items,
 }: DistributionChartSectionProps) {
-  const { t } = useTranslation();
-
   // Use label for color mapping, displayLabel for UI
   const chartData = items.map((item) => ({
     name: item.label,
@@ -35,16 +33,16 @@ export function DistributionChartSection({
   }));
 
   return (
-    <section className="rounded-2xl bg-[#171719] p-[28px_20px] flex flex-col gap-6">
+    <section className="flex flex-col gap-6 rounded-2xl bg-[#171719] p-[28px_20px]">
       {/* Title */}
-      <h2 className="text-[18px] font-semibold text-[#878A93] leading-[1.44] tracking-[-0.2%]">
+      <h2 className="text-[18px] leading-[1.44] font-semibold tracking-[-0.2%] text-[#878A93]">
         {title}
       </h2>
 
       {/* Contents */}
       <div className="flex flex-col items-center gap-8">
         {/* Doughnut Chart */}
-        <div className="w-[180px] h-[180px] relative">
+        <div className="relative h-[180px] w-[180px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -58,37 +56,40 @@ export function DistributionChartSection({
                 paddingAngle={-5}
               >
                 {chartData.map((entry) => (
-                  <Cell key={`cell-${entry.name}`} fill={COLORS[entry.name]} stroke="none" />
+                  <Cell
+                    key={`cell-${entry.name}`}
+                    fill={COLORS[entry.name]}
+                    stroke="none"
+                  />
                 ))}
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          
         </div>
 
         {/* List / Legend */}
-        <div className="w-full flex flex-col items-center gap-3">
+        <div className="flex w-full flex-col items-center gap-3">
           {items.map((item, index) => {
             const displayLabel = (item as any).displayLabel || item.label;
             return (
               <div key={item.label} className="w-full">
                 {/* List Item */}
-                <div className="w-full flex items-center justify-between gap-3">
+                <div className="flex w-full items-center justify-between gap-3">
                   {/* Left: Icon + Label */}
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 flex items-center justify-center">
+                    <div className="flex h-10 w-10 items-center justify-center">
                       {typeof item.icon === "string" ? (
-                        <img 
-                          src={item.icon} 
-                          alt={"icon"} 
-                          className="w-full h-full object-contain"
+                        <img
+                          src={item.icon}
+                          alt={"icon"}
+                          className="h-full w-full object-contain"
                         />
                       ) : (
-                        <item.icon className="w-full h-full" />
+                        <item.icon className="h-full w-full" />
                       )}
                     </div>
-                    <div className="h-8 flex items-center">
-                      <span className="text-[15px] font-medium leading-[1.46] tracking-[0.5%] text-[#E1E2E4]">
+                    <div className="flex h-8 items-center">
+                      <span className="text-[15px] leading-[1.46] font-medium tracking-[0.5%] text-[#E1E2E4]">
                         {displayLabel}
                       </span>
                     </div>
@@ -96,10 +97,10 @@ export function DistributionChartSection({
 
                   {/* Right: Value */}
                   <div className="flex items-center">
-                    <span className="text-[18px] font-medium leading-[1.44] tracking-[-0.2%] text-[#E1E2E4]">
+                    <span className="text-[18px] leading-[1.44] font-medium tracking-[-0.2%] text-[#E1E2E4]">
                       {item.value}
                     </span>
-                    <span className="text-[16px] font-semibold leading-normal tracking-[0.5%] text-[#C2C4C8]">
+                    <span className="text-[16px] leading-normal font-semibold tracking-[0.5%] text-[#C2C4C8]">
                       %
                     </span>
                   </div>
@@ -107,7 +108,7 @@ export function DistributionChartSection({
 
                 {/* Divider */}
                 {index < items.length - 1 && (
-                  <div className="w-full h-0.5 bg-[#212225] mt-3" />
+                  <div className="mt-3 h-0.5 w-full bg-[#212225]" />
                 )}
               </div>
             );

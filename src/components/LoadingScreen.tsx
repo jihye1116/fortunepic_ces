@@ -18,13 +18,13 @@ export function LoadingScreen() {
   const { t } = useTranslation();
   const [showQuiz, setShowQuiz] = useState(true);
   const [showResult, setShowResult] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<null | boolean>(null);
   const [showGreatModal, setShowGreatModal] = useState(false);
   const [fadeInQuiz, setFadeInQuiz] = useState(true);
   const [fadeOutQuiz, setFadeOutQuiz] = useState(false);
 
-    // Progress bar state
+  // Progress bar state
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -38,12 +38,13 @@ export function LoadingScreen() {
     }, 50);
     return () => clearInterval(interval);
   }, []);
-  
+
   // 단일 OX 퀴즈 문제
   const question = {
-    question: '한국에서 까치는\n나쁜 운을 가져오는 새로 여겨져요',
+    question: "한국에서 까치는\n나쁜 운을 가져오는 새로 여겨져요",
     isTrue: false,
-    explanation: '한국에서 까치는 반가운 손님이나 좋은 소식을 알리는 길조입니다.'
+    explanation:
+      "한국에서 까치는 반가운 손님이나 좋은 소식을 알리는 길조입니다.",
   };
 
   const handleAnswer = (answer: boolean) => {
@@ -63,14 +64,14 @@ export function LoadingScreen() {
     }, 1200);
   };
 
-  const resetQuiz = () => {
-    setShowResult(false);
-    setShowQuiz(true);
-    setShowAnswer(false);
-    setSelectedAnswer(null);
-    setFadeInQuiz(true);
-    setFadeOutQuiz(false);
-  };
+  // const resetQuiz = () => {
+  //   setShowResult(false);
+  //   setShowQuiz(true);
+  //   setShowAnswer(false);
+  //   setSelectedAnswer(null);
+  //   setFadeInQuiz(true);
+  //   setFadeOutQuiz(false);
+  // };
 
   const closeQuiz = () => {
     setFadeOutQuiz(true);
@@ -84,32 +85,37 @@ export function LoadingScreen() {
   return (
     <main className="fixed inset-0 z-50 flex h-dvh flex-col bg-[#1B1C1E]">
       {/* Background Elements from Root Layout */}
-      <div className="absolute inset-0 z-0 shadow-[inset_0px_-14px_42.7px_0px_rgba(253,249,219,1),inset_0px_-27px_120px_16px_rgba(91,114,183,1),inset_0px_-43px_140px_15px_rgba(132,149,201,1)] opacity-80 pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-80 shadow-[inset_0px_-14px_42.7px_0px_rgba(253,249,219,1),inset_0px_-27px_120px_16px_rgba(91,114,183,1),inset_0px_-43px_140px_15px_rgba(132,149,201,1)]" />
       <img
         src={BlackGradation}
         alt="background gradation"
-        className="absolute top-[-147px] left-1/2 z-0 h-[1981px] max-h-[1981px] min-h-[1981px] w-[1343px] max-w-[1343px] min-w-[1343px] -translate-x-1/2 blur-[80px] pointer-events-none -z-10"
+        className="pointer-events-none absolute top-[-147px] left-1/2 -z-10 z-0 h-[1981px] max-h-[1981px] min-h-[1981px] w-[1343px] max-w-[1343px] min-w-[1343px] -translate-x-1/2 blur-[80px]"
       />
 
       <div className="relative z-10 w-full">
         <NavigationBar />
         <Title text={t("loading.analyzing")} />
       </div>
-      
+
       {/* Background Lottie */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-        <Lottie animationData={loadingLottie} style={{ width: 1000, height: 1000 }} />
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+        <Lottie
+          animationData={loadingLottie}
+          style={{ width: 1000, height: 1000 }}
+        />
       </div>
 
       {/* Progress Bar Section - Footer */}
-      <div className="absolute bottom-60 left-0 right-0 flex flex-col items-center justify-center z-10">
-        <span className="text-[#878A93] text-4xl  mb-10">Fetching your fortune details...</span>
-        <div className="w-[664px] h-8 rounded-full bg-[#232325] flex items-center">
+      <div className="absolute right-0 bottom-60 left-0 z-10 flex flex-col items-center justify-center">
+        <span className="mb-10 text-4xl text-[#878A93]">
+          Fetching your fortune details...
+        </span>
+        <div className="flex h-8 w-[664px] items-center rounded-full bg-[#232325]">
           <div
             className="h-8 rounded-full transition-all duration-100"
             style={{
               width: `${progress}%`,
-              background: "linear-gradient(90deg, #7CA7F8 0%, #F8B5B6 100%)"
+              background: "linear-gradient(90deg, #7CA7F8 0%, #F8B5B6 100%)",
             }}
           />
         </div>
@@ -118,37 +124,36 @@ export function LoadingScreen() {
       {/* Quiz Overlay - Contents.png Style */}
       {showQuiz && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center  mx-20 transition-all duration-700
-            ${fadeInQuiz ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
-            ${fadeOutQuiz ? 'opacity-0 translate-y-10' : ''}`}
+          className={`fixed inset-0 z-50 mx-20 flex items-center justify-center transition-all duration-700 ${fadeInQuiz ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} ${fadeOutQuiz ? "translate-y-10 opacity-0" : ""}`}
         >
-          <div className="relative w-full flex flex-col gap-4">
-            
+          <div className="relative flex w-full flex-col gap-4">
             {/* Main Image Card */}
-            <div className="relative w-full  rounded-[24px] overflow-hidden shadow-2xl">
+            <div className="relative w-full overflow-hidden rounded-[24px] shadow-2xl">
               <img
                 src={MagpieImg}
                 alt="Magpie"
-                className="w-full h-120 object-cover"
+                className="h-120 w-full object-cover"
                 draggable={false}
               />
               {/* Dark Gradient Overlay for Text Readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              
+
               {/* Mini Quiz Badge */}
-              <div className="absolute top-4 right-4 bg-black/20  text-[#C2C4C8] text-3xl px-8 py-6 rounded-3xl">
+              <div className="absolute top-4 right-4 rounded-3xl bg-black/20 px-8 py-6 text-3xl text-[#C2C4C8]">
                 Mini Quiz
               </div>
 
               {/* Text Overlay: Question OR Result */}
-              <div className="absolute bottom-6 left-6 right-6">
+              <div className="absolute right-6 bottom-6 left-6">
                 {!showResult ? (
-                  <h3 className="text-white text-4xl  leading-[1.3] whitespace-pre-line drop-shadow-lg">
+                  <h3 className="text-4xl leading-[1.3] whitespace-pre-line text-white drop-shadow-lg">
                     {question.question}
                   </h3>
                 ) : (
-                   <h3 className={`ml-3 text-5xl font-medium leading-[1.3] drop-shadow-lg ${selectedAnswer === false ? 'text-[#ADB8DB]' : 'text-[#F8B5B6]'}`}>
-                    {selectedAnswer === false ? 'Good!' : 'Nice Try!'}
+                  <h3
+                    className={`ml-3 text-5xl leading-[1.3] font-medium drop-shadow-lg ${selectedAnswer === false ? "text-[#ADB8DB]" : "text-[#F8B5B6]"}`}
+                  >
+                    {selectedAnswer === false ? "Good!" : "Nice Try!"}
                   </h3>
                 )}
               </div>
@@ -156,56 +161,59 @@ export function LoadingScreen() {
 
             {/* Answer Buttons or Result Card */}
             {!showResult ? (
-              <div className="flex gap-5 mt-5">
+              <div className="mt-5 flex gap-5">
                 <button
                   type="button"
                   onClick={() => handleAnswer(true)}
-                  className="py-3 flex-1 bg-[#2C2C2C] rounded-[20px] flex items-center justify-center hover:bg-[#3A3A3A] active:scale-95 transition-all duration-200"
+                  className="flex flex-1 items-center justify-center rounded-[20px] bg-[#2C2C2C] py-3 transition-all duration-200 hover:bg-[#3A3A3A] active:scale-95"
                 >
-                  <OIcon className="w-[90px] h-[90px]" />
+                  <OIcon className="h-[90px] w-[90px]" />
                 </button>
                 <button
                   type="button"
                   onClick={() => handleAnswer(false)}
-                  className="flex-1 py-3 bg-[#2C2C2C] rounded-[20px] flex items-center justify-center hover:bg-[#3A3A3A] active:scale-95 transition-all duration-200"
+                  className="flex flex-1 items-center justify-center rounded-[20px] bg-[#2C2C2C] py-3 transition-all duration-200 hover:bg-[#3A3A3A] active:scale-95"
                 >
-                  <XIcon className="w-[90px] h-[90px]" />
+                  <XIcon className="h-[90px] w-[90px]" />
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col items-start justify-center p-6 bg-[#171719] rounded-3xl mt-5 animate-in fade-in duration-300">
-                <div className="bg-[#1B1C1E] px-3 py-1.5 rounded-xl mb-4 flex items-center gap-2">
-                   <span className="text-[#878A93] text-3xl">answer </span>
-                     {/* <button type="button" onClick={resetQuiz} className="focus:outline-none"> */}
-                     <button type="button" onClick={closeQuiz} className="focus:outline-none">
-                       <SmallXIcon className="w-[32px] h-[32px] cursor-pointer" />
-                     </button>
+              <div className="animate-in fade-in mt-5 flex flex-col items-start justify-center rounded-3xl bg-[#171719] p-6 duration-300">
+                <div className="mb-4 flex items-center gap-2 rounded-xl bg-[#1B1C1E] px-3 py-1.5">
+                  <span className="text-3xl text-[#878A93]">answer </span>
+                  {/* <button type="button" onClick={resetQuiz} className="focus:outline-none"> */}
+                  <button
+                    type="button"
+                    onClick={closeQuiz}
+                    className="focus:outline-none"
+                  >
+                    <SmallXIcon className="h-[32px] w-[32px] cursor-pointer" />
+                  </button>
                 </div>
-                <p className="text-[#C2C4C8] text-4xl leading-relaxed text-left">
+                <p className="text-left text-4xl leading-relaxed text-[#C2C4C8]">
                   {question.explanation}
                 </p>
-                 
               </div>
             )}
           </div>
         </div>
       )}
 
-
-
       {/* Great Modal (Correct Modal) */}
       {showGreatModal && (
-        <div className="absolute left-1/2 top-1/2 z-[60] -translate-x-1/2 -translate-y-1/2 animate-in fade-in zoom-in duration-300">
-          <div className="bg-[#171719] rounded-3xl flex flex-col items-center justify-center ">
-            <div className="px-40 py-20 flex flex-col items-center ">
+        <div className="animate-in fade-in zoom-in absolute top-1/2 left-1/2 z-[60] -translate-x-1/2 -translate-y-1/2 duration-300">
+          <div className="flex flex-col items-center justify-center rounded-3xl bg-[#171719]">
+            <div className="flex flex-col items-center px-40 py-20">
               <img
                 src={CorrectImg}
                 alt="Correct Confetti"
-                className="w-[472px] h-[472px] object-cover"
+                className="h-[472px] w-[472px] object-cover"
                 draggable={false}
               />
-              <div className="bg-[#232325] rounded-2xl px-12 py-5 ">
-                <span className="text-[#E1E2E4] text-5xl font-medium tracking-tight">Correct!</span>
+              <div className="rounded-2xl bg-[#232325] px-12 py-5">
+                <span className="text-5xl font-medium tracking-tight text-[#E1E2E4]">
+                  Correct!
+                </span>
               </div>
             </div>
           </div>

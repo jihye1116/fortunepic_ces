@@ -1,12 +1,8 @@
-
-import { useRouter } from "@tanstack/react-router";
-import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { Drawer } from "vaul";
 
 import SmallXIcon from "@/assets/icons/small-X.svg?react";
 import reportBanner from "@/assets/images/report/report-banner.png";
-import { resetAllAtoms } from "@/store/atoms";
 
 import { ChevronIcon } from "./ChevronIcon";
 
@@ -14,19 +10,16 @@ const insightDetails: Record<string, { title: string; description: string }> = {
   "Four Pillars of Destiny": {
     title: "Four Pillars of Destiny",
     description:
-      "Saju (Four Pillars of Destiny) is not a prophecy stating \"Your life will turn out this way.\"\nInstead, it functions as a guide, stating: \"You were born with this foundation, your abilities manifest best in these flows, and choosing this direction allows for the most natural expansion.\"",
+      'Saju (Four Pillars of Destiny) is not a prophecy stating "Your life will turn out this way."\nInstead, it functions as a guide, stating: "You were born with this foundation, your abilities manifest best in these flows, and choosing this direction allows for the most natural expansion."',
   },
   // Add more mappings as needed
 };
-
 
 interface ReportHeaderProps {
   sourceOfInsight: string;
 }
 
 export function ReportHeader({ sourceOfInsight }: ReportHeaderProps) {
-  const router = useRouter();
-  const resetAtoms = useSetAtom(resetAllAtoms);
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -51,13 +44,13 @@ export function ReportHeader({ sourceOfInsight }: ReportHeaderProps) {
       <img
         src={reportBanner}
         alt="Report Banner"
-        className="w-full h-[370px] object-cover"
+        className="h-[370px] w-full object-cover"
       />
       {/* Header */}
-      <header className="absolute bottom-0 left-0 right-0 pb-6 px-4 space-y-3">
+      <header className="absolute right-0 bottom-0 left-0 space-y-3 px-4 pb-6">
         <button
           onClick={handleClick}
-          className="w-full rounded-2xl bg-black/30 backdrop-blur-xl p-4 flex items-center justify-between shadow-[0_16px_50px_rgba(0,0,0,0.25)] text-left"
+          className="flex w-full items-center justify-between rounded-2xl bg-black/30 p-4 text-left shadow-[0_16px_50px_rgba(0,0,0,0.25)] backdrop-blur-xl"
         >
           <div className="space-y-1">
             <p className="text-xs text-[#878A93]">Source of Insight</p>
@@ -66,7 +59,7 @@ export function ReportHeader({ sourceOfInsight }: ReportHeaderProps) {
             </p>
           </div>
           <span onClick={handleSheetOpen} className="ml-2 cursor-pointer">
-            <ChevronIcon className="w-5 h-5 text-white/70" direction="right" />
+            <ChevronIcon className="h-5 w-5 text-white/70" direction="right" />
           </span>
         </button>
       </header>
@@ -81,14 +74,14 @@ export function ReportHeader({ sourceOfInsight }: ReportHeaderProps) {
               <div className="h-1 w-[51px] rounded-full bg-[#5A5C63]" />
             </div>
             {/* Header */}
-            <div className="shrink-0 px-5 py-5 flex items-center justify-between">
+            <div className="flex shrink-0 items-center justify-between px-5 py-5">
               <Drawer.Title asChild>
                 <h2 className="text-[18px] font-semibold text-[#878A93]">
                   {detail.title}
                 </h2>
               </Drawer.Title>
-              <button onClick={handleSheetClose} className="p-1 ml-2">
-                <SmallXIcon className="w-6 h-6 text-[#878A93]" />
+              <button onClick={handleSheetClose} className="ml-2 p-1">
+                <SmallXIcon className="h-6 w-6 text-[#878A93]" />
               </button>
             </div>
             {/* Content */}
