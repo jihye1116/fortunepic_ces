@@ -1,10 +1,24 @@
+
 import { useRouter } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
+import { useState } from "react";
+import { Drawer } from "vaul";
 
+import SmallXIcon from "@/assets/icons/small-X.svg?react";
 import reportBanner from "@/assets/images/report/report-banner.png";
 import { resetAllAtoms } from "@/store/atoms";
 
 import { ChevronIcon } from "./ChevronIcon";
+
+const insightDetails: Record<string, { title: string; description: string }> = {
+  "Four Pillars of Destiny": {
+    title: "Four Pillars of Destiny",
+    description:
+      "Saju (Four Pillars of Destiny) is not a prophecy stating \"Your life will turn out this way.\"\nInstead, it functions as a guide, stating: \"You were born with this foundation, your abilities manifest best in these flows, and choosing this direction allows for the most natural expansion.\"",
+  },
+  // Add more mappings as needed
+};
+
 
 interface ReportHeaderProps {
   sourceOfInsight: string;
@@ -13,10 +27,23 @@ interface ReportHeaderProps {
 export function ReportHeader({ sourceOfInsight }: ReportHeaderProps) {
   const router = useRouter();
   const resetAtoms = useSetAtom(resetAllAtoms);
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
-    resetAtoms();
-    router.navigate({ to: "/" });
+    // resetAtoms();
+    // router.navigate({ to: "/" });
+  };
+
+  const handleSheetOpen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpen(true);
+  };
+
+  const handleSheetClose = () => setOpen(false);
+
+  const detail = insightDetails[sourceOfInsight] || {
+    title: sourceOfInsight,
+    description: "No additional information available.",
   };
 
   return (
@@ -38,9 +65,43 @@ export function ReportHeader({ sourceOfInsight }: ReportHeaderProps) {
               {sourceOfInsight}
             </p>
           </div>
-          <ChevronIcon className="w-5 h-5 text-white/70" direction="right" />
+          <span onClick={handleSheetOpen} className="ml-2 cursor-pointer">
+            <ChevronIcon className="w-5 h-5 text-white/70" direction="right" />
+          </span>
         </button>
       </header>
+
+      {/* Bottom Sheet */}
+      <Drawer.Root open={open} onOpenChange={setOpen}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 z-50 bg-black/60" />
+          <Drawer.Content className="font-pretendard fixed right-0 bottom-0 left-0 z-50 mx-auto flex max-h-[92vh] w-full max-w-[480px] flex-col rounded-t-3xl bg-[#171719] outline-none">
+            {/* Handle */}
+            <div className="flex shrink-0 items-center justify-center py-3.5">
+              <div className="h-1 w-[51px] rounded-full bg-[#5A5C63]" />
+            </div>
+            {/* Header */}
+            <div className="shrink-0 px-5 py-5 flex items-center justify-between">
+              <Drawer.Title asChild>
+                <h2 className="text-[18px] font-semibold text-[#878A93]">
+                  {detail.title}
+                </h2>
+              </Drawer.Title>
+              <button onClick={handleSheetClose} className="p-1 ml-2">
+                <SmallXIcon className="w-6 h-6 text-[#878A93]" />
+              </button>
+            </div>
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-5 pb-10">
+              <div className="space-y-8">
+                <p className="text-[14px] leading-[1.57] whitespace-pre-line text-[#AEB0B6]">
+                  {detail.description}
+                </p>
+              </div>
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
     </div>
   );
 }
