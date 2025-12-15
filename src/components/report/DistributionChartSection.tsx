@@ -26,10 +26,12 @@ export function DistributionChartSection({
 }: DistributionChartSectionProps) {
   const { t } = useTranslation();
 
+  // Use label for color mapping, displayLabel for UI
   const chartData = items.map((item) => ({
     name: item.label,
     value: item.value,
-    icon: item.icon, // We won't use this directly in Recharts default tooltip/legend, but it's here if needed
+    icon: item.icon,
+    displayLabel: (item as any).displayLabel || item.label,
   }));
 
   return (
@@ -67,7 +69,7 @@ export function DistributionChartSection({
         {/* List / Legend */}
         <div className="w-full flex flex-col items-center gap-3">
           {items.map((item, index) => {
-            const translatedLabel = t(`report.elements.${item.label.toLowerCase()}`, { defaultValue: item.label });
+            const displayLabel = (item as any).displayLabel || item.label;
             return (
               <div key={item.label} className="w-full">
                 {/* List Item */}
@@ -78,7 +80,7 @@ export function DistributionChartSection({
                       {typeof item.icon === "string" ? (
                         <img 
                           src={item.icon} 
-                          alt={translatedLabel} 
+                          alt={"icon"} 
                           className="w-full h-full object-contain"
                         />
                       ) : (
@@ -87,7 +89,7 @@ export function DistributionChartSection({
                     </div>
                     <div className="h-8 flex items-center">
                       <span className="text-[15px] font-medium leading-[1.46] tracking-[0.5%] text-[#E1E2E4]">
-                        {translatedLabel}
+                        {displayLabel}
                       </span>
                     </div>
                   </div>

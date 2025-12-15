@@ -28,10 +28,10 @@ export function EssentialSelfSection({ items }: EssentialSelfSectionProps) {
         <div key={index} className="flex flex-col gap-3">
           {/* Chip Container */}
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-1 w-fit rounded-[28px] bg-[#5B72B7] p-1">
+            <div className="flex items-center gap-1 w-fit rounded-[28px] bg-[#2E2F33] p-1">
               {/* Label */}
               <div className="px-3 py-0 flex items-center justify-center">
-                <span className="text-[13px] leading-[1.38] text-black/70">
+                <span className="text-[13px] leading-[1.38] text-[#C2C4C8]">
                   {t(`report.essentialSelf.${labelMap[item.label]}`, {
                     defaultValue: item.label,
                   })}

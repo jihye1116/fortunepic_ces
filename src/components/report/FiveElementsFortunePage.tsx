@@ -53,7 +53,7 @@ export default function FiveElementsFortunePage() {
     subTitle: "Donations",
     description:
       "donate to non-profit organizations that support the education",
-    detailedDescription: analysisV3.lackingElement.solution,
+    detailedDescription: analysisV3.lackingElement?.solution ?? "solution",
   };
 
   // 5. Detailed List Mapping (10 Gods & Life Stages)
@@ -193,27 +193,27 @@ function mapFiveElementsDistribution(fiveElements: any, t: TFunction) {
 
   return [
     {
-      label: t("report.elements.wood"),
+      label: "Wood",
       value: getPercentage(fiveElements.wood),
       icon: WoodIcon,
     },
     {
-      label: t("report.elements.fire"),
+      label: "Fire",
       value: getPercentage(fiveElements.fire),
       icon: FireIcon,
     },
     {
-      label: t("report.elements.earth"),
+      label: "Earth",
       value: getPercentage(fiveElements.earth),
       icon: EarthIcon,
     },
     {
-      label: t("report.elements.metal"),
+      label: "Metal",
       value: getPercentage(fiveElements.metal),
       icon: MetalIcon,
     },
     {
-      label: t("report.elements.water"),
+      label: "Water",
       value: getPercentage(fiveElements.water),
       icon: WaterIcon,
     },
