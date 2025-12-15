@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
+import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
@@ -13,15 +14,16 @@ import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
+import { dataAtom } from "@/store/atoms";
 
 export default function DateFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const dateFortune = fortuneResult?.[0]?.result?.specifiedDateFortune;
-  const sajuInfo = fortuneResult?.[0]?.sajuInfo;
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const fortuneResult = useAtomValue(dataAtom);
+  const dateFortune = fortuneResult?.result?.specifiedDateFortune;
+  const sajuInfo = fortuneResult?.sajuInfo;
+  const nickname = fortuneResult?.nickname || data.nickname;
 
   // pillars 매핑
   const mappedPillars = sajuInfo?.pillars
@@ -154,18 +156,6 @@ export default function DateFortunePage() {
       </main>
     </div>
   );
-}
-
-// --- Helper Functions ---
-
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
 }
 
 function extractAnalysisData(dateFortune: any) {

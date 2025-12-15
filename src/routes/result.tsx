@@ -1,22 +1,52 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import CheckIcon from "@/assets/icons/check.svg?react";
 import { NavigationBar } from "@/components/NavigationBar";
-import { nicknameAtom, resetAllAtoms, topicAtom } from "@/store/atoms";
+import {
+  dataAtom,
+  nicknameAtom,
+  resetAllAtoms,
+  topicAtom,
+} from "@/store/atoms";
 
 export const Route = createFileRoute("/result")({
   component: RouteComponent,
+  validateSearch: (data) => {
+    return {
+      id: String(data.id),
+    };
+  },
 });
 
 function RouteComponent() {
   const { t } = useTranslation();
+  const { id } = Route.useSearch();
   const navigate = useNavigate();
   const [nickname] = useAtom(nicknameAtom);
   const [topic] = useAtom(topicAtom);
   const [, resetAtoms] = useAtom(resetAllAtoms);
+  const [data, setData] = useAtom(dataAtom);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setData(data.data);
+    console.log(data.data);
+  };
+
+  const router = useRouter();
 
   const getTopicConfig = () => {
     switch (topic) {
@@ -112,10 +142,7 @@ function RouteComponent() {
   };
 
   const config = getTopicConfig();
-  const reportUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/report/${topic}`
-      : `/report/${topic}`;
+  const reportUrl = `/report/${topic}`;
 
   return (
     <div className="h-dvh">
@@ -147,6 +174,7 @@ function RouteComponent() {
           {/* QR Code */}
           <div className="flex flex-col items-center rounded-3xl bg-black/20 p-10">
             <QRCodeSVG
+              onClick={() => router.navigate({ to: `/report/${topic}` })}
               value={reportUrl}
               size={260}
               bgColor="transparent"
@@ -165,7 +193,11 @@ function RouteComponent() {
           {config.hasImages && (config.zodiacImage || config.talismanImage) && (
             <div className="relative h-[416px] w-[344px] overflow-hidden rounded-3xl bg-black/20">
               {/* Placeholder for zodiac/talisman image */}
-              <div className="h-full w-full bg-linear-to-br from-blue-900/50 to-purple-900/50" />
+              <img
+                src={data?.imageUrl}
+                alt="zodiac or talisman"
+                className="h-full w-full"
+              />
             </div>
           )}
         </div>

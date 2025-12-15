@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
+import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
 import EarthIcon from "@/assets/icons/elements/earth.svg";
@@ -16,15 +17,16 @@ import { ImageDescriptionSection } from "@/components/report/ImageDescriptionSec
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
+import { dataAtom } from "@/store/atoms";
 
 export default function FiveElementsFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const sajuInfo = fortuneResult?.[0]?.sajuInfo;
-  const analysisV3 = fortuneResult?.[0]?.result?.fiveElementsAnalysisV3;
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const fortuneResult = useAtomValue(dataAtom);
+  const sajuInfo = fortuneResult?.sajuInfo;
+  const analysisV3 = fortuneResult?.result?.fiveElementsAnalysisV3;
+  const nickname = fortuneResult?.nickname || data.nickname;
 
   // 1. Four Pillars Data Mapping
   const mappedFourPillars = sajuInfo?.pillars
@@ -33,7 +35,7 @@ export default function FiveElementsFortunePage() {
 
   // 2. Element Distribution Mapping
   const mappedDistribution = sajuInfo?.fiveElements
-    ? mapFiveElementsDistribution(sajuInfo.fiveElements, t)
+    ? mapFiveElementsDistribution(sajuInfo.fiveElements)
     : data.elementDistributionItems?.map((item) => ({
         label: t(`report.elements.${item.element.toLowerCase()}` as any),
         value: item.percentage,
@@ -135,16 +137,6 @@ export default function FiveElementsFortunePage() {
 
 // --- Helper Functions ---
 
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapToFourPillarsData(pillars: any) {
   return {
@@ -180,7 +172,7 @@ function mapToFourPillarsData(pillars: any) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapFiveElementsDistribution(fiveElements: any, t: TFunction) {
+function mapFiveElementsDistribution(fiveElements: any) {
   const total =
     fiveElements.wood +
     fiveElements.fire +

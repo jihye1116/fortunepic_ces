@@ -41,6 +41,8 @@ export const birthtimeAtom = atom<string>("");
 export const genderAtom = atom<Gender | null>(null);
 export const targetDateAtom = atom<Date | null>(null);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const dataAtom = atom<any>(null);
 // 모든 atom을 초기화하는 write-only atom
 export const resetAllAtoms = atom(null, (_get, set) => {
   set(capturedPhotosAtom, []);

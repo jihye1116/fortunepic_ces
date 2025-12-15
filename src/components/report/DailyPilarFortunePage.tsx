@@ -1,3 +1,4 @@
+import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 
 import { DailyAnimalCard } from "@/components/report/DailyAnimalCard";
@@ -7,14 +8,15 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { dummyReportData } from "@/data/reportDummy";
+import { dataAtom } from "@/store/atoms";
 
 export default function DailyPilarFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const dayPillarAnimal = fortuneResult?.[0]?.result?.dayPillarAnimal;
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const fortuneResult = useAtomValue(dataAtom);
+  const dayPillarAnimal = fortuneResult?.result?.dayPillarAnimal;
+  const nickname = fortuneResult?.nickname || data.nickname;
 
   // 1. Strength & Weakness Mapping
   const mappedStrengthWeakness = dayPillarAnimal
@@ -127,14 +129,4 @@ export default function DailyPilarFortunePage() {
       </main>
     </div>
   );
-}
-
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
 }
