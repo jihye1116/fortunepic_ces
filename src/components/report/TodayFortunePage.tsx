@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
-import { useAtomValue } from "jotai";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { CardCarousel } from "@/components/report/CardCarousel";
 import { DetailedEnergyAnalysis } from "@/components/report/DetailedEnergyAnalysis";
@@ -14,10 +15,20 @@ import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
-import { dataAtom } from "@/store/atoms";
 
-export default function TodayFortunePage() {
+export default function TodayFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   // 운세 점수 및 키워드 추출 함수
   function extractScoreAndKeywords(summary: string | undefined) {
     if (!summary) return { score: undefined, keywords: [] };
@@ -35,7 +46,7 @@ export default function TodayFortunePage() {
   }
   const data = dummyReportData;
 
-  const fortuneResult = useAtomValue(dataAtom);
+  const fortuneResult = result;
   const todayFortune = fortuneResult?.result?.todayFortune;
   const sajuInfo = fortuneResult?.sajuInfo;
   const nickname = fortuneResult?.nickname || data.nickname;

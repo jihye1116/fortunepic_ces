@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
-import { useAtomValue } from "jotai";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { FaceReading } from "@/components/report/FaceReading";
@@ -13,14 +14,25 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
-import { dataAtom } from "@/store/atoms";
 import { AreaStrategy, RegulatingEnergy } from "@/types/report";
 
-export default function NewYearReportPage() {
+export default function NewYearReportPage({ id }: { id: string }) {
   const { t } = useTranslation();
+
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   // 실제 API 응답을 localStorage에서 가져오거나, 없으면 dummy 사용
   const data = dummyReportData;
-  const fortuneResult = useAtomValue(dataAtom);
+  const fortuneResult = result;
   // new-year는 fortuneResult?.result?.yearlyFortune 기준
   const yearlyFortune = fortuneResult?.result?.yearlyFortune;
   const sajuInfo = fortuneResult?.sajuInfo;

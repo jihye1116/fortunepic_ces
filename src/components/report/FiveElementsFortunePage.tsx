@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
-import { useAtomValue } from "jotai";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import EarthIcon from "@/assets/icons/elements/earth.svg";
 import FireIcon from "@/assets/icons/elements/fire.svg";
 import MetalIcon from "@/assets/icons/elements/metal.svg";
@@ -17,13 +18,23 @@ import { ImageDescriptionSection } from "@/components/report/ImageDescriptionSec
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
-import { dataAtom } from "@/store/atoms";
 
-export default function FiveElementsFortunePage() {
+export default function FiveElementsFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
 
-  const fortuneResult = useAtomValue(dataAtom);
+  const fortuneResult = result;
   const sajuInfo = fortuneResult?.sajuInfo;
   const analysisV3 = fortuneResult?.result?.fiveElementsAnalysisV3;
   const nickname = fortuneResult?.nickname || data.nickname;

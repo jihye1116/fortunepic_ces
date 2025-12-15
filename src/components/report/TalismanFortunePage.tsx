@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useAtomValue } from "jotai";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { DetailedEnergyAnalysis } from "@/components/report/DetailedEnergyAnalysis";
 import { FaceReading } from "@/components/report/FaceReading";
@@ -11,13 +12,23 @@ import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
-import { dataAtom } from "@/store/atoms";
 
-export default function TalismanFortunePage() {
+export default function TalismanFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
 
-  const fortuneResult = useAtomValue(dataAtom);
+  const fortuneResult = result;
   const physiognomy = fortuneResult?.result?.physiognomyAnalysis;
   const sajuInfo = fortuneResult?.sajuInfo;
   const nickname = fortuneResult?.nickname || data.nickname;

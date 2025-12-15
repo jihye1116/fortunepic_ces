@@ -10,27 +10,31 @@ import TodayFortunePage from "../../components/report/TodayFortunePage";
 
 export const Route = createFileRoute("/report/$topic")({
   component: ReportPage,
+  validateSearch: (search) => ({
+    id: search.id as string,
+  }),
 });
 
 function ReportPage() {
   const { topic } = Route.useParams();
+  const { id } = Route.useSearch();
 
   // topic 파라미터에 따라 적절한 페이지 컴포넌트를 렌더링
   switch (topic) {
     case "today":
-      return <TodayFortunePage />;
+      return <TodayFortunePage id={id} />;
     case "lifetime":
-      return <LifetimeReportPage />;
+      return <LifetimeReportPage id={id} />;
     case "dayPillarAnimal":
-      return <DailyPilarFortunePage />;
+      return <DailyPilarFortunePage id={id} />;
     case "physiognomy":
-      return <TalismanFortunePage />;
+      return <TalismanFortunePage id={id} />;
     case "fiveElementsV3":
-      return <FiveElementsFortunePage />;
+      return <FiveElementsFortunePage id={id} />;
     case "specifiedDate":
-      return <DateFortunePage />;
+      return <DateFortunePage id={id} />;
     case "yearly":
-      return <NewYearReportPage />;
+      return <NewYearReportPage id={id} />;
     default:
       return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#141415] text-[#DBDCDF]">

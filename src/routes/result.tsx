@@ -5,18 +5,13 @@ import {
 } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { instance } from "@/apis/instance";
 import CheckIcon from "@/assets/icons/check.svg?react";
 import { NavigationBar } from "@/components/NavigationBar";
-import {
-  dataAtom,
-  nicknameAtom,
-  resetAllAtoms,
-  topicAtom,
-} from "@/store/atoms";
+import { nicknameAtom, resetAllAtoms, topicAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/result")({
   component: RouteComponent,
@@ -34,7 +29,8 @@ function RouteComponent() {
   const [nickname] = useAtom(nicknameAtom);
   const [topic] = useAtom(topicAtom);
   const [, resetAtoms] = useAtom(resetAllAtoms);
-  const [data, setData] = useAtom(dataAtom);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     getData();
@@ -142,7 +138,7 @@ function RouteComponent() {
   };
 
   const config = getTopicConfig();
-  const reportUrl = `/report/${topic}`;
+  const reportUrl = `/report/${topic}?id=${id}`;
 
   return (
     <div className="h-dvh">
@@ -174,7 +170,7 @@ function RouteComponent() {
           {/* QR Code */}
           <div className="flex flex-col items-center rounded-3xl bg-black/20 p-10">
             <QRCodeSVG
-              onClick={() => router.navigate({ to: `/report/${topic}` })}
+              onClick={() => router.navigate({ to: reportUrl })}
               value={reportUrl}
               size={260}
               bgColor="transparent"

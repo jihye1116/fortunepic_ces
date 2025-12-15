@@ -1,6 +1,8 @@
-import { useAtomValue } from "jotai";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { DailyAnimalCard } from "@/components/report/DailyAnimalCard";
 import { DailyPilarCard } from "@/components/report/DailyPilarCard";
 import { FaceReading } from "@/components/report/FaceReading";
@@ -8,13 +10,23 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { dummyReportData } from "@/data/reportDummy";
-import { dataAtom } from "@/store/atoms";
 
-export default function DailyPilarFortunePage() {
+export default function DailyPilarFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
 
-  const fortuneResult = useAtomValue(dataAtom);
+  const fortuneResult = result;
   const dayPillarAnimal = fortuneResult?.result?.dayPillarAnimal;
   const nickname = fortuneResult?.nickname || data.nickname;
 
