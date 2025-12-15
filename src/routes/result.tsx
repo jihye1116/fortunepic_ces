@@ -57,14 +57,14 @@ function RouteComponent() {
         };
       case "today":
         return {
-          title: t("result.todaysFortune.title"),
-          subtitle: t("result.todaysFortune.subtitle"),
-          mainTitle: t("result.todaysFortune.mainTitle"),
+          title: t("result.today.title"),
+          subtitle: t("result.today.subtitle"),
+          mainTitle: t("result.today.mainTitle"),
           description: null,
           chips: [
-            t("result.todaysFortune.chip1"),
-            t("result.todaysFortune.chip2"),
-            t("result.todaysFortune.chip3"),
+            t("result.today.chip1"),
+            t("result.today.chip2"),
+            t("result.today.chip3"),
           ],
           hasImages: false,
         };
