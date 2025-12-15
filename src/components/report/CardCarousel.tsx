@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 
 export interface CarouselCardItem {
   id: string | number;
@@ -21,18 +22,33 @@ export function CardCarousel({
   items,
   cardWidth = "w-[305px]",
 }: CardCarouselProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+
+    const { scrollLeft } = scrollContainerRef.current;
+    const index = Math.round(scrollLeft / 220);
+    setCurrentIndex(index);
+  };
+
   return (
-    <section className="rounded-2xl bg-[#171719] p-[28px_20px] space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+    <section className="space-y-6 rounded-2xl bg-[#171719] p-[28px_20px] shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
       <div className="flex items-center justify-between">
         <h2 className="text-[18px] font-medium text-[#878A93]">{title}</h2>
       </div>
 
       <div className="relative">
-        <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory">
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2"
+        >
           {items.map((item) => (
             <div
               key={item.id}
-              className={`shrink-0 snap-start ${cardWidth} rounded-xl overflow-hidden bg-[#171719] flex flex-col`}
+              className={`shrink-0 snap-start ${cardWidth} flex flex-col overflow-hidden rounded-xl bg-[#171719]`}
             >
               <div className="relative h-[122px] p-[16px_12px]">
                 <img
@@ -42,7 +58,7 @@ export function CardCarousel({
                 />
                 <div className="relative z-10 flex items-start">
                   <span
-                    className="px-3 py-1.5 rounded-[28px] text-[13px]"
+                    className="rounded-[28px] px-3 py-1.5 text-[13px]"
                     style={{
                       backgroundColor:
                         item.chipStyle?.backgroundColor ||
@@ -54,7 +70,7 @@ export function CardCarousel({
                   </span>
                 </div>
               </div>
-              <div className="bg-[#212225] p-[24px_20px] flex-1">
+              <div className="flex-1 bg-[#212225] p-[24px_20px]">
                 <p className="text-[14px] leading-[1.57] text-[#AEB0B6]">
                   {item.description}
                 </p>
@@ -64,12 +80,14 @@ export function CardCarousel({
         </div>
 
         {/* Pagination Dots */}
-        <div className="flex justify-center gap-1.5 mt-6">
+        <div className="mt-6 flex justify-center gap-1.5">
           {items.map((_, idx) => (
             <div
               key={idx}
               className={`h-1.5 rounded-full transition-all ${
-                idx === 0 ? "w-[26px] bg-[#DBDCDF]" : "w-1.5 bg-[#5A5C63]"
+                idx === currentIndex
+                  ? "w-[26px] bg-[#DBDCDF]"
+                  : "w-1.5 bg-[#5A5C63]"
               }`}
             />
           ))}

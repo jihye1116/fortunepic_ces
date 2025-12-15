@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "../../global.css";
 
-import { createFileRoute } from "@tanstack/react-router";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -16,12 +14,7 @@ import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 import { AreaStrategy, RegulatingEnergy } from "@/types/report";
 
-export const Route = createFileRoute("/report/new-year")({
-  component: NewYearReportPage,
-});
-
-
-function NewYearReportPage() {
+export default function NewYearReportPage() {
   const { t } = useTranslation();
   // 실제 API 응답을 localStorage에서 가져오거나, 없으면 dummy 사용
   const data = dummyReportData;
@@ -31,7 +24,9 @@ function NewYearReportPage() {
   const sajuInfo = fortuneResult?.[0]?.sajuInfo;
 
   // Pillars 매핑 (sajuInfo.pillars)
-  const mappedPillars = sajuInfo?.pillars ? mapApiToPillars(sajuInfo.pillars, t) : data.pillars;
+  const mappedPillars = sajuInfo?.pillars
+    ? mapApiToPillars(sajuInfo.pillars, t)
+    : data.pillars;
 
   // LifePhases 매핑 (yearlyFortune.firstHalf, secondHalf, futureYears)
   const mappedLifePhases = yearlyFortune
@@ -53,10 +48,10 @@ function NewYearReportPage() {
   const mappedFaceReadingAreas = data.faceReadingAreas; // API에 없으므로 dummy 사용
 
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="Four Pillars of Destiny" />
-        <div className="px-4 space-y-8">
+        <div className="space-y-8 px-4">
           <BasicEnergyInterpretation
             nickname={nickname}
             pillars={mappedPillars}
@@ -80,14 +75,16 @@ function mapYearlyLifePhases(yearlyFortune: any, t: TFunction) {
   const phases = [];
   if (yearlyFortune.firstHalf) {
     phases.push({
-      ageRange: yearlyFortune.firstHalf.period || t("report.lifePhases.firstHalf"),
+      ageRange:
+        yearlyFortune.firstHalf.period || t("report.lifePhases.firstHalf"),
       phase: t("report.lifePhases.firstHalf"),
       description: yearlyFortune.firstHalf.analysis || "",
     });
   }
   if (yearlyFortune.secondHalf) {
     phases.push({
-      ageRange: yearlyFortune.secondHalf.period || t("report.lifePhases.secondHalf"),
+      ageRange:
+        yearlyFortune.secondHalf.period || t("report.lifePhases.secondHalf"),
       phase: t("report.lifePhases.secondHalf"),
       description: yearlyFortune.secondHalf.analysis || "",
     });
@@ -105,7 +102,10 @@ function mapYearlyLifePhases(yearlyFortune: any, t: TFunction) {
 }
 
 // 연도별 운세 areaStrategies 매핑
-function mapYearlyAreaStrategies(categoryFortune: any, t: TFunction): AreaStrategy[] {
+function mapYearlyAreaStrategies(
+  categoryFortune: any,
+  t: TFunction,
+): AreaStrategy[] {
   if (!categoryFortune) return [];
   return [
     {
@@ -148,12 +148,13 @@ function mapYearlyBeneficialEnergies(elementGuidance: any, t: TFunction) {
 
 // 연도별 운세 regulatingEnergies 매핑 (여기선 없음, 빈 배열)
 
-
 // LocalStorage util (copied from lifetime.tsx)
 function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }

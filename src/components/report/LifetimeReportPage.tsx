@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "../../global.css";
 
-import { createFileRoute } from "@tanstack/react-router";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -14,12 +12,7 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
 
-export const Route = createFileRoute("/report/lifetime")({
-  component: LifetimeReportPage,
-});
-
-
-function LifetimeReportPage() {
+export default function LifetimeReportPage() {
   const { t } = useTranslation();
   const data = dummyReportData;
   // localStorage 우선, 없으면 jotai atom
@@ -32,36 +25,40 @@ function LifetimeReportPage() {
     ? mapApiToPillars(lifetimeFortune.sajuInfo.pillars, t)
     : data.pillars;
 
-
   // lifePhases 매핑
-  const mappedLifePhases = lifetimeFortune?.result?.lifetimeFortune?.lifePeriodFlow
+  const mappedLifePhases = lifetimeFortune?.result?.lifetimeFortune
+    ?.lifePeriodFlow
     ? mapLifePhases(lifetimeFortune.result.lifetimeFortune.lifePeriodFlow, t)
     : data.lifePhases;
 
-
-
-  const mappedBeneficialEnergies = lifetimeFortune?.result?.lifetimeFortune?.elementGuidance
-    ? mapBeneficialEnergies(lifetimeFortune.result.lifetimeFortune.elementGuidance)
+  const mappedBeneficialEnergies = lifetimeFortune?.result?.lifetimeFortune
+    ?.elementGuidance
+    ? mapBeneficialEnergies(
+        lifetimeFortune.result.lifetimeFortune.elementGuidance,
+      )
     : data.beneficialEnergies;
-  const mappedRegulatingEnergies = lifetimeFortune?.result?.lifetimeFortune?.elementGuidance
-    ? mapRegulatingEnergies(lifetimeFortune.result.lifetimeFortune.elementGuidance)
+  const mappedRegulatingEnergies = lifetimeFortune?.result?.lifetimeFortune
+    ?.elementGuidance
+    ? mapRegulatingEnergies(
+        lifetimeFortune.result.lifetimeFortune.elementGuidance,
+      )
     : data.regulatingEnergies;
   const nickname = lifetimeFortune?.nickname || data.nickname;
 
   // AreaSpecificStrategies 매핑
-  const mappedAreaStrategies = lifetimeFortune?.result?.lifetimeFortune?.domainKaiun
+  const mappedAreaStrategies = lifetimeFortune?.result?.lifetimeFortune
+    ?.domainKaiun
     ? mapAreaStrategies(lifetimeFortune.result.lifetimeFortune.domainKaiun, t)
     : data.areaStrategies;
 
   // 디버깅용 콘솔
-  console.log('lifetimeFortune:', lifetimeFortune);
-
+  console.log("lifetimeFortune:", lifetimeFortune);
 
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="Four Pillars of Destiny" />
-        <div className="px-4 space-y-8">
+        <div className="space-y-8 px-4">
           <BasicEnergyInterpretation
             nickname={nickname}
             pillars={mappedPillars}
@@ -109,7 +106,7 @@ function mapApiToPillars(apiPillars: any, t: TFunction): any[] {
 }
 
 function mapLifePhases(apiLifePeriodFlow: any, t: TFunction): any[] {
-  console.log('apiLifePeriodFlow:', apiLifePeriodFlow);
+  console.log("apiLifePeriodFlow:", apiLifePeriodFlow);
 
   if (!apiLifePeriodFlow) return [];
 
@@ -211,7 +208,8 @@ function mapAreaStrategies(domainKaiun: any, t: TFunction): any[] {
     const attitude = domainKaiun.relationship.requiredAttitude || "";
     strategies.push({
       area: "relationship" as const,
-      title: domainKaiun.relationship.title || t("report.strategies.relationship"),
+      title:
+        domainKaiun.relationship.title || t("report.strategies.relationship"),
       description: style + "\n\n" + attitude,
       bgColor: "#F16C6E",
     });
@@ -224,6 +222,8 @@ function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }

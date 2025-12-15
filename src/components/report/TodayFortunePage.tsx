@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "../../global.css";
 
-import { createFileRoute } from "@tanstack/react-router";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -16,28 +14,24 @@ import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 
-export const Route = createFileRoute("/report/today")({
-  component: TodayFortunePage,
-});
-
-function TodayFortunePage() {
+export default function TodayFortunePage() {
   const { t } = useTranslation();
-    // 운세 점수 및 키워드 추출 함수
-    function extractScoreAndKeywords(summary: string | undefined) {
-      if (!summary) return { score: undefined, keywords: [] };
-      // 점수 추출 (예: "오늘의 운세 점수는 65점으로, ...")
-      const scoreMatch = summary.match(/운세 점수는 (\d+)점/);
-      const score = scoreMatch ? parseInt(scoreMatch[1], 10) : undefined;
-      // 키워드 추출 (예: "'적응', '성장', '신중함'을 키워드로 꼽을 수 있습니다.")
-      const keywordsMatch = summary.match(/'([^']+)'(?:, '([^']+)')?(?:, '([^']+)')?/);
-      const keywords = keywordsMatch
-        ? keywordsMatch.slice(1).filter(Boolean)
-        : [];
-      return { score, keywords };
-    }
+  // 운세 점수 및 키워드 추출 함수
+  function extractScoreAndKeywords(summary: string | undefined) {
+    if (!summary) return { score: undefined, keywords: [] };
+    // 점수 추출 (예: "오늘의 운세 점수는 65점으로, ...")
+    const scoreMatch = summary.match(/운세 점수는 (\d+)점/);
+    const score = scoreMatch ? parseInt(scoreMatch[1], 10) : undefined;
+    // 키워드 추출 (예: "'적응', '성장', '신중함'을 키워드로 꼽을 수 있습니다.")
+    const keywordsMatch = summary.match(
+      /'([^']+)'(?:, '([^']+)')?(?:, '([^']+)')?/,
+    );
+    const keywords = keywordsMatch
+      ? keywordsMatch.slice(1).filter(Boolean)
+      : [];
+    return { score, keywords };
+  }
   const data = dummyReportData;
-
-
 
   const fortuneResult = getFortuneResultFromStorage();
   const todayFortune = fortuneResult?.[0]?.result?.todayFortune;
@@ -50,8 +44,10 @@ function TodayFortunePage() {
     : data.pillars;
 
   // overallSummary를 DetailedEnergyAnalysis의 description으로 사용
-  const overallSummary = todayFortune?.overallSummary || t("report.dailyPillar.defaultDescription");
-  const { score: extractedScore, keywords: extractedKeywords } = extractScoreAndKeywords(todayFortune?.overallSummary);
+  const overallSummary =
+    todayFortune?.overallSummary || t("report.dailyPillar.defaultDescription");
+  const { score: extractedScore, keywords: extractedKeywords } =
+    extractScoreAndKeywords(todayFortune?.overallSummary);
 
   // timeAnalysis를 CardCarousel용으로 매핑
   const mappedTimeFlows = todayFortune?.timeAnalysis
@@ -107,7 +103,8 @@ function TodayFortunePage() {
     ? mapLuckyFood(todayFortune.luckyFood, t)
     : {
         title: t("report.sections.luckyFood"),
-        imageUrl: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
+        imageUrl:
+          "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
         subTitle: "Bibimbap",
         description: "Bibimbap is Korea's iconic, healthy dish",
         items: [
@@ -119,14 +116,13 @@ function TodayFortunePage() {
         ],
       };
 
-
-      console.log("todayFortune:", fortuneResult);
+  console.log("todayFortune:", fortuneResult);
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="Four Pillars of Destiny" />
 
-        <div className="px-4 space-y-8">
+        <div className="space-y-8 px-4">
           <BasicEnergyInterpretation
             nickname={nickname}
             pillars={mappedPillars}
@@ -136,7 +132,15 @@ function TodayFortunePage() {
 
           <DetailedEnergyAnalysis
             score={extractedScore ?? 85}
-            keywords={extractedKeywords.length > 0 ? extractedKeywords : [t("report.defaults.growth"), t("report.defaults.harmony"), t("report.defaults.opportunity")]}
+            keywords={
+              extractedKeywords.length > 0
+                ? extractedKeywords
+                : [
+                    t("report.defaults.growth"),
+                    t("report.defaults.harmony"),
+                    t("report.defaults.opportunity"),
+                  ]
+            }
             description={overallSummary}
           />
 
@@ -177,7 +181,8 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   if (timeAnalysis.morning) {
     flows.push({
       id: "Morning",
-      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
+      imageUrl:
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
       chipText: t("report.time.morning"),
       description: `${timeAnalysis.morning.analysis}\n\n${timeAnalysis.morning.advice}`,
     });
@@ -186,7 +191,8 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   if (timeAnalysis.afternoon) {
     flows.push({
       id: "Afternoon",
-      imageUrl: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&auto=format&fit=crop&q=60",
+      imageUrl:
+        "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&auto=format&fit=crop&q=60",
       chipText: t("report.time.afternoon"),
       description: `${timeAnalysis.afternoon.analysis}\n\n${timeAnalysis.afternoon.advice}`,
     });
@@ -195,7 +201,8 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   if (timeAnalysis.evening) {
     flows.push({
       id: "Evening",
-      imageUrl: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
+      imageUrl:
+        "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
       chipText: t("report.time.evening"),
       description: `${timeAnalysis.evening.analysis}\n\n${timeAnalysis.evening.advice}`,
     });
@@ -253,7 +260,8 @@ function mapActionGuide(todayFortune: any, t: TFunction): any[] {
 function mapLuckyFood(luckyFood: any, t: TFunction): any {
   return {
     title: t("report.sections.luckyFood"),
-    imageUrl: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
+    imageUrl:
+      "https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=60",
     subTitle: luckyFood.food,
     description: luckyFood.reason,
     items: [], // 레시피가 API에 없으므로 빈 배열
@@ -265,6 +273,8 @@ function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }

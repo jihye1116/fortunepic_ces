@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "../../global.css";
 
-import { createFileRoute } from "@tanstack/react-router";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -19,11 +17,7 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
 
-export const Route = createFileRoute("/report/five-elements")({
-  component: FiveElementsFortunePage,
-});
-
-function FiveElementsFortunePage() {
+export default function FiveElementsFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
@@ -40,7 +34,7 @@ function FiveElementsFortunePage() {
   // 2. Element Distribution Mapping
   const mappedDistribution = sajuInfo?.fiveElements
     ? mapFiveElementsDistribution(sajuInfo.fiveElements, t)
-    : data.elementDistributionItems?.map(item => ({
+    : data.elementDistributionItems?.map((item) => ({
         label: t(`report.elements.${item.element.toLowerCase()}` as any),
         value: item.percentage,
         icon: item.icon,
@@ -53,12 +47,14 @@ function FiveElementsFortunePage() {
 
   // 4. Image Analysis Mapping
   const mappedImageAnalysis = {
-        title: t("report.sections.growthDirection"),
-        imageUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
-        subTitle: "Donations",
-        description: "donate to non-profit organizations that support the education",
-       detailedDescription: analysisV3.lackingElement.solution,
-      };
+    title: t("report.sections.growthDirection"),
+    imageUrl:
+      "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=60",
+    subTitle: "Donations",
+    description:
+      "donate to non-profit organizations that support the education",
+    detailedDescription: analysisV3.lackingElement.solution,
+  };
 
   // 5. Detailed List Mapping (10 Gods & Life Stages)
   const mappedDetailedList = analysisV3?.dayPillarAnalysis
@@ -73,7 +69,8 @@ function FiveElementsFortunePage() {
         },
         {
           title: t("report.sections.twelveLifeStages"),
-          description: analysisV3.dayPillarAnalysis.twelveStageAnalysis?.combinedAnalysis,
+          description:
+            analysisV3.dayPillarAnalysis.twelveStageAnalysis?.combinedAnalysis,
         },
       ]
     : data.tenGodsAndLifeStages
@@ -94,11 +91,11 @@ function FiveElementsFortunePage() {
       : null;
 
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="The Five Elements" />
 
-        <div className="px-4 space-y-8">
+        <div className="space-y-8 px-4">
           {mappedFourPillars && (
             <FourPillarsAndFiveElements
               nickname={nickname}
@@ -116,7 +113,7 @@ function FiveElementsFortunePage() {
           {mappedEssentialSelf && (
             <EssentialSelfSection items={mappedEssentialSelf} />
           )}
-          
+
           {mappedDetailedList && (
             <DetailedListSection items={mappedDetailedList} />
           )}
@@ -142,7 +139,9 @@ function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }
 
@@ -188,8 +187,9 @@ function mapFiveElementsDistribution(fiveElements: any, t: TFunction) {
     fiveElements.earth +
     fiveElements.metal +
     fiveElements.water;
-  
-  const getPercentage = (val: number) => (total === 0 ? 0 : Math.round((val / total) * 100));
+
+  const getPercentage = (val: number) =>
+    total === 0 ? 0 : Math.round((val / total) * 100);
 
   return [
     {
@@ -225,18 +225,18 @@ function mapEssentialSelf(sajuInfo: any, t: TFunction) {
   const items = [
     {
       label: t("report.essentialSelf.daystem"),
-      element: sajuInfo.dayMaster.element, 
+      element: sajuInfo.dayMaster.element,
       description: `Day Master is ${sajuInfo.dayMaster.stem} (${sajuInfo.dayMaster.element}).`,
-    }
+    },
   ];
 
   // Strongest/Weakest as extra info?
   if (sajuInfo.strongestElement) {
-      items.push({
-          label: t("report.essentialSelf.strongest"),
-          element: sajuInfo.strongestElement,
-          description: `Strongest element is ${sajuInfo.strongestElement}.`
-      });
+    items.push({
+      label: t("report.essentialSelf.strongest"),
+      element: sajuInfo.strongestElement,
+      description: `Strongest element is ${sajuInfo.strongestElement}.`,
+    });
   }
 
   return items;

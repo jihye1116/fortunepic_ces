@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "../../global.css";
 
-import { createFileRoute } from "@tanstack/react-router";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -16,11 +14,7 @@ import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 
-export const Route = createFileRoute("/report/date")({
-  component: DateFortunePage,
-});
-
-function DateFortunePage() {
+export default function DateFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
@@ -67,7 +61,8 @@ function DateFortunePage() {
     ? mapLuckyFood(dateFortune.luckyFood, t)
     : {
         title: t("report.sections.luckySpace"),
-        imageUrl: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop&q=60",
+        imageUrl:
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop&q=60",
         subTitle: "Haeundae",
         description: "Haeundae is Busan's most famous and expansive beach",
         items: [
@@ -80,11 +75,11 @@ function DateFortunePage() {
       };
 
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="Four Pillars of Destiny" />
 
-        <div className="px-4 space-y-8">
+        <div className="space-y-8 px-4">
           <BasicEnergyInterpretation
             nickname={nickname}
             pillars={mappedPillars}
@@ -95,8 +90,18 @@ function DateFortunePage() {
           <DetailedEnergyAnalysis
             title={t("report.sections.generalAnalysis")}
             score={score ?? 85}
-            keywords={keywords.length > 0 ? keywords : [t("report.defaults.growth"), t("report.defaults.harmony"), t("report.defaults.opportunity")]}
-            description={description || t("report.dailyPillar.defaultDescription")}
+            keywords={
+              keywords.length > 0
+                ? keywords
+                : [
+                    t("report.defaults.growth"),
+                    t("report.defaults.harmony"),
+                    t("report.defaults.opportunity"),
+                  ]
+            }
+            description={
+              description || t("report.dailyPillar.defaultDescription")
+            }
           />
 
           <CardCarousel
@@ -157,18 +162,21 @@ function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }
 
 function extractAnalysisData(dateFortune: any) {
-  if (!dateFortune) return { score: undefined, keywords: [], description: undefined };
+  if (!dateFortune)
+    return { score: undefined, keywords: [], description: undefined };
 
   let score = 0;
   let count = 0;
   if (dateFortune.domainFortune) {
     Object.values(dateFortune.domainFortune).forEach((d: any) => {
-      if (typeof d.score === 'number') {
+      if (typeof d.score === "number") {
         score += d.score;
         count++;
       }
@@ -178,7 +186,9 @@ function extractAnalysisData(dateFortune: any) {
 
   const bestDomain = dateFortune.bestDomain;
   const keywords = bestDomain?.domain ? [bestDomain.domain] : [];
-  const description = bestDomain ? `${bestDomain.reason}\n\n${bestDomain.advice}` : undefined;
+  const description = bestDomain
+    ? `${bestDomain.reason}\n\n${bestDomain.advice}`
+    : undefined;
 
   return { score: averageScore, keywords, description };
 }
@@ -189,7 +199,8 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   if (timeAnalysis.morning) {
     flows.push({
       id: "Morning",
-      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
+      imageUrl:
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60",
       chipText: t("report.time.morning"),
       description: `${timeAnalysis.morning.analysis}\n\n${timeAnalysis.morning.advice.join("\n")}`,
     });
@@ -198,7 +209,8 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   if (timeAnalysis.afternoon) {
     flows.push({
       id: "Afternoon",
-      imageUrl: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&auto=format&fit=crop&q=60",
+      imageUrl:
+        "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&auto=format&fit=crop&q=60",
       chipText: t("report.time.afternoon"),
       description: `${timeAnalysis.afternoon.analysis}\n\n${timeAnalysis.afternoon.advice.join("\n")}`,
     });
@@ -207,7 +219,8 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
   if (timeAnalysis.evening) {
     flows.push({
       id: "Evening",
-      imageUrl: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
+      imageUrl:
+        "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&auto=format&fit=crop&q=60",
       chipText: t("report.time.evening"),
       description: `${timeAnalysis.evening.analysis}\n\n${timeAnalysis.evening.advice.join("\n")}`,
     });
@@ -219,7 +232,9 @@ function mapTimeFlows(timeAnalysis: any, t: TFunction): any[] {
 // Domain Score Finder Helper
 function findScoreByDomainTitle(domainFortune: any, title: string): number {
   if (!domainFortune || !title) return 50; // Default
-  const found = Object.values(domainFortune).find((d: any) => d.title === title) as any;
+  const found = Object.values(domainFortune).find(
+    (d: any) => d.title === title,
+  ) as any;
   return found ? found.score : 50;
 }
 
@@ -227,7 +242,10 @@ function findScoreByDomainTitle(domainFortune: any, title: string): number {
 
 function mapBrightestDomain(dateFortune: any) {
   if (!dateFortune?.bestDomain) return null;
-  const score = findScoreByDomainTitle(dateFortune.domainFortune, dateFortune.bestDomain.domain);
+  const score = findScoreByDomainTitle(
+    dateFortune.domainFortune,
+    dateFortune.bestDomain.domain,
+  );
   return {
     ...dateFortune.bestDomain,
     score,
@@ -236,14 +254,21 @@ function mapBrightestDomain(dateFortune: any) {
 
 function mapCloudiestDomain(dateFortune: any) {
   if (!dateFortune?.worstDomain) return null;
-  const score = findScoreByDomainTitle(dateFortune.domainFortune, dateFortune.worstDomain.domain);
+  const score = findScoreByDomainTitle(
+    dateFortune.domainFortune,
+    dateFortune.worstDomain.domain,
+  );
   return {
     ...dateFortune.worstDomain,
     score,
   };
 }
 
-function mapTimingPrediction(dateFortune: any, defaultData: any, t: TFunction): any[] {
+function mapTimingPrediction(
+  dateFortune: any,
+  defaultData: any,
+  t: TFunction,
+): any[] {
   if (!dateFortune) {
     return [
       {
@@ -282,8 +307,12 @@ function mapTimingPrediction(dateFortune: any, defaultData: any, t: TFunction): 
   return items;
 }
 
-function mapActionGuide(dateFortune: any, defaultData: any, t: TFunction): any[] {
-   if (!dateFortune) {
+function mapActionGuide(
+  dateFortune: any,
+  defaultData: any,
+  t: TFunction,
+): any[] {
+  if (!dateFortune) {
     return [
       {
         tag: t("report.dailyPillar.tags.recommend"),
@@ -322,7 +351,8 @@ function mapActionGuide(dateFortune: any, defaultData: any, t: TFunction): any[]
 function mapLuckyFood(luckyFood: any, t: TFunction): any {
   return {
     title: t("report.sections.luckyFood"),
-    imageUrl: "https://images.unsplash.com/photo-1553621642-f6e147245754?w=800&auto=format&fit=crop&q=60",
+    imageUrl:
+      "https://images.unsplash.com/photo-1553621642-f6e147245754?w=800&auto=format&fit=crop&q=60",
     subTitle: luckyFood.food,
     description: luckyFood.reason,
     items: [],

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import "../../global.css";
 
-import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
@@ -13,11 +11,7 @@ import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 
-export const Route = createFileRoute("/report/talisman")({
-  component: TalismanFortunePage,
-});
-
-function TalismanFortunePage() {
+export default function TalismanFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
@@ -60,29 +54,30 @@ function TalismanFortunePage() {
     : [];
 
   const combinedTraits = [...mappedStrengths, ...mappedWeaknesses];
-  
+
   // Fallback for traits if empty
-  const finalTraits = combinedTraits.length > 0 
-    ? combinedTraits 
-    : [
-        {
+  const finalTraits =
+    combinedTraits.length > 0
+      ? combinedTraits
+      : [
+          {
             tag: t("report.dailyPillar.tags.strength"),
             tagColor: "#5B72B7",
             description: t("report.dummy.strength"),
-        },
-        {
+          },
+          {
             tag: t("report.dailyPillar.tags.weakness"),
             tagColor: "#F16C6E",
             description: t("report.dummy.weakness"),
-        }
-    ];
+          },
+        ];
 
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="Physiognomy Analysis" />
 
-        <div className="px-4 space-y-8">
+        <div className="space-y-8 px-4">
           <BasicEnergyInterpretation
             nickname={nickname}
             pillars={mappedPillars}
@@ -92,7 +87,11 @@ function TalismanFortunePage() {
             title={t("report.sections.overallImpression")}
             score={85} // Physiognomy might not have a score, using default high
             keywords={["Sensitivity", "Analysis", "Growth"]} // Extract keywords if possible
-            description={physiognomy?.physiognomyAnalysis?.overallImpression || physiognomy?.overallImpression || t("report.physiognomy.noAnalysis")}
+            description={
+              physiognomy?.physiognomyAnalysis?.overallImpression ||
+              physiognomy?.overallImpression ||
+              t("report.physiognomy.noAnalysis")
+            }
           />
 
           <FaceReading faceReadingAreas={mappedFaceReadingAreas} />
@@ -103,13 +102,13 @@ function TalismanFortunePage() {
           />
 
           {physiognomy?.overallAdvice && (
-             <DetailedEnergyAnalysis
-                title={t("report.sections.advice")}
-                score={90}
-                keywords={["Growth", "Mindset"]}
-                description={physiognomy.overallAdvice}
-                tagColor="#2C925E"
-             />
+            <DetailedEnergyAnalysis
+              title={t("report.sections.advice")}
+              score={90}
+              keywords={["Growth", "Mindset"]}
+              description={physiognomy.overallAdvice}
+              tagColor="#2C925E"
+            />
           )}
 
           <ReportFooter />
@@ -123,6 +122,8 @@ function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }

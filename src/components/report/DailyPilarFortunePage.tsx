@@ -1,6 +1,3 @@
-import "../../global.css";
-
-import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { DailyAnimalCard } from "@/components/report/DailyAnimalCard";
@@ -11,11 +8,7 @@ import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { dummyReportData } from "@/data/reportDummy";
 
-export const Route = createFileRoute("/report/daily-pilar")({
-  component: DailyPilarFortunePage,
-});
-
-function DailyPilarFortunePage() {
+export default function DailyPilarFortunePage() {
   const { t } = useTranslation();
   const data = dummyReportData;
 
@@ -89,13 +82,12 @@ function DailyPilarFortunePage() {
       ];
 
   return (
-    <div className="relative min-h-screen bg-[#141415] text-[#DBDCDF] overflow-hidden">
-      <main className="relative z-10 max-w-screen-sm mx-auto pb-14">
+    <div className="relative min-h-screen overflow-hidden bg-[#141415] text-[#DBDCDF]">
+      <main className="relative z-10 mx-auto max-w-screen-sm pb-14">
         <ReportHeader sourceOfInsight="Day Pillar Animal" />
 
-        <div className="px-4 space-y-8">
-          
-          <DailyAnimalCard 
+        <div className="space-y-8 px-4">
+          <DailyAnimalCard
             nickname={nickname}
             animal={dayPillarAnimal?.animalEnglish}
             description={dayPillarAnimal?.summary}
@@ -107,15 +99,17 @@ function DailyPilarFortunePage() {
             title="Strength & Weakness"
             items={mappedStrengthWeakness}
           />
-          
-          <section className="rounded-2xl bg-[#171719] p-[28px_20px] space-y-8">
-            <h2 className="text-[18px] font-semibold text-[#878A93]">Current State</h2>
+
+          <section className="space-y-8 rounded-2xl bg-[#171719] p-[28px_20px]">
+            <h2 className="text-[18px] font-semibold text-[#878A93]">
+              Current State
+            </h2>
 
             <div className="space-y-6">
-              <div className="text-[14px] leading-[1.57] text-[#AEB0B6] whitespace-pre-line">
+              <div className="text-[14px] leading-[1.57] whitespace-pre-line text-[#AEB0B6]">
                 {currentState.status}
               </div>
-              <div className="text-[14px] leading-[1.57] text-[#AEB0B6] whitespace-pre-line">
+              <div className="text-[14px] leading-[1.57] whitespace-pre-line text-[#AEB0B6]">
                 {currentState.physiognomy}
               </div>
             </div>
@@ -139,6 +133,8 @@ function getFortuneResultFromStorage() {
   try {
     const saved = localStorage.getItem("fortuneResultAtom");
     if (saved) return JSON.parse(saved);
-  } catch { /* empty */ }
+  } catch {
+    /* empty */
+  }
   return undefined;
 }
