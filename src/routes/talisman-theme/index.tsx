@@ -32,99 +32,99 @@ interface ThemeButton {
   expandedPosition: { left: string; top: string };
 }
 
-const themes: ThemeButton[] = [
-  {
-    id: "happiness",
-    label: "Happiness",
-    image: happinessImg,
-    collapsedSize: 18.6875,
-    collapsedPosition: {
-      left: "calc(50% - 13.6875rem)",
-      top: "calc(50% - 11.8125rem)",
-    },
-    expandedSize: 23.375,
-    expandedPosition: { left: "0", top: "8.125rem" },
-  },
-  {
-    id: "business",
-    label: "Business",
-    image: businessImg,
-    collapsedSize: 14.125,
-    collapsedPosition: {
-      left: "calc(50% + 10.8125rem)",
-      top: "calc(50% - 7.0625rem)",
-    },
-    expandedSize: 18.8125,
-    expandedPosition: { left: "33.1875rem", top: "14.8125rem" },
-  },
-  {
-    id: "wealth",
-    label: "Wealth",
-    image: wealthImg,
-    collapsedSize: 14.125,
-    collapsedPosition: {
-      left: "calc(50% + 8.75rem)",
-      top: "calc(50% + 7.75rem)",
-    },
-    expandedSize: 18.8125,
-    expandedPosition: { left: "32.375rem", top: "35rem" },
-  },
-  {
-    id: "career",
-    label: "Career",
-    image: careerImg,
-    collapsedSize: 14.125,
-    collapsedPosition: {
-      left: "calc(50% - 11.375rem)",
-      top: "calc(50% + 6.1875rem)",
-    },
-    expandedSize: 18.8125,
-    expandedPosition: { left: "8.0625rem", top: "36.8125rem" },
-  },
-  {
-    id: "family",
-    label: "Family",
-    image: familyImg,
-    collapsedSize: 9,
-    collapsedPosition: {
-      left: "calc(50% - 0.75rem)",
-      top: "calc(50% - 1.75rem)",
-    },
-    expandedSize: 13.6875,
-    expandedPosition: { left: "20.25rem", top: "25.125rem" },
-  },
-  {
-    id: "love",
-    label: "Love",
-    image: loveImg,
-    collapsedSize: 9,
-    collapsedPosition: {
-      left: "calc(50% - 1.6875rem)",
-      top: "calc(50% + 13.9375rem)",
-    },
-    expandedSize: 13.6875,
-    expandedPosition: { left: "23.375rem", top: "51.5625rem" },
-  },
-  {
-    id: "health",
-    label: "Health",
-    image: healthImg,
-    collapsedSize: 12,
-    collapsedPosition: {
-      left: "calc(50% + 1.6875rem)",
-      top: "calc(50% - 17.8125rem)",
-    },
-    expandedSize: 16.6875,
-    expandedPosition: { left: "21.875rem", top: "0.8125rem" },
-  },
-];
-
 function TalismanThemePage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [selectedTheme, setSelectedTheme] = useAtom(themeAtom);
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const themes: ThemeButton[] = [
+    {
+      id: "happiness",
+      label: t("talisman-theme.themes.happiness"),
+      image: happinessImg,
+      collapsedSize: 18.6875,
+      collapsedPosition: {
+        left: "calc(50% - 13.6875rem)",
+        top: "calc(50% - 11.8125rem)",
+      },
+      expandedSize: 23.375,
+      expandedPosition: { left: "0", top: "8.125rem" },
+    },
+    {
+      id: "business",
+      label: t("talisman-theme.themes.business"),
+      image: businessImg,
+      collapsedSize: 14.125,
+      collapsedPosition: {
+        left: "calc(50% + 10.8125rem)",
+        top: "calc(50% - 7.0625rem)",
+      },
+      expandedSize: 18.8125,
+      expandedPosition: { left: "33.1875rem", top: "14.8125rem" },
+    },
+    {
+      id: "wealth",
+      label: t("talisman-theme.themes.wealth"),
+      image: wealthImg,
+      collapsedSize: 14.125,
+      collapsedPosition: {
+        left: "calc(50% + 8.75rem)",
+        top: "calc(50% + 7.75rem)",
+      },
+      expandedSize: 18.8125,
+      expandedPosition: { left: "32.375rem", top: "35rem" },
+    },
+    {
+      id: "career",
+      label: t("talisman-theme.themes.career"),
+      image: careerImg,
+      collapsedSize: 14.125,
+      collapsedPosition: {
+        left: "calc(50% - 11.375rem)",
+        top: "calc(50% + 6.1875rem)",
+      },
+      expandedSize: 18.8125,
+      expandedPosition: { left: "8.0625rem", top: "36.8125rem" },
+    },
+    {
+      id: "family",
+      label: t("talisman-theme.themes.family"),
+      image: familyImg,
+      collapsedSize: 9,
+      collapsedPosition: {
+        left: "calc(50% - 0.75rem)",
+        top: "calc(50% - 1.75rem)",
+      },
+      expandedSize: 13.6875,
+      expandedPosition: { left: "20.25rem", top: "25.125rem" },
+    },
+    {
+      id: "love",
+      label: t("talisman-theme.themes.love"),
+      image: loveImg,
+      collapsedSize: 9,
+      collapsedPosition: {
+        left: "calc(50% - 1.6875rem)",
+        top: "calc(50% + 13.9375rem)",
+      },
+      expandedSize: 13.6875,
+      expandedPosition: { left: "23.375rem", top: "51.5625rem" },
+    },
+    {
+      id: "health",
+      label: t("talisman-theme.themes.health"),
+      image: healthImg,
+      collapsedSize: 12,
+      collapsedPosition: {
+        left: "calc(50% + 1.6875rem)",
+        top: "calc(50% - 17.8125rem)",
+      },
+      expandedSize: 16.6875,
+      expandedPosition: { left: "21.875rem", top: "0.8125rem" },
+    },
+  ];
 
   // Expand animation after mount
   useEffect(() => {

@@ -1,117 +1,138 @@
 {
-  "home": {
-    "title": "운세를\n확인하세요",
-    "start": "화면을 터치하여\n시작하세요"
-  },
-  "language": {
-    "title": "언어를 선택하세요"
-  },
   "topic": {
-    "title": "주제를 선택하세요",
+    "title": "주제를 선택해주세요",
     "next": "다음",
     "topics": {
-      "today": "오늘의\n운세",
-      "lifetimeFortune": "평생\n총운",
-      "dayPillarAnimal": "나의 띠\n동물",
-      "physiognomy": "한국\n부적",
-      "fiveElementsV3": "오행\n분석",
-      "specifiedDate": "특정 날짜\n운세",
-      "yearly": "신년\n운세"
+      "today": "오늘의 운세",
+      "lifetimeFortune": "평생 운세",
+      "dayPillarAnimal": "나의 띠 동물",
+      "physiognomy": "한국 부적",
+      "fiveElementsV3": "오행 분석",
+      "specifiedDate": "특정 날짜 풀이",
+      "yearly": "신년 운세"
     }
   },
   "date": {
-    "title": "날짜를 선택하세요",
-    "subtitle": "운세를 볼 특정 날짜를 선택하세요"
+    "title": "특정 날짜를 선택해주세요",
+    "subtitle": "운세를 보고 싶은 날짜를 알려주세요",
+    "weekdays": ["일", "월", "화", "수", "목", "금", "토"],
+    "months": [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월"
+    ],
+    "next": "저장",
+    "cancel": "취소"
   },
   "confirm": {
     "restart": {
-      "title": "다시 시작하시겠습니까?",
-      "description": "현재 진행 상황이 사라집니다.",
-      "confirm": "다시 시작",
+      "title": "홈으로 갈까요?",
+      "description": "이전까지 진행했던 내용이 사라져요",
+      "confirm": "홈으로",
       "cancel": "취소"
     }
   },
   "talisman-theme": {
-    "title": "부적 테마를 선택하세요",
-    "subtitle": "현재 필요한 테마를 선택하세요"
+    "themes": {
+      "happiness": "행복",
+      "wealth": "자산",
+      "career": "경력",
+      "love": "사랑",
+      "family": "가족",
+      "health": "건강",
+      "business": "사업"
+    },
+    "title": "부적의 주제를 선택해주세요",
+    "subtitle": "선택한 주제에 대해 알려드려요"
   },
   "talisman": {
     "happiness": {
-      "title": "행복 부적",
-      "subtitle": "원하는 행복의 종류를 선택하세요",
-      "overallSuccess": "만사형통",
-      "goalAchievement": "소원성취",
-      "mentalPeace": "심신평안",
-      "divineProtection": "신명가호"
+      "title": "행복의 부적",
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "overallSuccess": "전반적인 성공과 원활한 흐름",
+      "goalAchievement": "특정 목표 달성",
+      "mentalPeace": "정신적 평화",
+      "divineProtection": "신을 통한 보호"
     },
     "wealth": {
-      "title": "재물 부적",
-      "subtitle": "원하는 재물의 종류를 선택하세요",
-      "fortuneBoost": "재수대길",
-      "moneyAttraction": "금전도래",
-      "windfallWish": "횡재기원",
-      "greatLuckFlow": "운수대통"
+      "title": "자산의 부적",
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "fortuneBoost": "행운 증가",
+      "moneyAttraction": "돈 끌어당기기",
+      "windfallWish": "뜻밖의 행운 소원",
+      "greatLuckFlow": "큰 행운의 흐름"
     },
     "career": {
-      "title": "직업 부적",
-      "subtitle": "원하는 직업의 종류를 선택하세요",
-      "legalTroubleSolve": "관재해결",
-      "gossipPrevention": "구설방지",
-      "promotionWish": "승진기원",
-      "jobSuccess": "직장안정"
+      "title": "경력 부적",
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "legalTroubleSolve": "법적 문제 해결",
+      "gossipPrevention": "나쁜 소문 방지",
+      "promotionWish": "승진 소원",
+      "jobSuccess": "직업을 통한 성공"
     },
     "love": {
-      "title": "사랑 부적",
-      "subtitle": "원하는 사랑의 종류를 선택하세요",
-      "coupleHarmony": "부부화합",
-      "relationshipRepair": "애정회복",
-      "relationshipCall": "인연도래",
-      "maritalPeace": "가정평화"
+      "title": "사랑의 부적",
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "coupleHarmony": "부부 조화",
+      "relationshipRepair": "관계 회복",
+      "relationshipCall": "관계 전화",
+      "maritalPeace": "부부의 평화"
     },
     "family": {
-      "title": "가족 부적",
-      "subtitle": "원하는 가족의 종류를 선택하세요",
-      "familyHarmony": "가내화목",
-      "movingSafety": "이사안전",
-      "homePeace": "가택평안",
-      "fetalProtection": "태아보호"
+      "title": "가족의 부적",
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "familyHarmony": "가족 조화",
+      "movingSafety": "이사 안전",
+      "homePeace": "집의 평화",
+      "fetalProtection": "뱃속의 아기 보호"
     },
     "health": {
       "title": "건강 부적",
-      "subtitle": "원하는 건강의 종류를 선택하세요",
-      "diseaseHealing": "질병퇴치",
-      "illnessRepel": "액운퇴치",
-      "accidentPrevention": "사고방지",
-      "longLifeHealth": "무병장수"
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "diseaseHealing": "질병 치유",
+      "illnessRepel": "질병 퇴치",
+      "accidentPrevention": "사고 예방",
+      "longLifeHealth": "장수 건강"
     },
     "business": {
       "title": "사업 부적",
-      "subtitle": "원하는 사업의 종류를 선택하세요",
-      "businessProsperity": "사업번창",
-      "salesSuccess": "영업성공",
-      "salesActivation": "매매성사",
-      "investmentSuccess": "투자성공"
+      "subtitle": "중심이 될 주제를 선택해주세요",
+      "businessProsperity": "사업 번창",
+      "salesSuccess": "판매 성공",
+      "salesActivation": "판매 활성화",
+      "investmentSuccess": "투자 성공"
     }
   },
   "information": {
     "intro": {
-      "title": "당신의 K-에너지 좌표",
-      "description": "운세와 운명에 영향을 미치는 당신만의 고유한 K-에너지 좌표를 발견해보세요.",
-      "okay": "확인"
+      "title": "당신의 K-에너지",
+      "description": "당신의 정보는 오직 운세 분석에만 사용됩니다.",
+      "okay": "확인했어요"
     },
     "nickname": {
-      "title": "닉네임을 입력하세요",
-      "placeholder": "닉네임 입력",
-      "helpText": "1~20자 이내로 입력해주세요.",
+      "title": "별명이나 이름을 적어주세요",
+      "placeholder": "홍길동",
+      "helpText": "1~20자 글자를 적어주세요",
       "next": "다음"
     },
     "birth": {
-      "title": "생년월일을 입력하세요",
+      "title": "생일을 적어주세요",
       "month": "월",
       "day": "일",
       "year": "년",
-      "incorrectDate": "잘못된 생년월일입니다",
-      "next": "다음"
+      "incorrectDate": "생일을 한번 더 확인해주세요",
+      "next": "다음",
+      "lunar": "음력",
+      "solar": "양력"
     },
     "time": {
       "title": "태어난 시간을 입력하세요",

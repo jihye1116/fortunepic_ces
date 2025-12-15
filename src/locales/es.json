@@ -1,11 +1,4 @@
 {
-  "home": {
-    "title": "Consulta tu\nFortuna",
-    "start": "Toca la pantalla\npara comenzar"
-  },
-  "language": {
-    "title": "Selecciona un idioma"
-  },
   "topic": {
     "title": "Selecciona un tema",
     "next": "Siguiente",
@@ -21,7 +14,24 @@
   },
   "date": {
     "title": "Selecciona tu fecha",
-    "subtitle": "Elige una fecha específica para tu lectura de fortuna"
+    "subtitle": "Elige una fecha específica para tu lectura de fortuna",
+    "weekdays": ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"],
+    "months": [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic"
+    ],
+    "next": "Guardar",
+    "cancel": "Cancelar"
   },
   "confirm": {
     "restart": {

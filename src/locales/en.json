@@ -1,11 +1,4 @@
 {
-  "home": {
-    "title": "Check your\nFortune",
-    "start": "Touch the screen\nto start"
-  },
-  "language": {
-    "title": "Select a language"
-  },
   "topic": {
     "title": "Select a topic",
     "next": "Next",
@@ -21,7 +14,24 @@
   },
   "date": {
     "title": "Select your date",
-    "subtitle": "Choose a specific date for your fortune reading"
+    "subtitle": "Choose a specific date for your fortune reading",
+    "weekdays": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+    "months": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "confirm": {
     "restart": {
@@ -32,6 +42,15 @@
     }
   },
   "talisman-theme": {
+    "themes": {
+      "happiness": "Happiness",
+      "wealth": "Wealth",
+      "career": "Career",
+      "love": "Love",
+      "family": "Family",
+      "health": "Health",
+      "business": "Business"
+    },
     "title": "Choose your Talisman Theme",
     "subtitle": "Select a theme that resonates with your current needs"
   },
