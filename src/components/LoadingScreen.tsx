@@ -6,9 +6,9 @@ import OIcon from "@/assets/icons/O.svg?react";
 import SmallXIcon from "@/assets/icons/small-X.svg?react";
 import XIcon from "@/assets/icons/X.svg?react";
 import CorrectImg from "@/assets/images/correct.png";
-import homeLottie from "@/assets/lottie/home.json";
 
 import { NavigationBar } from "./NavigationBar";
+import { Title } from "./Title";
 
 export function LoadingScreen() {
   const { t } = useTranslation();
@@ -65,18 +65,9 @@ export function LoadingScreen() {
   return (
     <main className="fixed inset-0 z-50 flex h-dvh flex-col bg-black">
       <NavigationBar />
-      <div className="relative z-10 w-full px-20 py-35">
-        <p className="text-transparent bg-clip-text bg-linear-to-r from-white to-[#1E2F63] text-5xl font-semibold leading-[1.3] tracking-[-1.5%]">
-          {t("loading.analyzing")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-12 py-30">
-        <Lottie
-          className="mx-auto blur-md"
-          animationData={homeLottie}
-          width={514}
-          height={514}
-        />
+      <Title text={t("loading.analyzing")} />
+      <div className="px-10">
+        <Lottie animationData={loadingLottie} width={1000} height={1000} />
       </div>
 
 

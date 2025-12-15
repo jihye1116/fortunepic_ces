@@ -158,7 +158,7 @@ function CameraPage() {
               0,
               0,
               canvasRef.current.width,
-              canvasRef.current.height
+              canvasRef.current.height,
             );
             const photoDataUrl = canvasRef.current.toDataURL("image/jpeg", 0.9);
             setCapturedPhotos([...capturedPhotos, photoDataUrl]);
@@ -253,7 +253,7 @@ function CameraPage() {
         {/* Countdown - 하단 */}
         <div className="flex flex-1 flex-col items-center bg-[#141415] px-20">
           <div className="h-fit py-20">
-            <p className="text-[6.25rem] font-semibold leading-[1.3] tracking-[-0.169rem] text-white">
+            <p className="text-[6.25rem] leading-[1.3] font-semibold tracking-[-0.169rem] text-white">
               {countdown}
             </p>
           </div>
@@ -326,7 +326,7 @@ function CameraPage() {
             disabled={isLoading}
             onClick={async () => {
               setIsLoading(true);
-              setBackgroundOpacity(false);
+              setBackgroundOpacity(true);
 
               try {
                 // 1. Get selected photo and convert to Blob
@@ -377,43 +377,13 @@ function CameraPage() {
                 const resultWithNickname = { ...(result as object), nickname };
                 setFortuneResult({ 0: resultWithNickname });
                 // 개발용: localStorage에도 저장
-                localStorage.setItem("fortuneResultAtom", JSON.stringify({ 0: resultWithNickname }));
+                localStorage.setItem(
+                  "fortuneResultAtom",
+                  JSON.stringify({ 0: resultWithNickname }),
+                );
 
-                // TODO :: 5. Navigate to result page 
-                // setTimeout(() => {
-                //   router.navigate({ to: "/result" });
-                //   setBackgroundOpacity(true);
-                // }, 800);
-
-                // theme 값에 따라 report 페이지로 이동
-                let reportPath = "/report";
-                switch ((topic || "basic") as ThemeType) {
-                  case "lifetime":
-                    reportPath = "/report/lifetime";
-                    break;
-                  case "yearly":
-                    reportPath = "/report/new-year";
-                    break;
-                  case "today":
-                    reportPath = "/report/today";
-                    break;
-                  case "specifiedDate":
-                    reportPath = "/report/date";
-                    break;
-                  case "fiveElementsV3":
-                    reportPath = "/report/five-elements";
-                    break;
-                  case "dayPillarAnimal":
-                    reportPath = "/report/daily-pilar";
-                    break;
-                  case "physiognomy":
-                    reportPath = "/report/talisman";
-                    break;
-                  default:
-                    reportPath = "/report";
-                }
                 setTimeout(() => {
-                  router.navigate({ to: reportPath });
+                  router.navigate({ to: "/result" });
                   setBackgroundOpacity(true);
                 }, 800);
               } catch (error) {

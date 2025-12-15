@@ -20,7 +20,7 @@ function RouteComponent() {
 
   const getTopicConfig = () => {
     switch (topic) {
-      case "lifetimeFortune":
+      case "lifetime":
         return {
           title: t("result.lifetimeFortune.title"),
           subtitle: null,
@@ -29,7 +29,7 @@ function RouteComponent() {
           chips: null,
           hasImages: false,
         };
-      case "todayFortune":
+      case "today":
         return {
           title: t("result.todaysFortune.title"),
           subtitle: t("result.todaysFortune.subtitle"),
@@ -40,6 +40,15 @@ function RouteComponent() {
             t("result.todaysFortune.chip2"),
             t("result.todaysFortune.chip3"),
           ],
+          hasImages: false,
+        };
+      case "yearly":
+        return {
+          title: t("result.yearly.title"),
+          subtitle: null,
+          mainTitle: t("result.yearly.mainTitle"),
+          description: null,
+          chips: [],
           hasImages: false,
         };
       case "specifiedDate":
@@ -105,8 +114,8 @@ function RouteComponent() {
   const config = getTopicConfig();
   const reportUrl =
     typeof window !== "undefined"
-      ? `${window.location.origin}/report`
-      : "/report";
+      ? `${window.location.origin}/report/${topic}`
+      : `/report/${topic}`;
 
   return (
     <div className="h-dvh">
