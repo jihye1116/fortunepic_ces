@@ -1,89 +1,98 @@
-import { cn } from "@sglara/cn";
-import { useTranslation } from "react-i18next";
 
-import businessImg from "@/assets/images/themes/business.png";
-import careerImg from "@/assets/images/themes/career.png";
-import familyImg from "@/assets/images/themes/family.png";
-import happinessImg from "@/assets/images/themes/happiness.png";
-import healthImg from "@/assets/images/themes/health.png";
+
+
+import dogImg from "@/assets/images/report/animals/dog.png";
+import dragonImg from "@/assets/images/report/animals/dragon.png";
+import horseImg from "@/assets/images/report/animals/horse.png";
+import monkeyImg from "@/assets/images/report/animals/monkey.png";
+import oxImg from "@/assets/images/report/animals/ox.png";
+import pigImg from "@/assets/images/report/animals/pig-2cae6e.png";
+import rabbitImg from "@/assets/images/report/animals/rabbit.png";
+import ratImg from "@/assets/images/report/animals/rat.png";
+import roosterImg from "@/assets/images/report/animals/rooster.png";
+import sheepImg from "@/assets/images/report/animals/sheep.png";
+import snakeImg from "@/assets/images/report/animals/snake.png";
+import tigerImg from "@/assets/images/report/animals/tiger.png";
+
+const animalImageMap: Record<string, string> = {
+  Rat: ratImg,
+  Ox: oxImg,
+  Tiger: tigerImg,
+  Rabbit: rabbitImg,
+  Dragon: dragonImg,
+  Snake: snakeImg,
+  Horse: horseImg,
+  Sheep: sheepImg,
+  Monkey: monkeyImg,
+  Rooster: roosterImg,
+  Dog: dogImg,
+  Pig: pigImg,
+};
+
 
 interface DailyPilarCardProps {
-  nickname?: string;
+  animal?: string;
+  selected?: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function DailyPilarCard({ nickname: _ }: DailyPilarCardProps) {
-  const { t } = useTranslation();
-
+export function DailyPilarCard({
+  animal = "Rat",
+}: DailyPilarCardProps) {
   const animals = [
-    {
-      key: "sheep",
-      size: "w-32 h-32",
-      position: "left-[25%] top-[25%]",
-      img: familyImg,
-    },
-    {
-      key: "dog",
-      size: "w-24 h-24",
-      position: "left-[55%] top-[15%]",
-      img: businessImg,
-    },
-    {
-      key: "monkey",
-      size: "w-24 h-24",
-      position: "left-[65%] top-[40%]",
-      img: careerImg,
-    },
-    {
-      key: "pig",
-      size: "w-20 h-20",
-      position: "left-[55%] top-[65%]",
-      img: happinessImg,
-    },
-    {
-      key: "ox",
-      size: "w-20 h-20",
-      position: "left-[35%] top-[65%]",
-      img: healthImg,
-    },
+    "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
+    "Horse", "Sheep", "Monkey", "Rooster", "Dog", "Pig"
   ];
 
   return (
-    <section className="rounded-2xl bg-[#171719] p-[28px_20px] space-y-6">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <h2 className="text-[18px] font-semibold text-[#878A93]">
-          {t("report.sections.nearDailyPilarAnimal")}
-        </h2>
-      </div>
-
-      {/* Content: Clustered Animals */}
-      <div className="relative h-[300px] w-full">
-        {animals.map((animal) => {
-          const label = t(`animals.${animal.key}`);
-          return (
+    
+    <div>
+      <h2 className="text-[18px] font-semibold text-[#878A93] mb-6">
+        {animal} Analysis
+      </h2>
+    
+    <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full px-20">
+      {animals.map((ani) => {
+        const selected = ani === animal;
+        return (
+          <div
+            key={ani}
+            className={
+              `flex flex-col items-center w-12` +
+              (selected ? " font-medium" : " font-normal")
+            }
+          >
             <div
-              key={label}
-              className={cn(
-                "absolute overflow-hidden rounded-full border border-white/10",
-                animal.size,
-                animal.position,
-              )}
+              className={
+                `rounded-full flex items-center justify-center` +
+                (selected
+                  ? " border-[#AEB0B6] border-2"
+                  : "")
+              }
+              style={{ width: 48, height: 48 }}
             >
-              <img
-                src={animal.img}
-                alt={label}
-                className="h-full w-full object-cover grayscale opacity-60"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-[15px] font-medium text-white drop-shadow-md">
-                  {label}
-                </span>
-              </div>
+              
+                <img
+                className="flex items-center justify-center rounded-full"
+                  src={animalImageMap[ani]}
+                  alt={ani}
+                  style={{ width: 48, height: 48, objectFit: "cover" }}
+                />
+              
             </div>
-          );
-        })}
-      </div>
-    </section>
+            <div
+              className={
+                `mt-2 text-[14px]` +
+                (selected
+                  ? " text-[#C2C4C8] font-medium text-center"
+                  : " text-[#70737C] font-normal text-center")
+              }
+            >
+              {ani}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    </div>
   );
 }
