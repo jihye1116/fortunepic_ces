@@ -202,6 +202,10 @@
       "title": "Talismán Coreano",
       "mainTitle": "Talismán de la Suerte",
       "description": "Como Dragón Azul, posees autoridad natural y un espíritu pionero. Tu camino es el de la innovación e inspirar a otros a lograr la grandeza."
+    },
+    "yearly": {
+      "title": "Fortuna de Año Nuevo",
+      "description": "El año que viene traerá nuevas oportunidades y desafíos. Mantente adaptable y abierto al cambio para aprovechar al máximo lo que viene."
     }
   },
   "report": {

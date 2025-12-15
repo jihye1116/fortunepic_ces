@@ -52,6 +52,12 @@ export const resetAllAtoms = atom(null, (_get, set) => {
   set(apiImageAtom, null);
   set(fortuneResultAtom, {});
   set(nicknameAtom, "");
+  set(themeAtom, "");
+  set(topicAtom, "");
+  set(birthdateAtom, "");
+  set(birthtimeAtom, "");
+  set(genderAtom, null);
+  set(targetDateAtom, null);
 });
 
 export const resetAtomsForRetake = atom(null, (_get, set) => {
