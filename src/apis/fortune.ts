@@ -1,4 +1,5 @@
 import { type Gender } from "@/core/types";
+import i18n from "@/i18n";
 
 import { instance } from "./instance";
 
@@ -26,7 +27,7 @@ const convertToPng = (imageBlob: Blob): Promise<Blob> => {
       }
       ctx.drawImage(img, 0, 0);
       canvas.toBlob(
-        blob => {
+        (blob) => {
           if (blob) {
             resolve(blob);
           } else {
@@ -38,7 +39,7 @@ const convertToPng = (imageBlob: Blob): Promise<Blob> => {
       ); // 1 is for full quality
       URL.revokeObjectURL(img.src);
     };
-    img.onerror = err => {
+    img.onerror = (err) => {
       URL.revokeObjectURL(img.src);
       reject(new Error(`Image load error: ${err}`));
     };
@@ -83,10 +84,10 @@ export type FortuneAnalysisResponse = unknown;
  */
 export const analyzeFortuneWithImages = async (
   data: FortuneAnalysisRequest,
-): Promise<FortuneAnalysisResponse> => {
+) => {
   const formData = new FormData();
 
-  const birthdayPayload = data.birthday.map(b => ({
+  const birthdayPayload = data.birthday.map((b) => ({
     ...b,
     hour: b.hour || "5",
     minute: b.minute || "00",
@@ -109,7 +110,7 @@ export const analyzeFortuneWithImages = async (
     }
   }
 
-    // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
+  // 문서 형식에 맞춰 모든 필드를 JSON.stringify()로 변환하여 추가
   formData.append("birthday", JSON.stringify(birthdayPayload));
   formData.append("theme", data.theme);
 
@@ -117,22 +118,14 @@ export const analyzeFortuneWithImages = async (
     formData.append("targetDate", data.targetDate);
   }
 
-  formData.append("language", 'ko');
+  formData.append("language", i18n.language);
   // formData.append("language", JSON.stringify(data.language));
-
-  console.log("요청 페이로드:", {
-    birthday: birthdayPayload,
-    theme: data.theme,
-    // heads: data.heads,
-  });
-
-
 
   // multipart/form-data로 전송
   // ⚠️ 중요: Content-Type을 수동으로 설정하면 boundary가 누락되어 400 에러 발생!
   // axios가 FormData를 감지하여 자동으로 올바른 Content-Type을 설정하도록 headers를 설정하지 않음
 
-  const response = await instance.post<FortuneAnalysisResponse>(
+  const response = await instance.post(
     "/anthropic/comprehensiveFortune",
     formData,
     {
@@ -141,8 +134,6 @@ export const analyzeFortuneWithImages = async (
       maxBodyLength: Infinity,
     },
   );
-
-  console.log("API 응답:", response.data);
 
   return response.data;
 };

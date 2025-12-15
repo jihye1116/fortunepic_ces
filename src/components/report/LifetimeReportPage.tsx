@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { FaceReading } from "@/components/report/FaceReading";
@@ -12,13 +14,25 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
 
-export default function LifetimeReportPage() {
+export default function LifetimeReportPage({ id }: { id: string }) {
   const { t } = useTranslation();
+
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
   // localStorage 우선, 없으면 jotai atom
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const lifetimeFortune = fortuneResult?.[0];
+  const fortuneResult = result;
+  const lifetimeFortune = fortuneResult;
 
   // pillars 매핑: sajuInfo.pillars에서 추출
   const mappedPillars = lifetimeFortune?.sajuInfo?.pillars
@@ -216,14 +230,4 @@ function mapAreaStrategies(domainKaiun: any, t: TFunction): any[] {
   }
 
   return strategies;
-}
-
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
 }

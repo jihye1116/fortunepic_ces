@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { DetailedEnergyAnalysis } from "@/components/report/DetailedEnergyAnalysis";
 import { FaceReading } from "@/components/report/FaceReading";
@@ -11,14 +13,25 @@ import { TagListSection } from "@/components/report/TagListSection";
 import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 
-export default function TalismanFortunePage() {
+export default function TalismanFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const physiognomy = fortuneResult?.[0]?.result?.physiognomyAnalysis;
-  const sajuInfo = fortuneResult?.[0]?.sajuInfo;
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const fortuneResult = result;
+  const physiognomy = fortuneResult?.result?.physiognomyAnalysis;
+  const sajuInfo = fortuneResult?.sajuInfo;
+  const nickname = fortuneResult?.nickname || data.nickname;
 
   // 1. Pillars Mapping
   const mappedPillars = sajuInfo?.pillars
@@ -116,14 +129,4 @@ export default function TalismanFortunePage() {
       </main>
     </div>
   );
-}
-
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
 }

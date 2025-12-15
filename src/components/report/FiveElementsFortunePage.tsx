@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import EarthIcon from "@/assets/icons/elements/earth.svg";
 import FireIcon from "@/assets/icons/elements/fire.svg";
 import MetalIcon from "@/assets/icons/elements/metal.svg";
@@ -17,14 +19,25 @@ import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { dummyReportData } from "@/data/reportDummy";
 
-export default function FiveElementsFortunePage() {
+export default function FiveElementsFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const sajuInfo = fortuneResult?.[0]?.sajuInfo;
-  const analysisV3 = fortuneResult?.[0]?.result?.fiveElementsAnalysisV3;
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const fortuneResult = result;
+  const sajuInfo = fortuneResult?.sajuInfo;
+  const analysisV3 = fortuneResult?.result?.fiveElementsAnalysisV3;
+  const nickname = fortuneResult?.nickname || data.nickname;
 
   // 1. Four Pillars Data Mapping
   const mappedFourPillars = sajuInfo?.pillars
@@ -33,7 +46,7 @@ export default function FiveElementsFortunePage() {
 
   // 2. Element Distribution Mapping
   const mappedDistribution = sajuInfo?.fiveElements
-    ? mapFiveElementsDistribution(sajuInfo.fiveElements, t)
+    ? mapFiveElementsDistribution(sajuInfo.fiveElements)
     : data.elementDistributionItems?.map((item) => ({
         label: t(`report.elements.${item.element.toLowerCase()}` as any),
         value: item.percentage,
@@ -135,16 +148,6 @@ export default function FiveElementsFortunePage() {
 
 // --- Helper Functions ---
 
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapToFourPillarsData(pillars: any) {
   return {
@@ -180,7 +183,7 @@ function mapToFourPillarsData(pillars: any) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapFiveElementsDistribution(fiveElements: any, t: TFunction) {
+function mapFiveElementsDistribution(fiveElements: any) {
   const total =
     fiveElements.wood +
     fiveElements.fire +

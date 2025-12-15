@@ -383,7 +383,10 @@ function CameraPage() {
                 );
 
                 setTimeout(() => {
-                  router.navigate({ to: "/result" });
+                  router.navigate({
+                    to: "/result",
+                    search: { id: result._id },
+                  });
                   setBackgroundOpacity(true);
                 }, 800);
               } catch (error) {

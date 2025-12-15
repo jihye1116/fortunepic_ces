@@ -1,10 +1,7 @@
 import axios from "axios";
 
 // 개발 환경에서는 Vite 프록시를 사용 (/api), 프로덕션에서는 실제 URL 사용
-const baseURL =
-  import.meta.env.MODE === "development"
-    ? "/api"
-    : import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 export const instance = axios.create({
   baseURL,

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { TFunction } from "i18next";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { AreaSpecificStrategies } from "@/components/report/AreaSpecificStrategies";
 import { BasicEnergyInterpretation } from "@/components/report/BasicEnergyInterpretation";
 import { FaceReading } from "@/components/report/FaceReading";
@@ -14,14 +16,26 @@ import { mapApiToPillars } from "@/core/mapApiToPillars";
 import { dummyReportData } from "@/data/reportDummy";
 import { AreaStrategy, RegulatingEnergy } from "@/types/report";
 
-export default function NewYearReportPage() {
+export default function NewYearReportPage({ id }: { id: string }) {
   const { t } = useTranslation();
+
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   // 실제 API 응답을 localStorage에서 가져오거나, 없으면 dummy 사용
   const data = dummyReportData;
-  const fortuneResult = getFortuneResultFromStorage();
-  // new-year는 fortuneResult?.[0]?.result?.yearlyFortune 기준
-  const yearlyFortune = fortuneResult?.[0]?.result?.yearlyFortune;
-  const sajuInfo = fortuneResult?.[0]?.sajuInfo;
+  const fortuneResult = result;
+  // new-year는 fortuneResult?.result?.yearlyFortune 기준
+  const yearlyFortune = fortuneResult?.result?.yearlyFortune;
+  const sajuInfo = fortuneResult?.sajuInfo;
 
   // Pillars 매핑 (sajuInfo.pillars)
   const mappedPillars = sajuInfo?.pillars
@@ -44,7 +58,7 @@ export default function NewYearReportPage() {
     : data.beneficialEnergies;
   const mappedRegulatingEnergies: RegulatingEnergy[] = [];
 
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const nickname = fortuneResult?.nickname || data.nickname;
   const mappedFaceReadingAreas = data.faceReadingAreas; // API에 없으므로 dummy 사용
 
   return (
@@ -147,14 +161,3 @@ function mapYearlyBeneficialEnergies(elementGuidance: any, t: TFunction) {
 }
 
 // 연도별 운세 regulatingEnergies 매핑 (여기선 없음, 빈 배열)
-
-// LocalStorage util (copied from lifetime.tsx)
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
-}

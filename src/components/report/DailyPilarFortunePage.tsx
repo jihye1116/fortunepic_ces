@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { instance } from "@/apis/instance";
 import { DailyAnimalCard } from "@/components/report/DailyAnimalCard";
 import { FaceReading } from "@/components/report/FaceReading";
 import { ReportFooter } from "@/components/report/ReportFooter";
@@ -9,13 +12,24 @@ import { dummyReportData } from "@/data/reportDummy";
 
 import { DailyPilarCard } from "./DailyPilarCard";
 
-export default function DailyPilarFortunePage() {
+export default function DailyPilarFortunePage({ id }: { id: string }) {
   const { t } = useTranslation();
+  const [result, setResult] = useState<any>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { data } = await instance.get(`/anthropic/fortunePic/${id}`);
+    setResult(data.data);
+  };
+
   const data = dummyReportData;
 
-  const fortuneResult = getFortuneResultFromStorage();
-  const dayPillarAnimal = fortuneResult?.[0]?.result?.dayPillarAnimal;
-  const nickname = fortuneResult?.[0]?.nickname || data.nickname;
+  const fortuneResult = result;
+  const dayPillarAnimal = fortuneResult?.result?.dayPillarAnimal;
+  const nickname = fortuneResult?.nickname || data.nickname;
 
   // 1. Strength & Weakness Mapping
   const mappedStrengthWeakness = dayPillarAnimal
@@ -128,14 +142,4 @@ export default function DailyPilarFortunePage() {
       </main>
     </div>
   );
-}
-
-function getFortuneResultFromStorage() {
-  try {
-    const saved = localStorage.getItem("fortuneResultAtom");
-    if (saved) return JSON.parse(saved);
-  } catch {
-    /* empty */
-  }
-  return undefined;
 }
