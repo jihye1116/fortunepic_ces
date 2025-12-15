@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import BackIcon from "@/assets/icons/back.svg?react";
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
-import { MONTHS, WEEKDAYS } from "@/core/constants";
 import { targetDateAtom } from "@/store/atoms";
 
 export const Route = createFileRoute("/date")({
@@ -20,6 +19,9 @@ function DatePage() {
   const setTargetDate = useSetAtom(targetDateAtom);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const weekdays = t("date.weekdays", { returnObjects: true }) as string[];
+  const months = t("date.months", { returnObjects: true }) as string[];
 
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
@@ -94,7 +96,7 @@ function DatePage() {
         <div className="flex w-full items-center justify-between">
           <div className="flex h-25 items-center justify-center rounded-3xl border-[3px] border-[#2e2f33] px-8 py-2.5">
             <div className="flex items-center gap-4.5 text-[2.5rem] font-medium tracking-[-0.0375rem] text-[#e1e2e4]">
-              <span>{MONTHS[currentMonth.getMonth()]}</span>
+              <span>{months[currentMonth.getMonth()]}</span>
               <span>{currentMonth.getFullYear()}</span>
             </div>
           </div>
@@ -119,7 +121,7 @@ function DatePage() {
         <div className="flex flex-col gap-10 rounded-3xl p-6">
           {/* Weekday Headers */}
           <div className="flex w-full items-center justify-between">
-            {WEEKDAYS.map((day) => (
+            {weekdays.map((day) => (
               <div
                 key={day}
                 className="flex h-13.75 w-30 items-center justify-center"
@@ -168,7 +170,7 @@ function DatePage() {
               router.navigate({ to: "/information" });
             }}
           >
-            Next
+            {t("topic.next")}
           </SecondaryButton>
         )}
       </div>

@@ -19,7 +19,7 @@ const languages = [
 ];
 
 function LanguagePage() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const router = useRouter();
   const setBackgroundOpacity = useSetAtom(backgroundOpacityAtom);
 
@@ -37,7 +37,7 @@ function LanguagePage() {
     <main className="flex h-dvh flex-col">
       <NavigationBar />
 
-      <Title text={t("language.title")} />
+      <Title text="Select a language" />
 
       <div className="flex flex-col gap-6 px-20 py-12">
         <SelectionButtons options={languages} onSelect={handleLanguageSelect} />
