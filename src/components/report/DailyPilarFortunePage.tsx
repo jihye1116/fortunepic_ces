@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
 
 import { DailyAnimalCard } from "@/components/report/DailyAnimalCard";
-import { DailyPilarCard } from "@/components/report/DailyPilarCard";
 import { FaceReading } from "@/components/report/FaceReading";
 import { ReportFooter } from "@/components/report/ReportFooter";
 import { ReportHeader } from "@/components/report/ReportHeader";
 import { TagListSection } from "@/components/report/TagListSection";
 import { dummyReportData } from "@/data/reportDummy";
+
+import { DailyPilarCard } from "./DailyPilarCard";
 
 export default function DailyPilarFortunePage() {
   const { t } = useTranslation();
@@ -93,7 +94,7 @@ export default function DailyPilarFortunePage() {
             description={dayPillarAnimal?.summary}
           />
 
-          <DailyPilarCard nickname={nickname} />
+          <DailyPilarCard  />
 
           <TagListSection
             title="Strength & Weakness"
