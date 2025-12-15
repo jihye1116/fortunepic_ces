@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import BackIcon from "@/assets/icons/back.svg?react";
+import { DatePickerBottomSheet } from "@/components/DatePickerBottomSheet";
 import { NavigationBar } from "@/components/NavigationBar";
 import { SecondaryButton } from "@/components/SecondaryButton";
 import { targetDateAtom } from "@/store/atoms";
@@ -19,6 +20,7 @@ function DatePage() {
   const setTargetDate = useSetAtom(targetDateAtom);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const weekdays = t("date.weekdays", { returnObjects: true }) as string[];
   const months = t("date.months", { returnObjects: true }) as string[];
@@ -76,6 +78,10 @@ function DatePage() {
 
   const days = getDaysInMonth(currentMonth);
 
+  const handleMonthYearConfirm = (date: Date) => {
+    setCurrentMonth(date);
+  };
+
   return (
     <div className="flex h-dvh flex-col items-center">
       <NavigationBar />
@@ -94,12 +100,15 @@ function DatePage() {
       <div className="flex flex-col gap-6 px-21 pt-12 pb-17">
         {/* Month Selector */}
         <div className="flex w-full items-center justify-between">
-          <div className="flex h-25 items-center justify-center rounded-3xl border-[3px] border-[#2e2f33] px-8 py-2.5">
+          <button
+            onClick={() => setIsBottomSheetOpen(true)}
+            className="flex h-25 items-center justify-center rounded-3xl border-[3px] border-[#2e2f33] px-8 py-2.5"
+          >
             <div className="flex items-center gap-4.5 text-[2.5rem] font-medium tracking-[-0.0375rem] text-[#e1e2e4]">
               <span>{months[currentMonth.getMonth()]}</span>
               <span>{currentMonth.getFullYear()}</span>
             </div>
-          </div>
+          </button>
 
           <div className="flex items-center gap-13">
             <button
@@ -147,9 +156,9 @@ function DatePage() {
                         key={dayIndex}
                         onClick={() => handleDateClick(day)}
                         className={cn(
-                          "flex h-30 w-30 items-center justify-center text-[2.5rem] leading-[1.3] font-normal tracking-[-0.025rem]",
+                          "flex h-30 w-30 items-center justify-center rounded-[2.25rem] text-[2.5rem] leading-[1.3] font-normal tracking-[-0.025rem] transition-all duration-100",
                           isSelected(day)
-                            ? "rounded-[2.25rem] bg-[#f6e24a] font-medium text-[#171719]"
+                            ? "bg-[#f6e24a] font-medium text-[#171719]"
                             : "text-[#aeb0b6]",
                         )}
                       >
@@ -173,6 +182,13 @@ function DatePage() {
             {t("topic.next")}
           </SecondaryButton>
         )}
+
+        <DatePickerBottomSheet
+          open={isBottomSheetOpen}
+          currentDate={currentMonth}
+          onConfirm={handleMonthYearConfirm}
+          onOpenChange={setIsBottomSheetOpen}
+        />
       </div>
     </div>
   );
