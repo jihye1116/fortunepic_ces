@@ -105,8 +105,8 @@ function RouteComponent() {
   const config = getTopicConfig();
   const reportUrl =
     typeof window !== "undefined"
-      ? `${window.location.origin}/report`
-      : "/report";
+      ? `${window.location.origin}/report/${topic}`
+      : `/report/${topic}`;
 
   return (
     <div className="h-dvh">
