@@ -30,7 +30,7 @@ function RouteComponent() {
   const [topic] = useAtom(topicAtom);
   const [, resetAtoms] = useAtom(resetAllAtoms);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<any>(null);
+  const [, setData] = useState<any>(null);
 
   useEffect(() => {
     getData();
@@ -189,11 +189,7 @@ function RouteComponent() {
           {config.hasImages && (config.zodiacImage || config.talismanImage) && (
             <div className="relative h-[416px] w-[344px] overflow-hidden rounded-3xl bg-black/20">
               {/* Placeholder for zodiac/talisman image */}
-              <img
-                src={data?.imageUrl}
-                alt="zodiac or talisman"
-                className="h-full w-full"
-              />
+              <div className="h-full w-full bg-linear-to-br from-blue-900/50 to-purple-900/50" />
             </div>
           )}
         </div>
