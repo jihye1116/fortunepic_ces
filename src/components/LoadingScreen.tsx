@@ -6,6 +6,7 @@ import OIcon from "@/assets/icons/O.svg?react";
 import SmallXIcon from "@/assets/icons/small-X.svg?react";
 import XIcon from "@/assets/icons/X.svg?react";
 import CorrectImg from "@/assets/images/correct.png";
+import loadingLottie from "@/assets/lottie/analyze-2.json";
 
 import { NavigationBar } from "./NavigationBar";
 import { Title } from "./Title";
