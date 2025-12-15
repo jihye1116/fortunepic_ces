@@ -6,6 +6,7 @@ import OIcon from "@/assets/icons/O.svg?react";
 import SmallXIcon from "@/assets/icons/small-X.svg?react";
 import XIcon from "@/assets/icons/X.svg?react";
 import CorrectImg from "@/assets/images/correct.png";
+import MagpieImg from "@/assets/images/magpie.jpg";
 import loadingLottie from "@/assets/lottie/analyze-2.json";
 
 import { NavigationBar } from "./NavigationBar";
@@ -84,9 +85,10 @@ export function LoadingScreen() {
             {/* Main Image Card */}
             <div className="relative w-full  rounded-[24px] overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1549608276-5786777e6587?q=80&w=800&auto=format&fit=crop"
+                src={MagpieImg}
                 alt="Magpie"
                 className="w-full h-120 object-cover"
+                draggable={false}
               />
               {/* Dark Gradient Overlay for Text Readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -100,11 +102,10 @@ export function LoadingScreen() {
               <div className="absolute bottom-6 left-6 right-6">
                 {!showResult ? (
                   <h3 className="text-white text-4xl  leading-[1.3] whitespace-pre-line drop-shadow-lg">
-                    한국에서 까치는{'\n'}
-                    나쁜 운을 가져오는 새로 여겨져요
+                    {question.question}
                   </h3>
                 ) : (
-                   <h3 className={`ml-3 text-5xl font-semibold leading-[1.3] drop-shadow-lg ${selectedAnswer === false ? 'text-[#5b72b7]' : 'text-[#F8B5B6]'}`}>
+                   <h3 className={`ml-3 text-5xl font-medium leading-[1.3] drop-shadow-lg ${selectedAnswer === false ? 'text-[#ADB8DB]' : 'text-[#F8B5B6]'}`}>
                     {selectedAnswer === false ? 'Good!' : 'Nice Try!'}
                   </h3>
                 )}
@@ -131,11 +132,11 @@ export function LoadingScreen() {
               </div>
             ) : (
               <div className="flex flex-col items-start justify-center p-6 bg-[#171719] rounded-[24px] mt-5 animate-in fade-in duration-300">
-                <div className="bg-[#2C2C2C] px-4 py-1.5 rounded-full mb-4 flex items-center gap-2">
-                   <span className="text-[#C2C4C8] text-xl">answer </span>
-                     <button type="button" onClick={resetQuiz} className="focus:outline-none">
-                     {/* <button type="button" onClick={closeQuiz} className="focus:outline-none"> */}
-                       <SmallXIcon className="w-[40px] h-[40px] cursor-pointer" />
+                <div className="bg-[#1B1C1E] px-3 py-1.5 rounded-xl mb-4 flex items-center gap-2">
+                   <span className="text-[#878A93] text-xl">answer </span>
+                     {/* <button type="button" onClick={resetQuiz} className="focus:outline-none"> */}
+                     <button type="button" onClick={closeQuiz} className="focus:outline-none">
+                       <SmallXIcon className="w-[32px] h-[32px] cursor-pointer" />
                      </button>
                 </div>
                 <p className="text-white/90 text-2xl leading-relaxed text-left">
