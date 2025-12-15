@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import OIcon from "@/assets/icons/O.svg?react";
 import SmallXIcon from "@/assets/icons/small-X.svg?react";
 import XIcon from "@/assets/icons/X.svg?react";
+import BlackGradation from "@/assets/images/black-gradation.png";
 import CorrectImg from "@/assets/images/correct.png";
 import MagpieImg from "@/assets/images/magpie.jpg";
 import loadingLottie from "@/assets/lottie/analyze-2.json";
@@ -22,6 +24,21 @@ export function LoadingScreen() {
   const [fadeInQuiz, setFadeInQuiz] = useState(true);
   const [fadeOutQuiz, setFadeOutQuiz] = useState(false);
 
+    // Progress bar state
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          return 100;
+        }
+        return prev + 100 / (15 * 20); // 15s, 20fps
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+  
   // 단일 OX 퀴즈 문제
   const question = {
     question: '한국에서 까치는\n나쁜 운을 가져오는 새로 여겨져요',
@@ -65,13 +82,38 @@ export function LoadingScreen() {
   };
 
   return (
-    <main className="fixed inset-0 z-50 flex h-dvh flex-col bg-black">
-      <NavigationBar />
-      <Title text={t("loading.analyzing")} />
-      <div className="px-10">
-        <Lottie animationData={loadingLottie} width={1000} height={1000} />
+    <main className="fixed inset-0 z-50 flex h-dvh flex-col bg-[#1B1C1E]">
+      {/* Background Elements from Root Layout */}
+      <div className="absolute inset-0 z-0 shadow-[inset_0px_-14px_42.7px_0px_rgba(253,249,219,1),inset_0px_-27px_120px_16px_rgba(91,114,183,1),inset_0px_-43px_140px_15px_rgba(132,149,201,1)] opacity-80 pointer-events-none" />
+      <img
+        src={BlackGradation}
+        alt="background gradation"
+        className="absolute top-[-147px] left-1/2 z-0 h-[1981px] max-h-[1981px] min-h-[1981px] w-[1343px] max-w-[1343px] min-w-[1343px] -translate-x-1/2 blur-[80px] pointer-events-none -z-10"
+      />
+
+      <div className="relative z-10 w-full">
+        <NavigationBar />
+        <Title text={t("loading.analyzing")} />
+      </div>
+      
+      {/* Background Lottie */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+        <Lottie animationData={loadingLottie} style={{ width: 1000, height: 1000 }} />
       </div>
 
+      {/* Progress Bar Section - Footer */}
+      <div className="absolute bottom-60 left-0 right-0 flex flex-col items-center justify-center z-10">
+        <span className="text-[#878A93] text-4xl  mb-10">Fetching your fortune details...</span>
+        <div className="w-[664px] h-8 rounded-full bg-[#232325] flex items-center">
+          <div
+            className="h-8 rounded-full transition-all duration-100"
+            style={{
+              width: `${progress}%`,
+              background: "linear-gradient(90deg, #7CA7F8 0%, #F8B5B6 100%)"
+            }}
+          />
+        </div>
+      </div>
 
       {/* Quiz Overlay - Contents.png Style */}
       {showQuiz && (
@@ -131,16 +173,16 @@ export function LoadingScreen() {
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col items-start justify-center p-6 bg-[#171719] rounded-[24px] mt-5 animate-in fade-in duration-300">
+              <div className="flex flex-col items-start justify-center p-6 bg-[#171719] rounded-3xl mt-5 animate-in fade-in duration-300">
                 <div className="bg-[#1B1C1E] px-3 py-1.5 rounded-xl mb-4 flex items-center gap-2">
-                   <span className="text-[#878A93] text-xl">answer </span>
+                   <span className="text-[#878A93] text-3xl">answer </span>
                      {/* <button type="button" onClick={resetQuiz} className="focus:outline-none"> */}
                      <button type="button" onClick={closeQuiz} className="focus:outline-none">
                        <SmallXIcon className="w-[32px] h-[32px] cursor-pointer" />
                      </button>
                 </div>
-                <p className="text-white/90 text-2xl leading-relaxed text-left">
-                  In Korea, magpies are actually considered symbols of good luck and good news
+                <p className="text-[#C2C4C8] text-4xl leading-relaxed text-left">
+                  {question.explanation}
                 </p>
                  
               </div>
@@ -148,6 +190,8 @@ export function LoadingScreen() {
           </div>
         </div>
       )}
+
+
 
       {/* Great Modal (Correct Modal) */}
       {showGreatModal && (
