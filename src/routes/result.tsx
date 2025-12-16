@@ -138,7 +138,7 @@ function RouteComponent() {
   };
 
   const config = getTopicConfig();
-  const reportUrl = `/report/${topic}?id=${id}`;
+  const reportUrl = `https://fortunepic-ces.vercel.app/report/${topic}?id=${id}`;
 
   return (
     <div className="h-dvh">
@@ -147,17 +147,11 @@ function RouteComponent() {
 
       {/* Title Section */}
       <div className="flex h-[220px] w-full flex-col gap-3 px-20 py-10">
-        <h1
-          className="bg-linear-to-r from-white to-[#1e2f63] bg-clip-text text-center text-[56px] leading-[1.3] font-medium tracking-[-1.12px] text-transparent"
-          style={{ fontFamily: "Pretendard JP Variable" }}
-        >
+        <h1 className="bg-linear-to-r from-white to-[#1e2f63] bg-clip-text text-center text-[56px] leading-[1.3] font-medium tracking-[-1.12px] text-transparent">
           {config.title}
         </h1>
         {config.subtitle && (
-          <p
-            className="text-center text-[40px] leading-[1.3] font-normal tracking-[-0.4px] text-[#989ba2]"
-            style={{ fontFamily: "Pretendard JP Variable" }}
-          >
+          <p className="text-center text-[40px] leading-[1.3] font-normal tracking-[-0.4px] text-[#989ba2]">
             {config.subtitle}
           </p>
         )}
@@ -177,10 +171,7 @@ function RouteComponent() {
               fgColor="#d6dced"
               level="M"
             />
-            <p
-              className="mt-[34px] text-[32px] leading-[1.3] font-medium tracking-[-0.864px] text-[#aeb0b6]"
-              style={{ fontFamily: "Pretendard JP Variable" }}
-            >
+            <p className="mt-[34px] text-[32px] leading-[1.3] font-medium tracking-[-0.864px] text-[#aeb0b6]">
               {t("result.qrCode")}
             </p>
           </div>
@@ -199,20 +190,14 @@ function RouteComponent() {
           <div className="flex gap-6">
             <div className="relative size-[178px] overflow-hidden rounded-3xl bg-linear-to-br from-blue-900/50 to-purple-900/50 p-3">
               <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-4.5 py-2.5">
-                <p
-                  className="text-2xl leading-[1.33] font-medium tracking-[-0.552px] text-[#c2c4c8]"
-                  style={{ fontFamily: "Pretendard JP Variable" }}
-                >
+                <p className="text-2xl leading-[1.33] font-medium tracking-[-0.552px] text-[#c2c4c8]">
                   {config.mainImageLabel}
                 </p>
               </div>
             </div>
             <div className="relative size-[178px] overflow-hidden rounded-3xl bg-linear-to-br from-amber-900/30 to-green-900/30 p-3">
               <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-4.5 py-2.5">
-                <p
-                  className="text-2xl leading-[1.33] font-medium tracking-[-0.552px] text-[#c2c4c8]"
-                  style={{ fontFamily: "Pretendard JP Variable" }}
-                >
+                <p className="text-2xl leading-[1.33] font-medium tracking-[-0.552px] text-[#c2c4c8]">
                   {config.supportingImageLabel}
                 </p>
               </div>
@@ -231,28 +216,20 @@ function RouteComponent() {
           <div className="flex flex-col gap-3">
             {/* Name's report */}
             <div className="flex items-center gap-1 text-[32px] leading-[1.3] font-medium tracking-[-0.864px] text-[#989ba2]">
-              <p style={{ fontFamily: "Pretendard JP Variable" }}>{nickname}</p>
-              <p style={{ fontFamily: "Pretendard JP Variable" }}>
-                {t("result.reportSuffix")}
-              </p>
+              <p>{nickname}</p>
+              <p>{t("result.reportSuffix")}</p>
             </div>
 
             {/* Main title with gradient */}
             {config.mainTitle && (
-              <h2
-                className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[40px] leading-[1.3] font-semibold tracking-[-1.08px] text-transparent"
-                style={{ fontFamily: "Pretendard JP Variable" }}
-              >
+              <h2 className="bg-linear-to-r from-[#d6dced] to-[#8495c9] bg-clip-text text-[40px] leading-[1.3] font-semibold tracking-[-1.08px] text-transparent">
                 {config.mainTitle}
               </h2>
             )}
 
             {/* Description */}
             {config.description && (
-              <p
-                className="text-[32px] leading-normal font-normal tracking-[-0.864px] text-[#c2c4c8]"
-                style={{ fontFamily: "Pretendard JP Variable" }}
-              >
+              <p className="text-[32px] leading-normal font-normal tracking-[-0.864px] text-[#c2c4c8]">
                 {config.description}
               </p>
             )}
@@ -265,10 +242,7 @@ function RouteComponent() {
                     key={idx}
                     className="rounded-[20px] bg-[rgba(50,78,165,0.2)] px-6 py-3"
                   >
-                    <p
-                      className="text-[32px] leading-[1.3] font-normal tracking-[-0.864px] text-[#adb8db]"
-                      style={{ fontFamily: "Pretendard JP Variable" }}
-                    >
+                    <p className="text-[32px] leading-[1.3] font-normal tracking-[-0.864px] text-[#adb8db]">
                       {chip}
                     </p>
                   </div>
@@ -289,10 +263,7 @@ function RouteComponent() {
               "radial-gradient(ellipse at center, rgba(50,78,165,1) 0%, rgba(132,149,201,1) 50%, rgba(33,34,37,1) 100%)",
           }}
         >
-          <p
-            className="text-[40px] leading-[1.3] font-medium tracking-[-0.6px] text-white"
-            style={{ fontFamily: "Pretendard JP Variable" }}
-          >
+          <p className="text-[40px] leading-[1.3] font-medium tracking-[-0.6px] text-white">
             {t("result.finish")}
           </p>
         </button>
@@ -305,10 +276,7 @@ function RouteComponent() {
           className="flex items-center gap-5 px-20 py-3"
         >
           <CheckIcon className="size-20 text-[#70737c]" />
-          <p
-            className="text-center text-[32px] leading-[1.3] font-normal tracking-[-0.864px] text-[#70737c]"
-            style={{ fontFamily: "Pretendard JP Variable" }}
-          >
+          <p className="text-center text-[32px] leading-[1.3] font-normal tracking-[-0.864px] text-[#70737c]">
             {t("result.removeData")}
           </p>
         </button>
