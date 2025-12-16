@@ -66,7 +66,7 @@ export default function FiveElementsFortunePage({ id }: { id: string }) {
     subTitle: "Donations",
     description:
       "donate to non-profit organizations that support the education",
-    detailedDescription: analysisV3.lackingElement?.solution ?? "solution",
+    detailedDescription: analysisV3?.lackingElement?.solution ?? "solution",
   };
 
   // 5. Detailed List Mapping (10 Gods & Life Stages)
