@@ -1,8 +1,4 @@
-import {
-  createFileRoute,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useState } from "react";
@@ -41,8 +37,6 @@ function RouteComponent() {
     setData(data.data);
     console.log(data.data);
   };
-
-  const router = useRouter();
 
   const getTopicConfig = () => {
     switch (topic) {
@@ -164,7 +158,7 @@ function RouteComponent() {
           {/* QR Code */}
           <div className="flex flex-col items-center rounded-3xl bg-black/20 p-10">
             <QRCodeSVG
-              onClick={() => router.navigate({ to: reportUrl })}
+              onClick={() => (window.location.href = reportUrl)}
               value={reportUrl}
               size={260}
               bgColor="transparent"
