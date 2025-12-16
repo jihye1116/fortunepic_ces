@@ -11,7 +11,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
+  console.log("ELECTRON_DISABLE:", process.env.ELECTRON_DISABLE);
   const isElectron = process.env.ELECTRON_DISABLE !== "true";
+  console.log("isElectron:", isElectron);
 
   const basePlugins = [
     tanstackRouter({
@@ -51,7 +53,7 @@ export default defineConfig(({ mode }) => {
     : basePlugins;
 
   return {
-    base: "./",
+    base: isElectron ? "./" : "/",
     plugins,
     server: {
       proxy: {
