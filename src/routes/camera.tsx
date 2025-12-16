@@ -30,8 +30,8 @@ export const Route = createFileRoute("/camera")({
   component: CameraPage,
 });
 
-const dataURLtoBlob = (dataurl: string) => {
-  const arr = dataurl.split(",");
+const dataURLtoBlob = (dataUrl: string) => {
+  const arr = dataUrl.split(",");
   if (arr.length < 2) {
     return null;
   }
