@@ -30,6 +30,7 @@ export default function DailyPilarFortunePage({ id }: { id: string }) {
   const fortuneResult = result;
   const dayPillarAnimal = fortuneResult?.result?.dayPillarAnimal;
   const nickname = fortuneResult?.nickname || data.nickname;
+  
 
   // 1. Strength & Weakness Mapping
   const mappedStrengthWeakness = dayPillarAnimal
@@ -108,7 +109,9 @@ export default function DailyPilarFortunePage({ id }: { id: string }) {
             description={dayPillarAnimal?.summary}
           />
 
-          <DailyPilarCard  />
+          <DailyPilarCard  
+            animal={"Tiger"}
+          />
 
           <TagListSection
             title="Strength & Weakness"

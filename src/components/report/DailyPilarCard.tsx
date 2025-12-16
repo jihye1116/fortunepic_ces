@@ -6,7 +6,7 @@ import dragonImg from "@/assets/images/report/animals/dragon.png";
 import horseImg from "@/assets/images/report/animals/horse.png";
 import monkeyImg from "@/assets/images/report/animals/monkey.png";
 import oxImg from "@/assets/images/report/animals/ox.png";
-import pigImg from "@/assets/images/report/animals/pig-2cae6e.png";
+import pigImg from "@/assets/images/report/animals/pig.png";
 import rabbitImg from "@/assets/images/report/animals/rabbit.png";
 import ratImg from "@/assets/images/report/animals/rat.png";
 import roosterImg from "@/assets/images/report/animals/rooster.png";
@@ -29,6 +29,12 @@ const animalImageMap: Record<string, string> = {
   Pig: pigImg,
 };
 
+// Helper: capitalize first letter, lowercase the rest
+function formatAnimalName(animal?: string) {
+  if (!animal) return undefined;
+  return animal.charAt(0).toUpperCase() + animal.slice(1).toLowerCase();
+}
+
 
 interface DailyPilarCardProps {
   animal?: string;
@@ -38,6 +44,7 @@ interface DailyPilarCardProps {
 export function DailyPilarCard({
   animal = "Rat",
 }: DailyPilarCardProps) {
+  const formattedAnimal = formatAnimalName(animal);
   const animals = [
     "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
     "Horse", "Sheep", "Monkey", "Rooster", "Dog", "Pig"
@@ -47,12 +54,12 @@ export function DailyPilarCard({
     
     <div>
       <h2 className="text-[18px] font-semibold text-[#878A93] mb-6">
-        {animal} Analysis
+        {formattedAnimal} Analysis
       </h2>
     
     <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full px-20">
       {animals.map((ani) => {
-        const selected = ani === animal;
+        const selected = ani === formattedAnimal;
         return (
           <div
             key={ani}
@@ -68,16 +75,14 @@ export function DailyPilarCard({
                   ? " border-[#AEB0B6] border-2"
                   : "")
               }
-              style={{ width: 48, height: 48 }}
+              style={{ width: 48, height: 48, padding: selected ? 2 : 0 }}
             >
-              
-                <img
+              <img
                 className="flex items-center justify-center rounded-full"
-                  src={animalImageMap[ani]}
-                  alt={ani}
-                  style={{ width: 48, height: 48, objectFit: "cover" }}
-                />
-              
+                src={animalImageMap[ani]}
+                alt={ani}
+                style={{ width: 44, height: 44, objectFit: "cover" }}
+              />
             </div>
             <div
               className={
